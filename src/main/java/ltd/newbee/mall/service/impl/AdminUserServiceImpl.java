@@ -25,8 +25,8 @@ public class AdminUserServiceImpl implements AdminUserService {
 
     @Override
     public AdminUser login(String userName, String password) {
-        String passwordMd5 = MD5Util.MD5Encode(password, Constants.UTF_ENCODING);
-        return adminUserMapper.login(userName, passwordMd5);
+        //String passwordMd5 = MD5Util.MD5Encode(password, Constants.UTF_ENCODING);
+        return adminUserMapper.login(userName, password);
     }
 
     @Override

@@ -43,7 +43,8 @@ public class CommonController {
         captcha.setCharType(Captcha.FONT_9);
 
         // 验证码存入session
-        httpServletRequest.getSession().setAttribute("verifyCode", captcha.text().toLowerCase());
+        httpServletRequest.getSession().setAttribute("verifyCode", captcha.text().toLowerCase()
+        );
 
         // 输出图片流
         captcha.out(httpServletResponse.getOutputStream());
