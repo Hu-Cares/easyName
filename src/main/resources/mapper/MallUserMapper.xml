@@ -11,10 +11,11 @@
         <result column="is_deleted" jdbcType="TINYINT" property="isDeleted"/>
         <result column="locked_flag" jdbcType="TINYINT" property="lockedFlag"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="is_merchant" jdbcType="TINYINT" property="isMerchant"/>
     </resultMap>
     <sql id="Base_Column_List">
     user_id, nick_name, login_name, password_md5, introduce_sign, address, is_deleted,
-    locked_flag, create_time
+    locked_flag, create_time,is_merchant
   </sql>
 
     <select id="findMallUserList" parameterType="Map" resultMap="BaseResultMap">
@@ -61,14 +62,18 @@
     update tb_newbee_mall_user set is_deleted = 1
     where user_id = #{userId,jdbcType=BIGINT} and is_deleted = 0
   </update>
+    <update id="isMerchant" parameterType="java.lang.String">
+    update tb_newbee_mall_user set is_merchant = 1
+    where login_name = #{loginName} and is_merchant = 0
+  </update>
     <insert id="insert" parameterType="ltd.newbee.mall.entity.MallUser">
     insert into tb_newbee_mall_user (user_id, nick_name, login_name,
       password_md5, introduce_sign, address,
-      is_deleted, locked_flag, create_time
+      is_deleted, locked_flag, create_time,is_merchant
       )
     values (#{userId,jdbcType=BIGINT}, #{nickName,jdbcType=VARCHAR}, #{loginName,jdbcType=VARCHAR},
       #{passwordMd5,jdbcType=VARCHAR}, #{introduceSign,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
-      #{isDeleted,jdbcType=TINYINT}, #{lockedFlag,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}
+      #{isDeleted,jdbcType=TINYINT}, #{lockedFlag,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{isMerchant,jdbcType=TINYINT}
       )
   </insert>
     <insert id="insertSelective" parameterType="ltd.newbee.mall.entity.MallUser" useGeneratedKeys="true" keyProperty="userId">
@@ -101,6 +106,9 @@
             <if test="createTime != null">
                 create_time,
             </if>
+            <if test="isMerchant != null">
+                is_merchant,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="userId != null">
@@ -129,6 +137,9 @@
             </if>
             <if test="createTime != null">
                 #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="isMerchant != null">
+                #{isMerchant,jdbcType=TINYINT},
             </if>
         </trim>
     </insert>
@@ -159,6 +170,9 @@
             <if test="createTime != null">
                 create_time = #{createTime,jdbcType=TIMESTAMP},
             </if>
+            <if test="isMerchant != null">
+                is_merchant = #{isMerchant,jdbcType=TINYINT},
+            </if>
         </set>
         where user_id = #{userId,jdbcType=BIGINT}
     </update>
@@ -171,7 +185,8 @@
       address = #{address,jdbcType=VARCHAR},
       is_deleted = #{isDeleted,jdbcType=TINYINT},
       locked_flag = #{lockedFlag,jdbcType=TINYINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP}
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_merchant = #{isMerchant,jdbcType=TINYINT}
     where user_id = #{userId,jdbcType=BIGINT}
   </update>
     <update id="lockUserBatch">

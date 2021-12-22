@@ -34,6 +34,16 @@ public interface NewBeeMallUserService {
     String register(String loginName, String password);
 
     /**
+     * 商家注册
+     *
+     * @param shopName
+     * @param idCard
+     * @param realName
+     * @param loginName
+     * @return
+     */
+    String shop_register(String shopName, String idCard,String realName,String loginName);
+    /**
      * 登录
      *
      * @param loginName

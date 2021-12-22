@@ -19,6 +19,8 @@ public class NewBeeMallUserVO implements Serializable {
 
     private String loginName;
 
+    private String isMerchant;
+
     private String introduceSign;
 
     private String address;
@@ -73,15 +75,25 @@ public class NewBeeMallUserVO implements Serializable {
         this.shopCartItemCount = shopCartItemCount;
     }
 
+    public String getIsMerchant() {
+        return isMerchant;
+    }
+
+    public void setIsMerchant(String isMerchant) {
+        this.isMerchant = isMerchant;
+    }
+
+
     @Override
     public String toString() {
-        return new StringJoiner(", ", NewBeeMallUserVO.class.getSimpleName() + "[", "]")
-                .add("userId=" + userId)
-                .add("nickName='" + nickName + "'")
-                .add("loginName='" + loginName + "'")
-                .add("introduceSign='" + introduceSign + "'")
-                .add("address='" + address + "'")
-                .add("shopCartItemCount=" + shopCartItemCount)
-                .toString();
+        return "NewBeeMallUserVO{" +
+                "userId=" + userId +
+                ", nickName='" + nickName + '\'' +
+                ", loginName='" + loginName + '\'' +
+                ", isMerchant='" + isMerchant + '\'' +
+                ", introduceSign='" + introduceSign + '\'' +
+                ", address='" + address + '\'' +
+                ", shopCartItemCount=" + shopCartItemCount +
+                '}';
     }
 }

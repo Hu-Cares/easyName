@@ -1442,4 +1442,17 @@ INSERT INTO `tb_newbee_mall_user_coupon_record` VALUES (131, 1, 12, 0, NULL, NUL
 INSERT INTO `tb_newbee_mall_user_coupon_record` VALUES (132, 1, 13, 0, '2021-05-31 13:38:16', 103, '2021-05-31 13:28:03', '2021-05-31 13:43:16', 0);
 INSERT INTO `tb_newbee_mall_user_coupon_record` VALUES (133, 14, 11, 0, '2021-05-31 14:35:10', 106, '2021-05-31 14:34:41', '2021-05-31 14:40:10', 0);
 
+//lj编写商店数据库
+DROP DATABASE IF EXISTS `shop`;
+CREATE TABLE `shop`  (
+                                        `shop_id` bigint NOT NULL AUTO_INCREMENT COMMENT '商店主键id',
+                                        `shop_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '商铺名',
+                                        `login_name` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '用户名(默认为手机号)',
+                                        `ID_card` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '商家身份证',
+																				`real_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '商家真实姓名',
+
+                                        `introduce_sign` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '个性签名',
+                                        PRIMARY KEY (`shop_id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+
 SET FOREIGN_KEY_CHECKS = 1;
