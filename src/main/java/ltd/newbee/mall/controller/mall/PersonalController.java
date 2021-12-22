@@ -69,8 +69,16 @@ public class PersonalController {
     }
 
     @GetMapping("/shop_register")
-    public String shop_registerPage(){return "mall/personal";}  //商家注册
+    public String shop_registerPage(){return "shop/register";}  //商家注册
 
+    @GetMapping("/shop_login")
+    public String shop_loginPage(){return "shop/login";}  //商家登录
+
+    @GetMapping({"/shop", "/shop/", "/shop/index", "/shop/index.html"})
+    public String index(HttpServletRequest request) {
+        request.setAttribute("path", "index");
+        return "shop/index";
+    }
     @PostMapping("/login")
     @ResponseBody
     public Result login(@RequestParam("loginName") String loginName,

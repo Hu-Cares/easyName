@@ -19,13 +19,13 @@ public class NewBeeMallUserVO implements Serializable {
 
     private String loginName;
 
-    private String isMerchant;
-
     private String introduceSign;
 
     private String address;
 
     private Integer shopCartItemCount;
+
+    private Byte isMerchant;
 
     public Long getUserId() {
         return userId;
@@ -75,11 +75,11 @@ public class NewBeeMallUserVO implements Serializable {
         this.shopCartItemCount = shopCartItemCount;
     }
 
-    public String getIsMerchant() {
+    public Byte getIsMerchant() {
         return isMerchant;
     }
 
-    public void setIsMerchant(String isMerchant) {
+    public void setIsMerchant(Byte isMerchant) {
         this.isMerchant = isMerchant;
     }
 

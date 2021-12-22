@@ -8,6 +8,7 @@ import ltd.newbee.mall.controller.vo.NewBeeMallShopVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallUserVO;
 import ltd.newbee.mall.dao.MallShopMapper;
 import ltd.newbee.mall.entity.MallShop;
+import ltd.newbee.mall.entity.MallUser;
 import ltd.newbee.mall.service.NewBeeMallUserService;
 import org.apache.ibatis.jdbc.Null;
 import org.junit.jupiter.api.Test;
@@ -35,7 +36,7 @@ class NewBeeMallUserServiceImplTest  {
     void login(){
        HttpSession session=request.getSession();
        service.login("15707061101","2a19cb7daff53d0166c5b4257dc3f62d",session);
-       MallShop newBeeMallShopVO=(MallShop) session.getAttribute(Constants.MALL_SHOP_SESSION_KEY);
+       NewBeeMallUserVO newBeeMallShopVO=(NewBeeMallUserVO) session.getAttribute(Constants.MALL_USER_SESSION_KEY);
        System.out.println(newBeeMallShopVO.toString());//newBeeMallShopVO.toString()
    }
 }

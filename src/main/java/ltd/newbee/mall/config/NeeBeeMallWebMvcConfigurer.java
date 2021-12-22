@@ -8,10 +8,7 @@
  */
 package ltd.newbee.mall.config;
 
-import ltd.newbee.mall.interceptor.AdminLoginInterceptor;
-import ltd.newbee.mall.interceptor.NewBeeMallCartNumberInterceptor;
-import ltd.newbee.mall.interceptor.NewBeeMallLoginInterceptor;
-import ltd.newbee.mall.interceptor.RepeatSubmitInterceptor;
+import ltd.newbee.mall.interceptor.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -28,6 +25,8 @@ public class NeeBeeMallWebMvcConfigurer implements WebMvcConfigurer {
     private NewBeeMallCartNumberInterceptor newBeeMallCartNumberInterceptor;
     @Autowired
     private RepeatSubmitInterceptor repeatSubmitInterceptor;
+    @Autowired
+    private ShopLoginInterceptor shopLoginInterceptor;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
@@ -37,6 +36,9 @@ public class NeeBeeMallWebMvcConfigurer implements WebMvcConfigurer {
                 .excludePathPatterns("/admin/login")
                 .excludePathPatterns("/admin/dist/**")
                 .excludePathPatterns("/admin/plugins/**");
+        //增加一个拦截器，拦截以/shop为前缀的url路径(商城登录拦截)
+        registry.addInterceptor(shopLoginInterceptor)
+                .addPathPatterns("/shop/**");
         // 购物车中的数量统一处理
         registry.addInterceptor(newBeeMallCartNumberInterceptor)
                 .excludePathPatterns("/admin/**")
@@ -64,6 +66,7 @@ public class NeeBeeMallWebMvcConfigurer implements WebMvcConfigurer {
                 .addPathPatterns("/personal")
                 .addPathPatterns("/personal/updateInfo")
                 .addPathPatterns("/selectPayType")
+                .addPathPatterns("/shop_register")
                 .addPathPatterns("/payPage");
         // 防止重复提交拦截
         registry.addInterceptor(repeatSubmitInterceptor).addPathPatterns("/**");
