@@ -1449,10 +1449,11 @@ CREATE TABLE `shop`  (
                                         `shop_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '商铺名',
                                         `login_name` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '用户名(默认为手机号)',
                                         `ID_card` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '商家身份证',
-																				`real_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '商家真实姓名',
-
-                                        `introduce_sign` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '个性签名',
+										`real_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '商家真实姓名',
+										`create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '注册时间',
                                         PRIMARY KEY (`shop_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+
+alter table tb_newbee_mall_user add  is_merchant  tinyint NOT NULL DEFAULT 0 COMMENT '标识字段，是否为商家'
 
 SET FOREIGN_KEY_CHECKS = 1;
