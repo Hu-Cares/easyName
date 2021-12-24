@@ -8,23 +8,29 @@
  */
 package ltd.newbee.mall.service.impl;
 
+import ltd.newbee.mall.common.Constants;
 import ltd.newbee.mall.common.NewBeeMallCategoryLevelEnum;
 import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.controller.vo.NewBeeMallSearchGoodsVO;
 import ltd.newbee.mall.dao.GoodsCategoryMapper;
 import ltd.newbee.mall.dao.NewBeeMallGoodsMapper;
 import ltd.newbee.mall.entity.GoodsCategory;
+import ltd.newbee.mall.entity.MallShop;
 import ltd.newbee.mall.entity.NewBeeMallGoods;
+import ltd.newbee.mall.entity.NewBeeMallshopGoods;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
 import ltd.newbee.mall.util.BeanUtil;
 import ltd.newbee.mall.util.PageQueryUtil;
 import ltd.newbee.mall.util.PageResult;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -34,10 +40,21 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
     private NewBeeMallGoodsMapper goodsMapper;
     @Autowired
     private GoodsCategoryMapper goodsCategoryMapper;
-
+    @Autowired
+    private HttpServletRequest request;
     @Override
     public PageResult getNewBeeMallGoodsPage(PageQueryUtil pageUtil) {
         List<NewBeeMallGoods> goodsList = goodsMapper.findNewBeeMallGoodsList(pageUtil);
+        MallShop mallshop=(MallShop)request.getSession().getAttribute(Constants.MALL_SHOP_SESSION_KEY);
+        if (mallshop!=null&&null == request.getSession().getAttribute("loginUser")) {
+            Iterator<NewBeeMallGoods> it = goodsList.iterator();
+            while(it.hasNext()){
+                NewBeeMallGoods x = it.next();
+                if((x.getShopId())!=(mallshop.getShopId())){
+                    it.remove();
+                }
+            }
+        }
         int total = goodsMapper.getTotalNewBeeMallGoods(pageUtil);
         PageResult pageResult = new PageResult(goodsList, total, pageUtil.getLimit(), pageUtil.getPage());
         return pageResult;
@@ -54,6 +71,21 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
             return ServiceResultEnum.SAME_GOODS_EXIST.getResult();
         }
         if (goodsMapper.insertSelective(goods) > 0) {
+            return ServiceResultEnum.SUCCESS.getResult();
+        }
+        return ServiceResultEnum.DB_ERROR.getResult();
+    }
+    @Override
+    public String shopSaveNewBeeMallGoods(NewBeeMallshopGoods goods) {
+        GoodsCategory goodsCategory = goodsCategoryMapper.selectByPrimaryKey(goods.getGoodsCategoryId());
+        // 分类不存在或者不是三级分类，则该参数字段异常
+        if (goodsCategory == null || goodsCategory.getCategoryLevel().intValue() != NewBeeMallCategoryLevelEnum.LEVEL_THREE.getLevel()) {
+            return ServiceResultEnum.GOODS_CATEGORY_ERROR.getResult();
+        }
+        if (goodsMapper.selectByCategoryIdAndName(goods.getGoodsName(), goods.getGoodsCategoryId()) != null) {
+            return ServiceResultEnum.SAME_GOODS_EXIST.getResult();
+        }
+        if (goodsMapper.shopInsertSelective(goods) > 0) {
             return ServiceResultEnum.SUCCESS.getResult();
         }
         return ServiceResultEnum.DB_ERROR.getResult();
@@ -93,7 +125,12 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
     public NewBeeMallGoods getNewBeeMallGoodsById(Long id) {
         return goodsMapper.selectByPrimaryKey(id);
     }
-    
+
+    //商家找寻
+    @Override
+    public NewBeeMallshopGoods getNewBeeMallShopGoodsById(Long id) {
+        return goodsMapper.shopSelectByPrimaryKey(id);
+    } //商家找寻
     @Override
     public Boolean batchUpdateSellStatus(Long[] ids, int sellStatus) {
         return goodsMapper.batchUpdateSellStatus(ids, sellStatus) > 0;
@@ -102,6 +139,16 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
     @Override
     public PageResult searchNewBeeMallGoods(PageQueryUtil pageUtil) {
         List<NewBeeMallGoods> goodsList = goodsMapper.findNewBeeMallGoodsListBySearch(pageUtil);
+        MallShop mallshop=(MallShop)request.getSession().getAttribute(Constants.MALL_SHOP_SESSION_KEY);
+        if (mallshop!=null&&null == request.getSession().getAttribute("loginUser")) {
+            Iterator<NewBeeMallGoods> it = goodsList.iterator();
+            while(it.hasNext()){
+                NewBeeMallGoods x = it.next();
+                if((x.getShopId())!=(mallshop.getShopId())){
+                    it.remove();
+                }
+            }
+        }
         int total = goodsMapper.getTotalNewBeeMallGoodsBySearch(pageUtil);
         List<NewBeeMallSearchGoodsVO> newBeeMallSearchGoodsVOS = new ArrayList<>();
         if (!CollectionUtils.isEmpty(goodsList)) {

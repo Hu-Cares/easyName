@@ -36,7 +36,7 @@ class NewBeeMallUserServiceImplTest  {
     void login(){
        HttpSession session=request.getSession();
        service.login("15707061101","2a19cb7daff53d0166c5b4257dc3f62d",session);
-       NewBeeMallUserVO newBeeMallShopVO=(NewBeeMallUserVO) session.getAttribute(Constants.MALL_USER_SESSION_KEY);
+       NewBeeMallUserVO newBeeMallShopVO=(NewBeeMallUserVO) session.getAttribute(Constants.MALL_SHOP_SESSION_KEY);
        System.out.println(newBeeMallShopVO.toString());//newBeeMallShopVO.toString()
    }
 }

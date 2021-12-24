@@ -9,6 +9,7 @@
 package ltd.newbee.mall.dao;
 
 import ltd.newbee.mall.entity.NewBeeMallGoods;
+import ltd.newbee.mall.entity.NewBeeMallshopGoods;
 import ltd.newbee.mall.entity.StockNumDTO;
 import ltd.newbee.mall.util.PageQueryUtil;
 import org.apache.ibatis.annotations.Param;
@@ -23,7 +24,11 @@ public interface NewBeeMallGoodsMapper {
 
     int insertSelective(NewBeeMallGoods record);
 
+    int shopInsertSelective(NewBeeMallshopGoods record);
+
     NewBeeMallGoods selectByPrimaryKey(Long goodsId);
+
+    NewBeeMallshopGoods shopSelectByPrimaryKey(Long goodsId); //商家找寻
 
     NewBeeMallGoods selectByCategoryIdAndName(@Param("goodsName") String goodsName, @Param("goodsCategoryId") Long goodsCategoryId);
 

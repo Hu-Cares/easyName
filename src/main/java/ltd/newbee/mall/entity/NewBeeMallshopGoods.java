@@ -1,18 +1,14 @@
-/**
- * 严肃声明：
- * 开源版本请务必保留此注释头信息，若删除我方将保留所有法律责任追究！
- * 本系统已申请软件著作权，受国家版权局知识产权以及国家计算机软件著作权保护！
- * 可正常分享和学习源码，不得用于违法犯罪活动，违者必究！
- * Copyright (c) 2019-2020 十三 all rights reserved.
- * 版权所有，侵权必究！
- */
 package ltd.newbee.mall.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.util.Date;
 
-public class NewBeeMallGoods {
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+import java.util.Date;
+
+public class NewBeeMallshopGoods{
     private Long goodsId;
 
     private String goodsName;
@@ -38,6 +34,7 @@ public class NewBeeMallGoods {
     private Integer createUser;
 
     private Long shopId;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
@@ -186,27 +183,24 @@ public class NewBeeMallGoods {
 
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", goodsId=").append(goodsId);
-        sb.append(", goodsName=").append(goodsName);
-        sb.append(", goodsIntro=").append(goodsIntro);
-        sb.append(", goodsCoverImg=").append(goodsCoverImg);
-        sb.append(", goodsCarousel=").append(goodsCarousel);
-        sb.append(", originalPrice=").append(originalPrice);
-        sb.append(", sellingPrice=").append(sellingPrice);
-        sb.append(", stockNum=").append(stockNum);
-        sb.append(", tag=").append(tag);
-        sb.append(", goodsSellStatus=").append(goodsSellStatus);
-        sb.append(", createUser=").append(createUser);
-        sb.append(", createTime=").append(createTime);
-        sb.append(", updateUser=").append(updateUser);
-        sb.append(", updateTime=").append(updateTime);
-        sb.append(", goodsDetailContent=").append(goodsDetailContent);
-        sb.append(", shopId=").append(shopId);
-        sb.append("]");
-        return sb.toString();
+        return "NewBeeMallshopGoods{" +
+                "goodsId=" + goodsId +
+                ", goodsName='" + goodsName + '\'' +
+                ", goodsIntro='" + goodsIntro + '\'' +
+                ", goodsCategoryId=" + goodsCategoryId +
+                ", goodsCoverImg='" + goodsCoverImg + '\'' +
+                ", goodsCarousel='" + goodsCarousel + '\'' +
+                ", originalPrice=" + originalPrice +
+                ", sellingPrice=" + sellingPrice +
+                ", stockNum=" + stockNum +
+                ", tag='" + tag + '\'' +
+                ", goodsSellStatus=" + goodsSellStatus +
+                ", createUser=" + createUser +
+                ", shopId=" + shopId +
+                ", createTime=" + createTime +
+                ", updateUser=" + updateUser +
+                ", updateTime=" + updateTime +
+                ", goodsDetailContent='" + goodsDetailContent + '\'' +
+                '}';
     }
 }
