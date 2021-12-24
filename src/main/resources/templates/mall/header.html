@@ -1,4 +1,4 @@
-<!-- Copyright (c) 2019-2020 十三 all rights reserved. -->
+<!-- 商城首页头部 -->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:fragment="head-fragment(title,path)">
@@ -17,8 +17,8 @@
     <div class="banner_x center">
         <a th:href="@{/index}" class="logo"><h1>新蜂商城</h1></a>
         <ul class="list">
-            <li><a th:href="@{/seckill}">秒杀专区<img th:src="@{/mall/image/icon-seckill.png}"></a></li>
-            <li><a th:href="@{/couponList}">优惠券<img th:src="@{/mall/image/icon-coupon.png}"></a></li>
+<!--            <li><a th:href="@{/seckill}">秒杀专区<img th:src="@{/mall/image/icon-seckill.png}"></a></li>-->
+<!--            <li><a th:href="@{/couponList}">优惠券<img th:src="@{/mall/image/icon-coupon.png}"></a></li>-->
         </ul>
         <div class="fr">
             <div class="search">
@@ -59,11 +59,11 @@
                                 我的订单
                             </a>
                         </li>
-                        <li>
-                            <a th:href="@{/myCoupons}">
-                                优惠券
-                            </a>
-                        </li>
+<!--                        <li>-->
+<!--                            <a th:href="@{/myCoupons}">-->
+<!--                                优惠券-->
+<!--                            </a>-->
+<!--                        </li>-->
                         <li>
                             <a th:href="@{/logout}">
                                 退出登录
