@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ltd.newbee.mall.dao.GoodsCommentMapper">
+
+    <resultMap id="BaseResultMap" type="ltd.newbee.mall.entity.GoodsCategory">
+        <id column="gcId" jdbcType="BIGINT" property="gcId"/>
+        <result column="gc_gid" jdbcType="BIGINT" property="gcGid"/>
+        <result column="gc_uid" jdbcType="BIGINT" property="gcUid"/>
+        <result column="gc_time" jdbcType="TIMESTAMP" property="gcTime"/>
+        <result column="gc_content" jdbcType="VARCHAR" property="gcContent"/>
+        <result column="gc_status" jdbcType="VARCHAR" property="gcStatus"/>
+        <result column="gc_parentid" jdbcType="BIGINT" property="gcParentid"/>
+
+    </resultMap>
+    <sql id="Base_Column_List">
+        gcId, gcGid, gcUid, gcTime, gcContent, gcStatus,
+    gcParentid, goods, users, child
+    </sql>
+
+    <select id="findByGoodId" resultMap="BaseResultMap">
+        SELECT a.*,b.*
+        <include refid="Base_Column_List"/>
+        FROM goods_comment AS a,users AS b
+        WHERE a.gc_gId=#{gId}
+          AND a.gc_status=b.u_status=1
+          AND a.gc_uid=b.u_id
+    </select>
+</mapper>
