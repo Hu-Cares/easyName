@@ -68,6 +68,17 @@ public class PersonalController {
         return "mall/addresses";
     }
 
+    @GetMapping("/shop_register")
+    public String shop_registerPage(){return "shop/register";}  //商家注册
+
+    @GetMapping("/shop_login")
+    public String shop_loginPage(){return "shop/login";}  //商家登录
+
+    @GetMapping({"/shop", "/shop/", "/shop/index", "/shop/index.html"})
+    public String index(HttpServletRequest request) {
+        request.setAttribute("path", "index");
+        return "shop/index";
+    }
     @PostMapping("/login")
     @ResponseBody
     public Result login(@RequestParam("loginName") String loginName,
@@ -120,6 +131,43 @@ public class PersonalController {
         }
         httpSession.setAttribute(Constants.MALL_VERIFY_CODE_KEY, null);
         String registerResult = newBeeMallUserService.register(loginName, password);
+        //注册成功
+        if (ServiceResultEnum.SUCCESS.getResult().equals(registerResult)) {
+            //删除session中的verifyCode
+            httpSession.removeAttribute(Constants.MALL_VERIFY_CODE_KEY);
+            return ResultGenerator.genSuccessResult();
+        }
+        //注册失败
+        return ResultGenerator.genFailResult(registerResult);
+    }
+
+//商家注册
+    @PostMapping("/shop_register")
+    @ResponseBody
+    public Result shop_register(@RequestParam("shopName") String shopName,
+                           @RequestParam("verifyCode") String verifyCode,
+                           @RequestParam("idCard") String idCard,
+                           @RequestParam("realName") String realName,
+                           @RequestParam("loginName") String loginName,
+                           HttpSession httpSession) {
+        if (StringUtils.isEmpty(shopName)) {
+            return ResultGenerator.genFailResult(ServiceResultEnum. SAME_SHOP_NAME_EXIST.getResult());
+        }
+        if (StringUtils.isEmpty(idCard)) {
+            return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_ID_CARD_NULL.getResult());
+        }
+        if (StringUtils.isEmpty(verifyCode)) {
+            return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_VERIFY_CODE_NULL.getResult());
+        }
+        if (StringUtils.isEmpty(realName)) {
+            return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_REAL_NAME_NULL.getResult());
+        }
+        String kaptchaCode = httpSession.getAttribute(Constants.MALL_VERIFY_CODE_KEY) + "";
+        if (StringUtils.isEmpty(kaptchaCode) || !verifyCode.toLowerCase().equals(kaptchaCode)) {
+            return ResultGenerator.genFailResult(ServiceResultEnum.LOGIN_VERIFY_CODE_ERROR.getResult());
+        }
+        httpSession.setAttribute(Constants.MALL_VERIFY_CODE_KEY, null);
+        String registerResult = newBeeMallUserService.shop_register(shopName, idCard,realName,loginName);
         //注册成功
         if (ServiceResultEnum.SUCCESS.getResult().equals(registerResult)) {
             //删除session中的verifyCode

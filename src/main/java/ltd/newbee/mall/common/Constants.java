@@ -35,6 +35,8 @@ public class Constants {
 
     public final static String MALL_USER_SESSION_KEY = "newBeeMallUser";//session中user的key
 
+    public final static String MALL_SHOP_SESSION_KEY = "newBeeMallShop";//session中shop的key
+
     public final static int GOODS_SEARCH_PAGE_LIMIT = 10;//搜索分页的默认条数(每页10条)
 
     public final static int ORDER_SEARCH_PAGE_LIMIT = 3;//我的订单列表分页的默认条数(每页3条)

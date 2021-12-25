@@ -23,6 +23,16 @@ public enum ServiceResultEnum {
 
     SAME_CATEGORY_EXIST("已存在同级同名的分类！"),
 
+    //商家注册
+    SAME_SHOP_NAME_EXIST("店铺名已存在"),
+
+    SHOP_NAME_NULL("请输入商铺名！"),
+
+    LOGIN_ID_CARD_NULL("请输入身份证！"),
+
+    LOGIN_REAL_NAME_NULL("请输入真实姓名！"),
+    //--商家注册
+
     SAME_LOGIN_NAME_EXIST("用户名已存在！"),
 
     LOGIN_NAME_NULL("请输入登录名！"),
