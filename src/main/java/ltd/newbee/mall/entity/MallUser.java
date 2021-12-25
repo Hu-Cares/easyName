@@ -29,6 +29,8 @@ public class MallUser {
 
     private Byte lockedFlag;
 
+    private Byte isMerchant;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
 
@@ -104,22 +106,27 @@ public class MallUser {
         this.createTime = createTime;
     }
 
+    public Byte getIsMerchant() {
+        return isMerchant;
+    }
+
+    public void setIsMerchant(Byte isMerchant) {
+        this.isMerchant = isMerchant;
+    }
+
     @Override
     public String toString() {
-        StringBuilder sb = new StringBuilder();
-        sb.append(getClass().getSimpleName());
-        sb.append(" [");
-        sb.append("Hash = ").append(hashCode());
-        sb.append(", userId=").append(userId);
-        sb.append(", nickName=").append(nickName);
-        sb.append(", loginName=").append(loginName);
-        sb.append(", passwordMd5=").append(passwordMd5);
-        sb.append(", introduceSign=").append(introduceSign);
-        sb.append(", address=").append(address);
-        sb.append(", isDeleted=").append(isDeleted);
-        sb.append(", lockedFlag=").append(lockedFlag);
-        sb.append(", createTime=").append(createTime);
-        sb.append("]");
-        return sb.toString();
+        return "MallUser{" +
+                "userId=" + userId +
+                ", nickName='" + nickName + '\'' +
+                ", loginName='" + loginName + '\'' +
+                ", passwordMd5='" + passwordMd5 + '\'' +
+                ", introduceSign='" + introduceSign + '\'' +
+                ", address='" + address + '\'' +
+                ", isDeleted=" + isDeleted +
+                ", lockedFlag=" + lockedFlag +
+                ", isMerchant=" + isMerchant +
+                ", createTime=" + createTime +
+                '}';
     }
 }

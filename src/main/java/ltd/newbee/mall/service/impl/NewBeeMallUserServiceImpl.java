@@ -10,10 +10,13 @@ package ltd.newbee.mall.service.impl;
 
 import ltd.newbee.mall.common.Constants;
 import ltd.newbee.mall.common.ServiceResultEnum;
+import ltd.newbee.mall.controller.vo.NewBeeMallShopVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallUserVO;
+import ltd.newbee.mall.dao.MallShopMapper;
 import ltd.newbee.mall.dao.MallUserMapper;
 import ltd.newbee.mall.dao.NewBeeMallCouponMapper;
 import ltd.newbee.mall.dao.NewBeeMallUserCouponRecordMapper;
+import ltd.newbee.mall.entity.MallShop;
 import ltd.newbee.mall.entity.MallUser;
 import ltd.newbee.mall.entity.NewBeeMallCoupon;
 import ltd.newbee.mall.entity.NewBeeMallUserCouponRecord;
@@ -32,6 +35,9 @@ public class NewBeeMallUserServiceImpl implements NewBeeMallUserService {
 
     @Autowired
     private MallUserMapper mallUserMapper;
+
+    @Autowired
+    private MallShopMapper mallShopMapper;
 
     @Autowired
     private NewBeeMallCouponMapper newBeeMallCouponMapper;
@@ -72,6 +78,27 @@ public class NewBeeMallUserServiceImpl implements NewBeeMallUserService {
         return ServiceResultEnum.SUCCESS.getResult();
     }
 
+//商家注册
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public String shop_register(String shopName, String idCard,String realName,String loginName) {
+
+        if (mallShopMapper.selectByShopName(shopName) != null) {
+            return ServiceResultEnum.SAME_SHOP_NAME_EXIST.getResult();
+        }
+        MallShop registerShop = new MallShop();
+        registerShop.setShopName(shopName);
+        registerShop.setIdCard(idCard);
+        registerShop.setRealName(realName);
+        registerShop.setLoginName(loginName);
+        if (mallShopMapper.insertSelective(registerShop) <= 0) {
+            return ServiceResultEnum.DB_ERROR.getResult();
+        }
+        mallUserMapper.isMerchant(loginName);
+        return ServiceResultEnum.SUCCESS.getResult();
+    }
+
     @Override
     public String login(String loginName, String passwordMD5, HttpSession httpSession) {
         MallUser user = mallUserMapper.selectByLoginNameAndPasswd(loginName, passwordMD5);
@@ -83,6 +110,10 @@ public class NewBeeMallUserServiceImpl implements NewBeeMallUserService {
             if (user.getNickName() != null && user.getNickName().length() > 7) {
                 String tempNickName = user.getNickName().substring(0, 7) + "..";
                 user.setNickName(tempNickName);
+            }
+            if(user.getIsMerchant()==1){
+              MallShop shop=mallShopMapper.selectByLoginName(loginName);  //从商家中获取店铺ID和店铺名以及姓名
+              httpSession.setAttribute(Constants.MALL_SHOP_SESSION_KEY, shop);
             }
             NewBeeMallUserVO newBeeMallUserVO = new NewBeeMallUserVO();
             BeanUtil.copyProperties(user, newBeeMallUserVO);

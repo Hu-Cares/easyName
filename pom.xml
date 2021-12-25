@@ -5,6 +5,26 @@
       @link https://github.com/newbee-ltd -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<!--打包报错而加-->
+    <build>
+        <plugins>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+            <executions>
+                <execution>
+                    <goals>
+                        <goal>repackage</goal>
+                        <goal>build-info</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+    </build>
+
+
+
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
     <groupId>ltd.newbee.mall</groupId>
@@ -20,12 +40,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-        <aliyun-docker-namespace>填写你的阿里云docker容器命名空间，容器设置：https://cr.console.aliyun.com/cn-shanghai/instances</aliyun-docker-namespace>
-    </properties>
+
 
     <dependencies>
         <dependency>
@@ -124,86 +139,26 @@
             <artifactId>guava</artifactId>
             <version>31.0.1-jre</version>
         </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+        </dependency>
     </dependencies>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
 
-            <plugin>
-                <groupId>com.google.cloud.tools</groupId>
-                <artifactId>jib-maven-plugin</artifactId>
-                <version>3.1.4</version>
-                <configuration>
-                    <!--配置基本镜像-->
-                    <from>
-                        <image>adoptopenjdk:8-jre</image>
-                    </from>
-                    <!--配置最终推送的地址，仓库名，镜像名-->
-                    <to>
-                        <image>registry.cn-shanghai.aliyuncs.com/${aliyun-docker-namespace}/${project.artifactId}</image>
-                        <tags>
-                            <tag>${project.version}</tag>
-                            <tag>latest</tag>
-                        </tags>
-                        <auth>
-                            <username>填写你的阿里云docker容器账号（邮箱）</username>
-                            <password>填写你的阿里云docker容器密码（固定密码），密码设置：https://cr.console.aliyun.com/cn-shanghai/instance/credentials</password>
-                        </auth>
-                    </to>
-                    <container>
-                        <mainClass>ltd.newbee.mall.NewBeeMallPlusApplication</mainClass>
-                        <jvmFlags>
-                            <jvmFlag>-Xms512m</jvmFlag>
-                            <jvmFlag>-Xmx512m</jvmFlag>
-                            <!-- 记录内存溢出时的推展情况-->
-                            <jvmFlag>-XX:+HeapDumpOnOutOfMemoryError</jvmFlag>
-                            <!-- 内存溢出文件位置-->
-                            <jvmFlag>-XX:HeapDumpPath=./</jvmFlag>
-                        </jvmFlags>
-                    </container>
-                </configuration>
-
-                <!--绑定到maven lifecicle-->
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-
-        </plugins>
-    </build>
-    <repositories>
-        <repository>
-            <id>public</id>
-            <name>aliyun nexus</name>
-            <url>https://maven.aliyun.com/repository/public</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-        </repository>
-    </repositories>
-
-    <pluginRepositories>
-        <pluginRepository>
-            <id>public</id>
-            <name>aliyun nexus</name>
-            <url>https://maven.aliyun.com/repository/public</url>
-            <releases>
-                <enabled>true</enabled>
-            </releases>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </pluginRepository>
-    </pluginRepositories>
 
 
     <profiles>
