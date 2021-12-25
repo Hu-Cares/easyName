@@ -1,6 +1,5 @@
 $(function () {
     var configType = $("#configType").val();
-
     $("#jqGrid").jqGrid({
         url: '/admin/indexConfigs/list?configType=' + configType,
         datatype: "json",

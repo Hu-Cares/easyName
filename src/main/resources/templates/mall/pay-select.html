@@ -1,7 +1,7 @@
 <!-- Copyright (c) 2019-2020 十三 all rights reserved. -->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="mall/header::head-fragment('NewBee商城-选择支付方式','pay-select')">
+<head th:replace="mall/header::head-fragment('Itema商城-选择支付方式','pay-select')">
 </head>
 <body>
 <div class="page-main">
@@ -32,30 +32,6 @@
                 <div class="payment-box ">
                     <div class="payment-header clearfix">
                         <h3 class="title">支付平台</h3>
-                        <span class="desc"></span>
-                    </div>
-                    <div class="payment-body">
-                        <ul class="clearfix payment-list J_paymentList J_linksign-customize">
-                            <li class="J_alipay">
-                                <input type="radio" name="payOnlineBank" id="alipay" value="alipay">
-                                <img onclick="payOrder(1)" th:src="@{/mall/image/pay/payOnline_zfb.png}" alt="支付宝"
-                                     style="margin-left: 0;">
-                            </li>
-                            <div style="float: left;color: grey;line-height: 16px;margin-left: 14px;margin-bottom: 14px;">
-                                <!-- 请各位开发者自行配置自己的测试账号和支付宝沙箱环境 -->
-                                已接入支付宝沙箱环境，可以模拟支付宝进行支付<br/>
-                                新蜂商城沙箱测试账号如下：<br/>
-                                买家账号：eiqirp8601@sandbox.com<br/>
-                                登录密码：111111 支付密码：111111<br/>
-                                </h4>
-                            </div>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="payment-box ">
-                    <div class="payment-header clearfix">
-                        <h3 class="title">模拟支付平台</h3>
                         <span class="desc"></span>
                     </div>
                     <div class="payment-body">

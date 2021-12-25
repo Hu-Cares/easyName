@@ -124,9 +124,9 @@ $('#saveButton').click(function () {
         });
         return;
     }
-    if (isNull(originalPrice) || originalPrice < 1) {
+    if (isNull(originalPrice) ) {
         swal("请输入商品价格", {
-            icon: "error",
+            icon: "error",//|| originalPrice < 1
         });
         return;
     }

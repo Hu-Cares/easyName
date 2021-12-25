@@ -11,13 +11,15 @@ package ltd.newbee.mall.controller.admin;
 import ltd.newbee.mall.common.Constants;
 import ltd.newbee.mall.common.NewBeeMallCategoryLevelEnum;
 import ltd.newbee.mall.common.ServiceResultEnum;
-import ltd.newbee.mall.entity.GoodsCategory;
-import ltd.newbee.mall.entity.NewBeeMallGoods;
+import ltd.newbee.mall.controller.vo.NewBeeMallUserVO;
+import ltd.newbee.mall.entity.*;
 import ltd.newbee.mall.service.NewBeeMallCategoryService;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
+import ltd.newbee.mall.util.BeanUtil;
 import ltd.newbee.mall.util.PageQueryUtil;
 import ltd.newbee.mall.util.Result;
 import ltd.newbee.mall.util.ResultGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -29,6 +31,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 
 /**
  * @author 13
@@ -44,7 +49,8 @@ public class NewBeeMallGoodsController {
     private NewBeeMallGoodsService newBeeMallGoodsService;
     @Resource
     private NewBeeMallCategoryService newBeeMallCategoryService;
-
+    @Autowired
+    private HttpServletRequest request;
     @GetMapping("/goods")
     public String goodsPage(HttpServletRequest request) {
         request.setAttribute("path", "newbee_mall_goods");
@@ -160,6 +166,10 @@ public class NewBeeMallGoodsController {
                 || StringUtils.isEmpty(newBeeMallGoods.getGoodsDetailContent())) {
             return ResultGenerator.genFailResult("参数异常！");
         }
+        MallShop mallshop=(MallShop)request.getSession().getAttribute(Constants.MALL_SHOP_SESSION_KEY);
+        if (mallshop!=null&&null == request.getSession().getAttribute("loginUser")) {
+            newBeeMallGoods.setShopId(mallshop.getShopId());
+        }
         String result = newBeeMallGoodsService.saveNewBeeMallGoods(newBeeMallGoods);
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
             return ResultGenerator.genSuccessResult();
@@ -187,6 +197,10 @@ public class NewBeeMallGoodsController {
                 || StringUtils.isEmpty(newBeeMallGoods.getGoodsCoverImg())
                 || StringUtils.isEmpty(newBeeMallGoods.getGoodsDetailContent())) {
             return ResultGenerator.genFailResult("参数异常！");
+        }
+        MallShop mallshop=(MallShop)request.getSession().getAttribute(Constants.MALL_SHOP_SESSION_KEY);
+        if (mallshop!=null&&null == request.getSession().getAttribute("loginUser")) {
+            newBeeMallGoods.setShopId(mallshop.getShopId());
         }
         String result = newBeeMallGoodsService.updateNewBeeMallGoods(newBeeMallGoods);
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {

@@ -9,6 +9,7 @@
 package ltd.newbee.mall.service;
 
 import ltd.newbee.mall.entity.NewBeeMallGoods;
+import ltd.newbee.mall.entity.NewBeeMallshopGoods;
 import ltd.newbee.mall.util.PageQueryUtil;
 import ltd.newbee.mall.util.PageResult;
 
@@ -30,7 +31,13 @@ public interface NewBeeMallGoodsService {
      * @return
      */
     String saveNewBeeMallGoods(NewBeeMallGoods goods);
-
+    /**
+     * 添加商品
+     *
+     * @param goods
+     * @return
+     */
+    String shopSaveNewBeeMallGoods(NewBeeMallshopGoods goods);
     /**
      * 批量新增商品数据
      *
@@ -55,6 +62,13 @@ public interface NewBeeMallGoodsService {
      */
     NewBeeMallGoods getNewBeeMallGoodsById(Long id);
 
+    /**
+     * 商家获取商品详情
+     *
+     * @param id
+     * @return
+     */
+    NewBeeMallshopGoods getNewBeeMallShopGoodsById(Long id);
     /**
      * 批量修改销售状态(上架下架)
      *

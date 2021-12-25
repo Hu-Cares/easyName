@@ -120,6 +120,7 @@ public class OrderController {
     public String selectPayType(HttpServletRequest request, @RequestParam("orderNo") String orderNo, HttpSession httpSession) {
         NewBeeMallUserVO user = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         NewBeeMallOrder newBeeMallOrder = judgeOrderUserId(orderNo, user.getUserId());
+        newBeeMallOrder.setTotalPrice((Integer)request.getSession().getAttribute("totalprice"));
         //判断订单状态
         if (newBeeMallOrder.getOrderStatus().intValue() != NewBeeMallOrderStatusEnum.ORDER_PRE_PAY.getOrderStatus()) {
             NewBeeMallException.fail(ServiceResultEnum.ORDER_STATUS_ERROR.getResult());
@@ -135,6 +136,7 @@ public class OrderController {
         NewBeeMallUserVO mallUserVO = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         Long userId = mallUserVO.getUserId();
         NewBeeMallOrder newBeeMallOrder = judgeOrderUserId(orderNo, userId);
+        newBeeMallOrder.setTotalPrice((Integer)request.getSession().getAttribute("totalprice"));
         // 判断订单userId
         if (!userId.equals(newBeeMallOrder.getUserId())) {
             NewBeeMallException.fail(ServiceResultEnum.NO_PERMISSION_ERROR.getResult());
@@ -144,6 +146,7 @@ public class OrderController {
                 || newBeeMallOrder.getPayStatus() != PayStatusEnum.PAY_ING.getPayStatus()) {
             throw new NewBeeMallException("订单结算异常");
         }
+        newBeeMallOrder.setTotalPrice((Integer)request.getSession().getAttribute("totalprice"));
         request.setAttribute("orderNo", orderNo);
         request.setAttribute("totalPrice", newBeeMallOrder.getTotalPrice());
         if (payType == 1) {
