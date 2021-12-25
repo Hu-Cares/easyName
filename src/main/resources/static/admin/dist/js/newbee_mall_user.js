@@ -4,8 +4,9 @@ $(function () {
         datatype: "json",
         colModel: [
             {label: 'id', name: 'userId', index: 'userId', width: 50, key: true, hidden: true},
-            {label: '昵称', name: 'nickName', index: 'nickName', width: 180},
-            {label: '登录名', name: 'loginName', index: 'loginName', width: 120},
+            {label: '店铺名称', name: 'nickName', index: 'nickName', width: 100},
+            {label: '手机号', name: 'loginName', index: 'loginName', width: 100},
+           /* {label: '是否为商家', name: '', index: '', width: 100},*/
             {label: '身份状态', name: 'lockedFlag', index: 'lockedFlag', width: 60, formatter: lockedFormatter},
             {label: '是否注销', name: 'isDeleted', index: 'isDeleted', width: 60, formatter: deletedFormatter},
             {label: '注册时间', name: 'createTime', index: 'createTime', width: 120}
