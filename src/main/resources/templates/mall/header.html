@@ -16,10 +16,10 @@
 <nav id="nav" th:fragment="nav-fragment">
     <div class="banner_x center">
         <a th:href="@{/index}" class="logo"><h1>新蜂商城</h1></a>
-        <ul class="list">
-            <li><a th:href="@{/seckill}">秒杀专区<img th:src="@{/mall/image/icon-seckill.png}"></a></li>
-            <li><a th:href="@{/couponList}">优惠券<img th:src="@{/mall/image/icon-coupon.png}"></a></li>
-        </ul>
+        <!--        <ul class="list">
+                    <li><a th:href="@{/seckill}">秒杀专区<img th:src="@{/mall/image/icon-seckill.png}"></a></li>
+                    <li><a th:href="@{/couponList}">优惠券<img th:src="@{/mall/image/icon-coupon.png}"></a></li>
+                </ul>-->
         <div class="fr">
             <div class="search">
                 <input class="text" type="text" id="keyword" autocomplete="off">
@@ -30,21 +30,15 @@
         </div>
     </div>
 </nav>
-<header id="header" th:fragment="header-fragment">
-    <div class="center">
+<header id="header" th:fragment="header-fragment" >
+    <div class="center" th:if="${session.loginUser==null}">
+        <!--个人或商家进入，左上角-->
         <ul class="fl">
             <li><a th:href="@{/index}">新蜂商城</a></li>
-            <li><a th:href="@{/admin/login}">后台管理系统</a></li>
-            <li><a th:href="@{/shop}">我的小店</a>
-            <!--
-            <li><a href="https://edu.csdn.net/course/detail/26258">课程视频</a></li>
-            <li><a href="https://juejin.im/book/5da2f9d4f265da5b81794d48?referrer=59199e22a22b9d0058279886">课程文档</a></li>
-            <li><a href="https://gitee.com/newbee-ltd/newbee-donate">捐赠</a></li>
-            <li><a href="https://github.com/newbee-ltd/newbee-mall-plus/issues">问题反馈</a></li>
-            <li><a href="https://github.com/newbee-ltd/newbee-mall-plus">GitHub 地址</a></li>
-            <li><a href="https://gitee.com/newbee-ltd/newbee-mall-plus">码云Gitee 地址</a></li>
-            -->
+            <li><a th:href="@{/admin/login}" >后台管理系统</a></li>
+            <li><a th:href="@{/shop}">我的小店</a></li>
         </ul>
+        <!--右上角-->
         <div class="fr">
             <th:block th:unless="${session.newBeeMallUser==null}">
                 <div class="user">
@@ -94,5 +88,19 @@
             </th:block>
         </div>
     </div>
+    <div class="center" th:if="${session.loginUser!=null}">
+        <!--管理员进入左上角-->
+        <ul class="fl">
+            <li><a th:href="@{/index}">新蜂商城</a></li>
+            <li><a th:href="@{/admin}" >后台管理系统</a></li>
+        </ul>
+        <!--右上角-->
+        <div class="fr">
+            <ul class="login">
+                <li><a th:href="@{/admin/logout}">安全退出</a></li>
+            </ul>
+        </div>
+    </div>
 </header>
+
 </html>
