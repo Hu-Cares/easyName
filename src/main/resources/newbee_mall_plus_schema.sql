@@ -1062,7 +1062,7 @@ INSERT INTO `tb_newbee_mall_order` VALUES (111, '16224563262257542', 9, 6999, 1,
 -- Table structure for tb_newbee_mall_order_item
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_newbee_mall_order_item`;
-CREATE TABLE `tb_newbee_mall_order_item`  (
+CREATE TABLE `tb_newbee_mall_order_item` (
                                               `order_item_id` bigint NOT NULL AUTO_INCREMENT COMMENT '订单关联购物项主键id',
                                               `order_id` bigint NOT NULL DEFAULT 0 COMMENT '订单主键id',
                                               `seckill_id` bigint NULL DEFAULT NULL COMMENT '秒杀商品ID',
@@ -1442,7 +1442,6 @@ INSERT INTO `tb_newbee_mall_user_coupon_record` VALUES (131, 1, 12, 0, NULL, NUL
 INSERT INTO `tb_newbee_mall_user_coupon_record` VALUES (132, 1, 13, 0, '2021-05-31 13:38:16', 103, '2021-05-31 13:28:03', '2021-05-31 13:43:16', 0);
 INSERT INTO `tb_newbee_mall_user_coupon_record` VALUES (133, 14, 11, 0, '2021-05-31 14:35:10', 106, '2021-05-31 14:34:41', '2021-05-31 14:40:10', 0);
 
-//lj编写商店数据库
 DROP TABLE IF EXISTS `shop`;
 CREATE TABLE `shop`  (
                                         `shop_id` bigint NOT NULL AUTO_INCREMENT COMMENT '商店主键id',
