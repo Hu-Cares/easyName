@@ -1062,17 +1062,17 @@ INSERT INTO `tb_newbee_mall_order` VALUES (111, '16224563262257542', 9, 6999, 1,
 -- Table structure for tb_newbee_mall_order_item
 -- ----------------------------
 DROP TABLE IF EXISTS `tb_newbee_mall_order_item`;
-CREATE TABLE `tb_newbee_mall_order_item`  (
-                                              `order_item_id` bigint NOT NULL AUTO_INCREMENT COMMENT '订单关联购物项主键id',
-                                              `order_id` bigint NOT NULL DEFAULT 0 COMMENT '订单主键id',
-                                              `seckill_id` bigint NULL DEFAULT NULL COMMENT '秒杀商品ID',
-                                              `goods_id` bigint NOT NULL DEFAULT 0 COMMENT '关联商品id',
-                                              `goods_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '下单时商品的名称(订单快照)',
-                                              `goods_cover_img` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '下单时商品的主图(订单快照)',
-                                              `selling_price` int NOT NULL DEFAULT 1 COMMENT '下单时商品的价格(订单快照)',
-                                              `goods_count` int NOT NULL DEFAULT 1 COMMENT '数量(订单快照)',
-                                              `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-                                              PRIMARY KEY (`order_item_id`) USING BTREE
+CREATE TABLE `tb_newbee_mall_order_item` (
+                                             `order_item_id` bigint NOT NULL AUTO_INCREMENT COMMENT '订单关联购物项主键id',
+                                             `order_id` bigint NOT NULL DEFAULT 0 COMMENT '订单主键id',
+                                             `seckill_id` bigint NULL DEFAULT NULL COMMENT '秒杀商品ID',
+                                             `goods_id` bigint NOT NULL DEFAULT 0 COMMENT '关联商品id',
+                                             `goods_name` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '下单时商品的名称(订单快照)',
+                                             `goods_cover_img` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '下单时商品的主图(订单快照)',
+                                             `selling_price` int NOT NULL DEFAULT 1 COMMENT '下单时商品的价格(订单快照)',
+                                             `goods_count` int NOT NULL DEFAULT 1 COMMENT '数量(订单快照)',
+                                             `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+                                             PRIMARY KEY (`order_item_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 127 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
@@ -1442,18 +1442,19 @@ INSERT INTO `tb_newbee_mall_user_coupon_record` VALUES (131, 1, 12, 0, NULL, NUL
 INSERT INTO `tb_newbee_mall_user_coupon_record` VALUES (132, 1, 13, 0, '2021-05-31 13:38:16', 103, '2021-05-31 13:28:03', '2021-05-31 13:43:16', 0);
 INSERT INTO `tb_newbee_mall_user_coupon_record` VALUES (133, 14, 11, 0, '2021-05-31 14:35:10', 106, '2021-05-31 14:34:41', '2021-05-31 14:40:10', 0);
 
-//lj编写商店数据库
-DROP DATABASE IF EXISTS `shop`;
+DROP TABLE IF EXISTS `shop`;
 CREATE TABLE `shop`  (
-                                        `shop_id` bigint NOT NULL AUTO_INCREMENT COMMENT '商店主键id',
-                                        `shop_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '商铺名',
-                                        `login_name` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '用户名(默认为手机号)',
-                                        `ID_card` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '商家身份证',
-										`real_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '商家真实姓名',
-										`create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '注册时间',
-                                        PRIMARY KEY (`shop_id`) USING BTREE
+                         `shop_id` bigint NOT NULL AUTO_INCREMENT COMMENT '商店主键id',
+                         `shop_name` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '商铺名',
+                         `login_name` varchar(11) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '用户名(默认为手机号)',
+                         `ID_card` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '商家身份证',
+                         `real_name` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT '' COMMENT '商家真实姓名',
+                         `create_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '注册时间',
+                         PRIMARY KEY (`shop_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
-alter table tb_newbee_mall_user add  is_merchant  tinyint NOT NULL DEFAULT 0 COMMENT '标识字段，是否为商家'
+alter table tb_newbee_mall_user add  is_merchant  tinyint NOT NULL DEFAULT 0 COMMENT '标识字段，是否为商家';
+alter table tb_newbee_mall_goods_info add  shop_id  bigint NOT NULL DEFAULT 0 COMMENT '商家ID，进行商品关联';
+alter table tb_newbee_mall_order add  shop_id  bigint NOT NULL DEFAULT 0 COMMENT '商家ID，将订单与商家关联';
 
 SET FOREIGN_KEY_CHECKS = 1;
