@@ -30,7 +30,7 @@ public class AdminLoginInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object o) throws Exception {
         String requestServletPath = request.getServletPath();
-        if (request.getSession().getAttribute(Constants.MALL_SHOP_SESSION_KEY)!=null ) {
+        if (request.getSession().getAttribute(Constants.MALL_SHOP_SESSION_KEY)!=null && null == request.getSession().getAttribute("loginUser")) {
             return true;
         }
         if (requestServletPath.startsWith("/admin") && null == request.getSession().getAttribute("loginUser")) {

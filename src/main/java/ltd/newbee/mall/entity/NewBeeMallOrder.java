@@ -35,6 +35,8 @@ public class NewBeeMallOrder {
 
     private Byte isDeleted;
 
+    private Long shopId;
+
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date createTime;
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
@@ -144,6 +146,14 @@ public class NewBeeMallOrder {
         this.updateTime = updateTime;
     }
 
+    public Long getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(Long shopId) {
+        this.shopId = shopId;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -163,6 +173,7 @@ public class NewBeeMallOrder {
         sb.append(", isDeleted=").append(isDeleted);
         sb.append(", createTime=").append(createTime);
         sb.append(", updateTime=").append(updateTime);
+        sb.append(", shopId=").append(shopId);
         sb.append("]");
         return sb.toString();
     }

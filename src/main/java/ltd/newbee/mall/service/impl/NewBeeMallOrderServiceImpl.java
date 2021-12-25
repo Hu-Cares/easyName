@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -53,10 +54,22 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
     private NewBeeMallSeckillSuccessMapper newBeeMallSeckillSuccessMapper;
     @Autowired
     private TaskService taskService;
+    @Autowired
+    private HttpServletRequest request;
 
     @Override
     public PageResult getNewBeeMallOrdersPage(PageQueryUtil pageUtil) {
         List<NewBeeMallOrder> newBeeMallOrders = newBeeMallOrderMapper.findNewBeeMallOrderList(pageUtil);
+        MallShop mallshop=(MallShop)request.getSession().getAttribute(Constants.MALL_SHOP_SESSION_KEY);
+         if (mallshop!=null&&null == request.getSession().getAttribute("loginUser")) {
+             Iterator<NewBeeMallOrder> it = newBeeMallOrders.iterator();
+             while (it.hasNext()) {
+                 NewBeeMallOrder x = it.next();
+                 if ((x.getShopId()) != (mallshop.getShopId())) {
+                     it.remove();
+                 }
+             }
+         }
         int total = newBeeMallOrderMapper.getTotalNewBeeMallOrders(pageUtil);
         PageResult pageResult = new PageResult(newBeeMallOrders, total, pageUtil.getLimit(), pageUtil.getPage());
         return pageResult;
@@ -89,6 +102,7 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
     public String checkDone(Long[] ids) {
         // 查询所有的订单 判断状态 修改状态和更新时间
         List<NewBeeMallOrder> orders = newBeeMallOrderMapper.selectByPrimaryKeys(Arrays.asList(ids));
+
         String errorOrderNos = "";
         if (!CollectionUtils.isEmpty(orders)) {
             for (NewBeeMallOrder newBeeMallOrder : orders) {
@@ -210,6 +224,7 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
         }
         Map<Long, NewBeeMallGoods> newBeeMallGoodsMap = newBeeMallGoods.stream().collect(Collectors.toMap(NewBeeMallGoods::getGoodsId, Function.identity(), (entity1, entity2) -> entity1));
         // 判断商品库存
+        int i=0;
         for (NewBeeMallShoppingCartItemVO shoppingCartItemVO : myShoppingCartItems) {
             // 查出的商品中不存在购物车中的这条关联商品数据，直接返回错误提醒
             if (!newBeeMallGoodsMap.containsKey(shoppingCartItemVO.getGoodsId())) {
@@ -232,61 +247,73 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
             NewBeeMallException.fail(ServiceResultEnum.SHOPPING_ITEM_COUNT_ERROR.getResult());
         }
         // 生成订单号
-        String orderNo = NumberUtil.genOrderNo();
-        int priceTotal = 0;
-        // 保存订单
-        NewBeeMallOrder newBeeMallOrder = new NewBeeMallOrder();
-        newBeeMallOrder.setOrderNo(orderNo);
-        newBeeMallOrder.setUserId(user.getUserId());
-        newBeeMallOrder.setUserAddress(user.getAddress());
-        // 总价
-        for (NewBeeMallShoppingCartItemVO newBeeMallShoppingCartItemVO : myShoppingCartItems) {
-            priceTotal += newBeeMallShoppingCartItemVO.getGoodsCount() * newBeeMallShoppingCartItemVO.getSellingPrice();
+        Integer totalpriceTotal=0;
+        int l=0;
+        ArrayList<String> oderNoo =  new ArrayList<String>();
+        for(NewBeeMallGoods o:newBeeMallGoods) {
+            String orderNo = NumberUtil.genOrderNo();
+            int priceTotal = 0;
+            totalpriceTotal=0;
+            // 保存订单
+            NewBeeMallOrder newBeeMallOrder = new NewBeeMallOrder();
+            newBeeMallOrder.setOrderNo(orderNo);
+            newBeeMallOrder.setUserId(user.getUserId());
+            newBeeMallOrder.setUserAddress(user.getAddress());
+            newBeeMallOrder.setShopId(o.getShopId());
+
+            for (NewBeeMallShoppingCartItemVO newBeeMallShoppingCartItemVO : myShoppingCartItems) {
+                totalpriceTotal += newBeeMallShoppingCartItemVO.getGoodsCount() * newBeeMallShoppingCartItemVO.getSellingPrice();
+            }
+            priceTotal += myShoppingCartItems.get(i).getGoodsCount() * myShoppingCartItems.get(i++).getSellingPrice();
+            // 如果使用了优惠卷
+            if (couponUserId != null) {
+                NewBeeMallUserCouponRecord newBeeMallUserCouponRecord = newBeeMallUserCouponRecordMapper.selectByPrimaryKey(couponUserId);
+                NewBeeMallCoupon newBeeMallCoupon = newBeeMallCouponMapper.selectByPrimaryKey(newBeeMallUserCouponRecord.getCouponId());
+                priceTotal -= newBeeMallCoupon.getDiscount();
+            }
+            if (priceTotal < 1) {
+                NewBeeMallException.fail(ServiceResultEnum.ORDER_PRICE_ERROR.getResult());
+            }
+            newBeeMallOrder.setTotalPrice(priceTotal);
+            String extraInfo = "newbeemall-plus支付宝沙箱支付";
+            newBeeMallOrder.setExtraInfo(extraInfo);
+            // 生成订单项并保存订单项纪录
+            if (newBeeMallOrderMapper.insertSelective(newBeeMallOrder) <= 0) {
+                NewBeeMallException.fail(ServiceResultEnum.DB_ERROR.getResult());
+            }
+            // 如果使用了优惠卷，则更新优惠卷状态
+            if (couponUserId != null) {
+                NewBeeMallUserCouponRecord couponUser = new NewBeeMallUserCouponRecord();
+                couponUser.setCouponUserId(couponUserId);
+                couponUser.setOrderId(newBeeMallOrder.getOrderId());
+                couponUser.setUseStatus((byte) 1);
+                couponUser.setUsedTime(new Date());
+                couponUser.setUpdateTime(new Date());
+                newBeeMallUserCouponRecordMapper.updateByPrimaryKeySelective(couponUser);
+            }
+            // 生成所有的订单项快照，并保存至数据库
+            //List<NewBeeMallOrderItem> newBeeMallOrderItems = new ArrayList<>();
+            //for (NewBeeMallShoppingCartItemVO newBeeMallShoppingCartItemVO : myShoppingCartItems) {
+                NewBeeMallShoppingCartItemVO newBeeMallShoppingCartItemVO =myShoppingCartItems.get(l++);
+                NewBeeMallOrderItem newBeeMallOrderItem = new NewBeeMallOrderItem();
+                // 使用BeanUtil工具类将newBeeMallShoppingCartItemVO中的属性复制到newBeeMallOrderItem对象中
+                BeanUtil.copyProperties(newBeeMallShoppingCartItemVO, newBeeMallOrderItem);
+                // NewBeeMallOrderMapper文件insert()方法中使用了useGeneratedKeys因此orderId可以获取到
+                newBeeMallOrderItem.setOrderId(newBeeMallOrder.getOrderId());
+             //   newBeeMallOrderItems.add(newBeeMallOrderItem);
+           // }
+            // 保存至数据库
+            if (newBeeMallOrderItemMapper.insert(newBeeMallOrderItem) <= 0) {
+                NewBeeMallException.fail(ServiceResultEnum.DB_ERROR.getResult());
+            }
+            // 订单支付超期任务，超过300秒自动取消订单
+            taskService.addTask(new OrderUnPaidTask(newBeeMallOrder.getOrderId(), ProjectConfig.getOrderUnpaidOverTime() * 1000));
+            oderNoo.add(orderNo);
         }
-        // 如果使用了优惠卷
-        if (couponUserId != null) {
-            NewBeeMallUserCouponRecord newBeeMallUserCouponRecord = newBeeMallUserCouponRecordMapper.selectByPrimaryKey(couponUserId);
-            NewBeeMallCoupon newBeeMallCoupon = newBeeMallCouponMapper.selectByPrimaryKey(newBeeMallUserCouponRecord.getCouponId());
-            priceTotal -= newBeeMallCoupon.getDiscount();
-        }
-        if (priceTotal < 1) {
-            NewBeeMallException.fail(ServiceResultEnum.ORDER_PRICE_ERROR.getResult());
-        }
-        newBeeMallOrder.setTotalPrice(priceTotal);
-        String extraInfo = "newbeemall-plus支付宝沙箱支付";
-        newBeeMallOrder.setExtraInfo(extraInfo);
-        // 生成订单项并保存订单项纪录
-        if (newBeeMallOrderMapper.insertSelective(newBeeMallOrder) <= 0) {
-            NewBeeMallException.fail(ServiceResultEnum.DB_ERROR.getResult());
-        }
-        // 如果使用了优惠卷，则更新优惠卷状态
-        if (couponUserId != null) {
-            NewBeeMallUserCouponRecord couponUser = new NewBeeMallUserCouponRecord();
-            couponUser.setCouponUserId(couponUserId);
-            couponUser.setOrderId(newBeeMallOrder.getOrderId());
-            couponUser.setUseStatus((byte) 1);
-            couponUser.setUsedTime(new Date());
-            couponUser.setUpdateTime(new Date());
-            newBeeMallUserCouponRecordMapper.updateByPrimaryKeySelective(couponUser);
-        }
-        // 生成所有的订单项快照，并保存至数据库
-        List<NewBeeMallOrderItem> newBeeMallOrderItems = new ArrayList<>();
-        for (NewBeeMallShoppingCartItemVO newBeeMallShoppingCartItemVO : myShoppingCartItems) {
-            NewBeeMallOrderItem newBeeMallOrderItem = new NewBeeMallOrderItem();
-            // 使用BeanUtil工具类将newBeeMallShoppingCartItemVO中的属性复制到newBeeMallOrderItem对象中
-            BeanUtil.copyProperties(newBeeMallShoppingCartItemVO, newBeeMallOrderItem);
-            // NewBeeMallOrderMapper文件insert()方法中使用了useGeneratedKeys因此orderId可以获取到
-            newBeeMallOrderItem.setOrderId(newBeeMallOrder.getOrderId());
-            newBeeMallOrderItems.add(newBeeMallOrderItem);
-        }
-        // 保存至数据库
-        if (newBeeMallOrderItemMapper.insertBatch(newBeeMallOrderItems) <= 0) {
-            NewBeeMallException.fail(ServiceResultEnum.DB_ERROR.getResult());
-        }
-        // 订单支付超期任务，超过300秒自动取消订单
-        taskService.addTask(new OrderUnPaidTask(newBeeMallOrder.getOrderId(), ProjectConfig.getOrderUnpaidOverTime() * 1000));
+        request.getSession().setAttribute("totalprice",totalpriceTotal);
+         request.getSession().setAttribute("oderNoo",oderNoo);      
         // 所有操作成功后，将订单号返回，以供Controller方法跳转到订单详情
-        return orderNo;
+        return oderNoo.get(oderNoo.size()-1);
     }
 
     @Override
@@ -340,10 +367,12 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
         if (newBeeMallOrder == null) {
             return null;
         }
+        
         // 验证是否是当前userId下的订单，否则报错
         if (!userId.equals(newBeeMallOrder.getUserId())) {
             NewBeeMallException.fail(ServiceResultEnum.NO_PERMISSION_ERROR.getResult());
         }
+        newBeeMallOrder.setTotalPrice((Integer)request.getSession().getAttribute("totalprice"));
         List<NewBeeMallOrderItem> orderItems = newBeeMallOrderItemMapper.selectByOrderId(newBeeMallOrder.getOrderId());
         // 获取订单项数据
         if (CollectionUtils.isEmpty(orderItems)) {
@@ -449,23 +478,26 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
 
     @Override
     public String paySuccess(String orderNo, int payType) {
-        NewBeeMallOrder newBeeMallOrder = newBeeMallOrderMapper.selectByOrderNo(orderNo);
-        if (newBeeMallOrder == null) {
-            return ServiceResultEnum.ORDER_NOT_EXIST_ERROR.getResult();
+        ArrayList<String> oderNoo=(ArrayList<String>)request.getSession().getAttribute("oderNoo");
+        for(String oderNo1:oderNoo) {
+            NewBeeMallOrder newBeeMallOrder = newBeeMallOrderMapper.selectByOrderNo(oderNo1);
+            if (newBeeMallOrder == null) {
+                return ServiceResultEnum.ORDER_NOT_EXIST_ERROR.getResult();
+            }
+            newBeeMallOrder.setOrderStatus((byte) 0);
+            if (newBeeMallOrder.getOrderStatus().intValue() != NewBeeMallOrderStatusEnum.ORDER_PRE_PAY.getOrderStatus()) {
+                return ServiceResultEnum.ORDER_STATUS_ERROR.getResult();
+            }
+            newBeeMallOrder.setOrderStatus((byte) NewBeeMallOrderStatusEnum.ORDER_PAID.getOrderStatus());
+            newBeeMallOrder.setPayType((byte) payType);
+            newBeeMallOrder.setPayStatus((byte) PayStatusEnum.PAY_SUCCESS.getPayStatus());
+            newBeeMallOrder.setPayTime(new Date());
+            newBeeMallOrder.setUpdateTime(new Date());
+            if (newBeeMallOrderMapper.updateByPrimaryKeySelective(newBeeMallOrder) <= 0) {
+                return ServiceResultEnum.DB_ERROR.getResult();
+            }
+            taskService.removeTask(new OrderUnPaidTask(newBeeMallOrder.getOrderId()));
         }
-        // 订单状态判断 非待支付状态下不进行修改操作
-        if (newBeeMallOrder.getOrderStatus().intValue() != NewBeeMallOrderStatusEnum.ORDER_PRE_PAY.getOrderStatus()) {
-            return ServiceResultEnum.ORDER_STATUS_ERROR.getResult();
-        }
-        newBeeMallOrder.setOrderStatus((byte) NewBeeMallOrderStatusEnum.ORDER_PAID.getOrderStatus());
-        newBeeMallOrder.setPayType((byte) payType);
-        newBeeMallOrder.setPayStatus((byte) PayStatusEnum.PAY_SUCCESS.getPayStatus());
-        newBeeMallOrder.setPayTime(new Date());
-        newBeeMallOrder.setUpdateTime(new Date());
-        if (newBeeMallOrderMapper.updateByPrimaryKeySelective(newBeeMallOrder) <= 0) {
-            return ServiceResultEnum.DB_ERROR.getResult();
-        }
-        taskService.removeTask(new OrderUnPaidTask(newBeeMallOrder.getOrderId()));
         return ServiceResultEnum.SUCCESS.getResult();
     }
 
