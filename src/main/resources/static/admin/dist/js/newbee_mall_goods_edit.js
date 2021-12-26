@@ -60,11 +60,9 @@ $(function () {
            else return true;
         },
         onComplete: function (file, r) {
-            alert("123");
             if (r != null && r.resultCode == 200) {
                 $("#goodsCoverImg").attr("src", r.data);
                 $("#goodsCoverImg").attr("style", "width: 128px;height: 128px;display:block;");
-                alert(r.data);
                 return false;
             } else {
                 alert("error");

@@ -41,6 +41,8 @@ public class NewBeeMallOrderDetailVO implements Serializable {
 
     private Integer discount;
 
+    private String comment;
+
     private List<NewBeeMallOrderItemVO> newBeeMallOrderItemVOS;
 
     public String getOrderNo() {
@@ -145,5 +147,13 @@ public class NewBeeMallOrderDetailVO implements Serializable {
 
     public void setDiscount(Integer discount) {
         this.discount = discount;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

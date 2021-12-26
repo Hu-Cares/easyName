@@ -35,6 +35,8 @@ public class NewBeeMallOrderListVO implements Serializable {
 
     private List<NewBeeMallOrderItemVO> newBeeMallOrderItemVOS;
 
+    private String comment;
+
     public Long getOrderId() {
         return orderId;
     }
@@ -105,5 +107,13 @@ public class NewBeeMallOrderListVO implements Serializable {
 
     public void setNewBeeMallOrderItemVOS(List<NewBeeMallOrderItemVO> newBeeMallOrderItemVOS) {
         this.newBeeMallOrderItemVOS = newBeeMallOrderItemVOS;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

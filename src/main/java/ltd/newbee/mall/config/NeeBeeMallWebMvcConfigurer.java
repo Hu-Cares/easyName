@@ -31,11 +31,11 @@ public class NeeBeeMallWebMvcConfigurer implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 添加一个拦截器，拦截以/admin为前缀的url路径（后台登陆拦截）
-     /*   registry.addInterceptor(adminLoginInterceptor)
+        registry.addInterceptor(adminLoginInterceptor)
                 .addPathPatterns("/admin/**")
                 .excludePathPatterns("/admin/login")
                 .excludePathPatterns("/admin/dist/**")
-                .excludePathPatterns("/admin/plugins/**"); */
+                .excludePathPatterns("/admin/plugins/**");
         //增加一个拦截器，拦截以/shop为前缀的url路径(商城登录拦截)
         registry.addInterceptor(shopLoginInterceptor)
                 .addPathPatterns("/shop/**");
@@ -53,6 +53,7 @@ public class NeeBeeMallWebMvcConfigurer implements WebMvcConfigurer {
                 .excludePathPatterns("/logout")
                 .addPathPatterns("/goods/detail/**")
                 .addPathPatterns("/shop-cart")
+                .addPathPatterns("/search")
                 .addPathPatterns("/couponList")
                 .addPathPatterns("/myCoupons")
                 .addPathPatterns("/coupon/**")

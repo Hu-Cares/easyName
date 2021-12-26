@@ -20,6 +20,7 @@ import ltd.newbee.mall.controller.vo.NewBeeMallOrderDetailVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallShoppingCartItemVO;
 import ltd.newbee.mall.controller.vo.NewBeeMallUserVO;
 import ltd.newbee.mall.dao.MallUserMapper;
+import ltd.newbee.mall.dao.NewBeeMallOrderMapper;
 import ltd.newbee.mall.entity.NewBeeMallOrder;
 import ltd.newbee.mall.service.NewBeeMallOrderService;
 import ltd.newbee.mall.service.NewBeeMallShoppingCartService;
@@ -55,11 +56,15 @@ public class OrderController {
     private MallUserMapper mallUserMapper;
     @Autowired
     private AlipayConfig alipayConfig;
+    @Autowired
+    private NewBeeMallOrderMapper newBeeMallOrdermapper;
 
     @GetMapping("/orders/{orderNo}")
     public String orderDetailPage(HttpServletRequest request, @PathVariable("orderNo") String orderNo, HttpSession httpSession) {
         NewBeeMallUserVO user = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+        NewBeeMallOrder newBeeMallOrder=(NewBeeMallOrder)  newBeeMallOrdermapper.selectByOrderNo(orderNo);
         NewBeeMallOrderDetailVO orderDetailVO = newBeeMallOrderService.getOrderDetailByOrderNo(orderNo, user.getUserId());
+        orderDetailVO.setTotalPrice(newBeeMallOrder.getTotalPrice());
         if (orderDetailVO == null) {
             return "error/error_5xx";
         }
@@ -257,6 +262,17 @@ public class OrderController {
         } else {
             return ResultGenerator.genFailResult(finishOrderResult);
         }
+    }
+
+    /*
+    评论提交
+     */
+    @PostMapping ("/orders/Ircomment")
+    public String Ircomment( @RequestParam("oderNo") String orderNo,@RequestParam("comment")  String comment ,HttpSession httpSession) {
+        NewBeeMallOrder oder=newBeeMallOrdermapper.selectByOrderNo(orderNo);
+        oder.setComment(comment);
+        newBeeMallOrdermapper.updateByPrimaryKeySelective(oder);
+       return "redirect:/orders/" + orderNo;
     }
 
     /**

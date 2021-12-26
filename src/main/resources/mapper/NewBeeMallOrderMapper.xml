@@ -16,10 +16,11 @@
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
         <result column="shop_id" jdbcType="BIGINT" property="shopId"/>
+        <result column="comment" jdbcType="VARCHAR" property="comment"/>
     </resultMap>
     <sql id="Base_Column_List">
         order_id, order_no, user_id, total_price, pay_status, pay_type, pay_time, order_status,
-    extra_info, user_name, user_phone, user_address, is_deleted, create_time, update_time,shop_id
+    extra_info, user_name, user_phone, user_address, is_deleted, create_time, update_time,shop_id,comment
     </sql>
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
@@ -117,12 +118,12 @@
         insert into tb_newbee_mall_order (order_id, order_no, user_id,
                                           total_price, pay_status, pay_type,
                                           pay_time, order_status, extra_info,
-                                          user_address, is_deleted, create_time, update_time,shop_id)
+                                          user_address, is_deleted, create_time, update_time,shop_id,comment)
         values (#{orderId,jdbcType=BIGINT}, #{orderNo,jdbcType=VARCHAR}, #{userId,jdbcType=BIGINT},
                 #{totalPrice,jdbcType=INTEGER}, #{payStatus,jdbcType=TINYINT}, #{payType,jdbcType=TINYINT},
                 #{payTime,jdbcType=TIMESTAMP}, #{orderStatus,jdbcType=TINYINT}, #{extraInfo,jdbcType=VARCHAR},
                 #{userAddress,jdbcType=VARCHAR}, #{isDeleted,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP},
-                #{updateTime,jdbcType=TIMESTAMP},#{shopId,jdbcType=BIGINT})
+                #{updateTime,jdbcType=TIMESTAMP},#{shopId,jdbcType=BIGINT},#{comment,jdbcType=VARCHAR})
     </insert>
     <insert id="insertSelective" useGeneratedKeys="true" keyProperty="orderId"
             parameterType="ltd.newbee.mall.entity.NewBeeMallOrder">
@@ -170,6 +171,9 @@
             <if test="shopId != null">
                 shop_id,
             </if>
+            <if test="comment != null">
+                comment,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="orderId != null">
@@ -213,6 +217,9 @@
             </if>
             <if test="shopId != null">
                 #{shopId,jdbcType=BIGINT},
+            </if>
+            <if test="comment != null">
+                #{comment,jdbcType=VARCHAR},
             </if>
         </trim>
     </insert>
@@ -282,6 +289,9 @@
             <if test="shopId != null">
                 shop_id = #{shopId,jdbcType=BIGINT},
             </if>
+            <if test="comment != null">
+                comment = #{comment,jdbcType=VARCHAR},
+            </if>
         </set>
         where order_id = #{orderId,jdbcType=BIGINT}
     </update>
@@ -300,6 +310,7 @@
             create_time  = #{createTime,jdbcType=TIMESTAMP},
             update_time  = #{updateTime,jdbcType=TIMESTAMP},
             shop_id      = #{shopId,jdbcType=BIGINT}
+            comment      = #{comment,jdbcType=VARCHAR},
         where order_id = #{orderId,jdbcType=BIGINT}
     </update>
 </mapper>
