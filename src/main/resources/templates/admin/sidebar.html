@@ -1,4 +1,3 @@
-<!-- Copyright (c) 2019-2020 十三 all rights reserved. -->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <aside th:fragment="sidebar-fragment(path)" class="main-sidebar sidebar-dark-primary elevation-4">
@@ -9,8 +8,56 @@
              style="opacity: .8">
         <span class="brand-text font-weight-light">NEWBEE商城</span>
     </a>
-    <!-- Sidebar -->
-    <div class="sidebar">
+    <!-- Sidebar 1-->
+    <div class="sidebar" th:if="${session.newBeeMallShop!=null}and${session.loginUser==null}">
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
+                data-accordion="false">
+                <!-- Add icons to the links using the .nav-icon class
+                     with font-awesome or any other icon font library -->
+                <li class="nav-header">Dashboard</li>
+                <li class="nav-item">
+                    <a th:href="@{/shop/index}" th:class="${path}=='index'?'nav-link active':'nav-link'">
+                        <i class="nav-icon fa fa-dashboard"></i>
+                        <p>
+                            Dashboard
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/admin/goods/edit}" th:class="${path}=='goods-edit'?'nav-link active':'nav-link'">
+                        <i class="nav-icon fa fa-plus"></i>
+                        <p>
+                            商品信息
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-header">管理模块</li>
+                <li class="nav-item">
+                    <a th:href="@{/admin/goods}" th:class="${path}=='newbee_mall_goods'?'nav-link active':'nav-link'">
+                        <i class="fa fa-archive nav-icon" aria-hidden="true"></i>
+                        <p>
+                            商品管理
+                        </p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a th:href="@{/admin/orders}" th:class="${path}=='orders'?'nav-link active':'nav-link'">
+                        <i class="fa fa-money nav-icon" aria-hidden="true"></i>
+                        <p>
+                            订单管理
+                        </p>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+
+    <!-- Sidebar 2-->
+    <div class="sidebar" th:if="${session.loginUser!=null}">
         <!-- Sidebar Menu -->
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
@@ -82,18 +129,18 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a th:href="@{/admin/goods}" th:class="${path}=='newbee_mall_goods'?'nav-link active':'nav-link'">
-                        <i class="fa fa-archive nav-icon" aria-hidden="true"></i>
+                    <a th:href="@{/admin/users}" th:class="${path}=='users'?'nav-link active':'nav-link'">
+                        <i class="fa fa-users nav-icon" aria-hidden="true"></i>
                         <p>
-                            商品管理
+                            商家管理
                         </p>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a th:href="@{/admin/users}" th:class="${path}=='users'?'nav-link active':'nav-link'">
-                        <i class="fa fa-users nav-icon" aria-hidden="true"></i>
+                    <a th:href="@{/admin/goods}" th:class="${path}=='newbee_mall_goods'?'nav-link active':'nav-link'">
+                        <i class="fa fa-archive nav-icon" aria-hidden="true"></i>
                         <p>
-                            会员管理
+                            商品管理
                         </p>
                     </a>
                 </li>
@@ -103,21 +150,6 @@
                         <p>
                             订单管理
                         </p>
-                    </a>
-                </li>
-                <li class="nav-header">营销管理</li>
-                <li class="nav-item">
-                    <a th:href="@{/admin/coupon}"
-                       th:class="${path}=='newbee_mall_coupon'?'nav-link active':'nav-link'">
-                        <i class="fa fa-ticket nav-icon"></i>
-                        <p>优惠卷管理</p>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a th:href="@{/admin/seckill}"
-                       th:class="${path}=='newbee_mall_seckill'?'nav-link active':'nav-link'">
-                        <i class="fa fa-fire nav-icon"></i>
-                        <p>秒杀管理</p>
                     </a>
                 </li>
                 <li class="nav-header">系统管理</li>
@@ -140,5 +172,6 @@
         <!-- /.sidebar-menu -->
     </div>
     <!-- /.sidebar -->
+
 </aside>
 </html>
