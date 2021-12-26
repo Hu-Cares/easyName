@@ -16,10 +16,7 @@ import ltd.newbee.mall.dao.MallShopMapper;
 import ltd.newbee.mall.dao.MallUserMapper;
 import ltd.newbee.mall.dao.NewBeeMallCouponMapper;
 import ltd.newbee.mall.dao.NewBeeMallUserCouponRecordMapper;
-import ltd.newbee.mall.entity.MallShop;
-import ltd.newbee.mall.entity.MallUser;
-import ltd.newbee.mall.entity.NewBeeMallCoupon;
-import ltd.newbee.mall.entity.NewBeeMallUserCouponRecord;
+import ltd.newbee.mall.entity.*;
 import ltd.newbee.mall.service.NewBeeMallUserService;
 import ltd.newbee.mall.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpSession;
+import java.util.Iterator;
 import java.util.List;
 
 @Service
@@ -48,6 +46,17 @@ public class NewBeeMallUserServiceImpl implements NewBeeMallUserService {
     @Override
     public PageResult getNewBeeMallUsersPage(PageQueryUtil pageUtil) {
         List<MallUser> mallUsers = mallUserMapper.findMallUserList(pageUtil);
+        Iterator<MallUser> it = mallUsers.iterator();
+        while(it.hasNext()){
+            MallUser x = it.next();
+            if((x.getIsMerchant())!=1){
+                it.remove();
+            }
+        }
+        for(MallUser x:mallUsers){
+            x.setNickName((mallShopMapper.selectByLoginName(x.getLoginName())).getShopName());
+            x.setCreateTime((mallShopMapper.selectByLoginName(x.getLoginName())).getCreateTime());
+        }
         int total = mallUserMapper.getTotalMallUsers(pageUtil);
         PageResult pageResult = new PageResult(mallUsers, total, pageUtil.getLimit(), pageUtil.getPage());
         return pageResult;

@@ -17,7 +17,7 @@ server:
 project:
   name: newbee-mall-plus # 项目名称
   #  fileUploadPath: /opt/newbee-mall-plus/upload/  # 上传文件的默认url前缀，根据部署设置自行修改，linux下路径
-  fileUploadPath: D:\\upload\\              # 上传文件的默认url前缀，根据部署设置自行修改，windows下路径
+  fileUploadPath:  D:\\购物网站\\新峰商城\\src\\main\\resources\\static\\upload            # 上传文件的默认url前缀，根据部署设置自行修改，windows下路径
   orderUnpaidOverTime: 300 # 订单未支付超期时间，单位秒
   serverUrl: http://localhost:28079 # 服务器地址
 

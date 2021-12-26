@@ -53,7 +53,7 @@ public class UploadController {
         String newFileName = sdf.format(new Date()) + r.nextInt(100) + suffixName;
         File fileDirectory = new File(ProjectConfig.getFileUploadPath());
         //创建文件
-        File destFile = new File(ProjectConfig.getFileUploadPath() + newFileName);
+        File destFile = new File(ProjectConfig.getFileUploadPath()+"\\" + newFileName);
         try {
             if (!fileDirectory.exists()) {
                 if (!fileDirectory.mkdir()) {
@@ -62,7 +62,9 @@ public class UploadController {
             }
             file.transferTo(destFile);
             Result resultSuccess = ResultGenerator.genSuccessResult();
+            System.out.println(newFileName);
             resultSuccess.setData("/upload/" + newFileName);
+
             return resultSuccess;
         } catch (IOException e) {
             e.printStackTrace();
