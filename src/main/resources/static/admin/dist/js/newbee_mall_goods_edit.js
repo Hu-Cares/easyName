@@ -15,7 +15,7 @@ $(function () {
     //限制一次最多能传几张图片 一次最多上传 5 个图片
     editorD.config.uploadImgMaxLength = 5
     //隐藏插入网络图片的功能
-    editorD.config.showLinkImg = false
+    editorD.config.showLinkImg = true
     editorD.config.uploadImgHooks = {
         // 图片上传并返回了结果，图片插入已成功
         success: function (xhr) {
@@ -57,7 +57,6 @@ $(function () {
                 alert('只支持jpg、png、gif格式的文件！');
                 return false;
             }
-           else return true;
         },
         onComplete: function (file, r) {
             if (r != null && r.resultCode == 200) {

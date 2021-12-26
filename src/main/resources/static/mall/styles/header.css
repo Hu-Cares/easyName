@@ -50,7 +50,7 @@
 }
 
 #header .center .fr .user:hover .username {
-    color: #1baeae;
+    color: #FFAA42;
     background-color: #fff;
 }
 
@@ -89,7 +89,7 @@
 }
 
 #header .center .fr .user .selector li:hover a {
-    color: #1baeae;
+    color: #FFAA42;
     background-color: #fafafa;
 }
 
@@ -131,7 +131,7 @@
     margin: 0 20px;
     justify-content: center;
     align-items: center;
-    background-color: #1baeae;
+    background-color: #FFAA42;
 }
 
 
@@ -156,7 +156,7 @@
 #nav .banner_x .logo {
     width: 240px;
     text-indent: -10000px;
-    background: url(../image/login-logo-2.png) no-repeat;
+    background: url(../image/login-logo-3.png) no-repeat;
     background-size: 100%;
     background-position: center;
     margin-top: 10px;
@@ -165,7 +165,7 @@
 #nav .banner_x .icon-search {
     width: 100px;
     text-indent: -10000px;
-    background: url("../image/search.png") no-repeat;
+    background: url("../image/搜索.png") no-repeat;
     background-size: 50%;
     background-position: center;
 }
@@ -177,7 +177,7 @@
 }
 
 #nav .banner_x .list a {
-    color: #1baeae;
+    color: #FFAA42;
     text-decoration: none;
     background-color: transparent;
     -webkit-text-decoration-skip: objects;
@@ -218,7 +218,7 @@
 }
 
 #nav .banner_x .fr .button:active {
-    background-color: #1baeae;
+    background-color: #FFAA42;
     color: #fff;
 }
 
@@ -236,7 +236,7 @@
 
 #nav .banner_x .fr .search .text:focus {
     outline: none;
-    border: 1px solid #1baeae;
+    border: 1px solid #FFAA42;
 }
 
 #nav .banner_x .fr .search .text:focus ~ .keyword_list {
@@ -264,7 +264,7 @@
 
 #nav .banner_x .fr .search .search_hot a:hover {
     color: #fff;
-    background-color: #1baeae;
+    background-color: #FFAA42;
 }
 
 #nav .banner_x .fr .search .keyword_list {
@@ -275,7 +275,7 @@
     z-index: 100;
     width: 250px;
     box-sizing: border-box;
-    border: 1px solid #1baeae;
+    border: 1px solid #FFAA42;
 }
 
 #nav .banner_x .fr .search .keyword_list li {
@@ -319,7 +319,7 @@
 .w1100 {width: 1100px;margin: 0 auto;}
 .fl {float: left;}
 .site-footer a { color: #a8aaba;}
-.site-footer a:hover { color: #1baeae !important;}
+.site-footer a:hover { color: #FFAA42 !important;}
 .site-footer .footer-article { padding: 30px 0 20px; overflow: hidden;}
 .site-footer .contact { float: left; width: 280px;}
 .site-footer .contact dt { width: 90px;}

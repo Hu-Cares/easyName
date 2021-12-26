@@ -3,7 +3,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>NewBee商城-购物车</title>
+    <title>Itema商城-购物车</title>
     <link rel="stylesheet" th:href="@{mall/css/iconfont.css}">
     <link rel="stylesheet" th:href="@{mall/css/common.css}">
     <link rel="stylesheet" th:href="@{mall/styles/header.css}">
@@ -16,19 +16,19 @@
     <div class="banner_x center">
         <a th:href="@{/index}" target="_blank">
             <div class="logo fl">
-                <img src="mall/image/new-bee-logo-3.png"/>
+                <img src="mall/image/Itema-logo.png"/>
             </div>
         </a>
 
         <div class="wdgwc fl ml20">购物车</div>
-        <div class="wxts fl ml20">温馨提示：产品是否购买成功，以最终下单为准哦，请尽快结算</div>
+        <div class="wxts fl ml20">温馨提示：产品是否购买成功，以最终下单为准，请尽快结算</div>
         <div class="clear"></div>
     </div>
     <div class="cart_line"></div>
     <div class="cart_bg">
         <th:block th:if="${#lists.isEmpty(myShoppingCartItems)}">
             <div class="list center">
-                <img style="position: absolute;margin-top: 16px;left: 45%;" th:src="@{/mall/image/null-content.png}">
+                <img style="position: absolute;margin-top: 16px;left: 45%;" th:src="@{/mall/image/null-content-2.png}">
             </div>
         </th:block>
         <th:block th:unless="${#lists.isEmpty(myShoppingCartItems)}">

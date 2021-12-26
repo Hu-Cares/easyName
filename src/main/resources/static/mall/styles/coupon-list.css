@@ -49,7 +49,7 @@
 .quan-item .q-price {
     display: inline-block;
     display: block;
-    color: #1baeae;
+    color: #FFAA42;
 }
 
 .quan-item .q-price em {
@@ -110,7 +110,7 @@
 }
 
 .quan-d-item .q-opbtns {
-    background: #1baeae;
+    background: #FFAA42;
 }
 
 .quan-item .q-opbtns {
@@ -121,7 +121,7 @@
     height: 144px;
     padding: 48px 22px 0;
     line-height: 24px;
-    background: #1baeae;
+    background: #FFAA42;
     color: #fff;
     font-size: 14px;
 }
