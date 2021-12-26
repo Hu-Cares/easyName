@@ -1,17 +1,15 @@
-
 $(function () {
     $("#jqGrid").jqGrid({
         url: '/admin/users/list',
         datatype: "json",
         colModel: [
             {label: 'id', name: 'userId', index: 'userId', width: 50, key: true, hidden: true},
-            {label: '店铺名', name: 'nickName', index: 'nickName', width: 180},
-            {label: '登录名', name: 'loginName', index: 'loginName', width: 120},
+            {label: '店铺名称', name: 'nickName', index: 'nickName', width: 180},
+            {label: '手机号', name: 'loginName', index: 'loginName', width: 120},
             {label: '身份状态', name: 'lockedFlag', index: 'lockedFlag', width: 60, formatter: lockedFormatter},
             {label: '是否注销', name: 'isDeleted', index: 'isDeleted', width: 60, formatter: deletedFormatter},
             {label: '注册时间', name: 'createTime', index: 'createTime', width: 120}
         ],
-
         height: 560,
         rowNum: 10,
         rowList: [10, 20, 50],
@@ -26,7 +24,7 @@ $(function () {
             root: "data.list",
             page: "data.currPage",
             total: "data.totalPage",
-            records: "data.totalCount",
+            records: "data.totalCount"
         },
         prmNames: {
             page: "page",
@@ -63,7 +61,6 @@ $(function () {
 /**
  * jqGrid重新加载
  */
-
 function reload() {
     var page = $("#jqGrid").jqGrid('getGridParam', 'page');
     $("#jqGrid").jqGrid('setGridParam', {

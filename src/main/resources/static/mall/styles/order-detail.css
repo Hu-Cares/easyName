@@ -34,7 +34,7 @@
 }
 
 #personal .self-info .lfnav .title_list ul li .active {
-    color: #1baeae;
+    color: #FFAA42;
     font-weight: bold;
 }
 
@@ -101,11 +101,11 @@
 }
 
 #personal .self-info .intro .info_item span a {
-    color: #008080;
+    color: #DA9121;
 }
 
 #personal .self-info .intro .info_item span a:hover {
-    color: #1baeae;
+    color: #FFAA42;
 }
 
 .uc-main-box {
@@ -201,10 +201,27 @@
     -webkit-transition: all .4s;
     transition: all .4s;
 }
+.btn1 {
+    display: inline-block;
+    *zoom: 1;
+    *display: inline;
+    width: 158px;
+    height: 38px;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #FFAA42;
+    font-size: 14px;
+    line-height: 38px;
+    text-align: center;
+    color: #FFAA42;
+    cursor: pointer;
+    -webkit-transition: all .4s;
+    transition: all .4s;
+}
 
 .btn-primary {
-    background: #1baeae;
-    border-color: #1baeae;
+    background: #FFAA42;
+    border-color: #FFAA42;
     color: #fff;
 }
 
@@ -221,7 +238,7 @@
     margin-bottom: 25px;
 }
 .uc-order-item-pay .order-status, .uc-order-item-pay .order-desc {
-    color: #1baeae;
+    color: #FFAA42;
 }
 .uc-order-item .order-status {
     font-size: 18px;
@@ -231,7 +248,7 @@
     margin: -15px 0 25px;
 }
 .uc-order-item-pay .order-status, .uc-order-item-pay .order-desc {
-    color: #1baeae;
+    color: #FFAA42;
 }
 .uc-order-item .order-desc {
     margin: 10px 0 0;
@@ -430,7 +447,7 @@ td {
 }
 .order-view-box .uc-order-item .order-detail-total .total-table td {
     text-align: right;
-    color: #1baeae;
+    color: #FFAA42;
 }
 
 .order-view-box .uc-order-item .order-detail-total .total-table th.total, .order-view-box .uc-order-item .order-detail-total .total-table td.total {

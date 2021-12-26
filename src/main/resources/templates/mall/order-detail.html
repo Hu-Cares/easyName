@@ -1,7 +1,7 @@
 <!-- Copyright (c) 2019-2020 十三 all rights reserved. -->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="mall/header::head-fragment('NewBee商城-订单详情','order-detail')">
+<head th:replace="mall/header::head-fragment('Itema商城-订单详情','order-detail')">
 </head>
 <link rel="stylesheet" th:href="@{/admin/plugins/sweetalert/sweetalert.css}"/>
 <body>
@@ -31,10 +31,15 @@
                             </h2>
                             <div class="actions">
                                 <input type="hidden" id="orderNoValue" th:value="${orderDetailVO.orderNo}">
+
                                 <th:block th:if="${orderDetailVO.orderStatus>0 and orderDetailVO.orderStatus<3}">
                                     <a onclick="cancelOrder()"
                                        class="btn btn-small btn-line-gray" title="取消订单">取消订单</a>
                                 </th:block>
+
+                                <a th:href="@{/mall/evaluation}"
+                                   class="btn1 btn-small btn-line-gray" title="评价">评价</a>
+
                                 <th:block th:if="${orderDetailVO.orderStatus==0}">
                                     <a onclick="payOrder()"
                                        class="btn btn-small btn-primary" title="去支付">去支付</a>
@@ -52,14 +57,14 @@
 
                                 <div class="order-summary">
                                     <div class="order-status" th:text="${orderDetailVO.orderStatusString}">
-                                        newbee
+                                        Itema
                                     </div>
                                     <div class="order-desc">
                                         <th:block th:if="${orderDetailVO.orderStatus==0}">请尽快完成支付哦~</th:block>
-                                        <th:block th:if="${orderDetailVO.orderStatus==1}">newbee商城订单确认中~</th:block>
-                                        <th:block th:if="${orderDetailVO.orderStatus==2}">newbee仓库正在紧急配货中~</th:block>
+                                        <th:block th:if="${orderDetailVO.orderStatus==1}">Itema商城订单确认中~</th:block>
+                                        <th:block th:if="${orderDetailVO.orderStatus==2}">Itema仓库正在紧急配货中~</th:block>
                                         <th:block th:if="${orderDetailVO.orderStatus==3}">订单已出库正在快马加鞭向您奔来~</th:block>
-                                        <th:block th:if="${orderDetailVO.orderStatus==4}">交易成功，感谢您对newbee商城的支持~
+                                        <th:block th:if="${orderDetailVO.orderStatus==4}">交易成功，感谢您对Itema商城的支持~
                                         </th:block>
                                         <th:block th:if="${orderDetailVO.orderStatus<0}">交易已关闭~</th:block>
 
@@ -146,7 +151,7 @@
                                             <td class="col col-name">
                                                 <p class="name">
                                                     <a target="_blank" th:href="@{'/goods/detail/'+${item.goodsId}}"
-                                                       th:text="${item.goodsName}">newbee</a>
+                                                       th:text="${item.goodsName}">Itema</a>
                                                 </p>
                                             </td>
                                             <td class="col col-price"><p class="price"
@@ -186,31 +191,6 @@
                                 <div class="actions">
                                 </div>
                             </div>
-                            <th:block th:if="${orderDetailVO.orderStatus==4}">
-                                <div id="" class="order-detail-info">
-                                    <h3>评价</h3>
-                                    <table class="info-table">
-                                        <tbody>
-                                        <tr>
-                                            <th>评论：</th>
-                                            <!--orderDetailVO.comment-->
-                                            <td th:text="${orderDetailVO.comment}">
-                                                没有评论，请添加评论
-                                            </td>
-                                            <td th:if="${orderDetailVO.comment==null}">
-                                                <form name="input" action="/orders/Ircomment" method="post">
-                                                    <input type="text" name="comment">
-                                                    <input type="hidden" name="oderNo" th:value="${orderDetailVO.orderNo}">
-                                                    <input type="submit" value="提交评论">
-                                                </form>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                    <div class="actions">
-                                    </div>
-                                </div>
-                            </th:block>
                             <div class="order-detail-total">
                                 <table class="total-table">
                                     <tbody>

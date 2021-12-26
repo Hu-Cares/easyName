@@ -34,7 +34,7 @@
 }
 
 #personal .self-info .lfnav .title_list ul li .active {
-  color: #1baeae;
+  color: #FFAA42;
   font-weight: bold;
 }
 
@@ -101,11 +101,11 @@
 }
 
 #personal .self-info .intro .info_item span a {
-  color: #008080;
+  color: #DA9121;
 }
 
 #personal .self-info .intro .info_item span a:hover {
-  color: #1baeae;
+  color: #FFAA42;
 }
 
 .uc-main-box {
@@ -203,8 +203,8 @@
 }
 
 .btn-primary {
-  background: #1baeae;
-  border-color: #1baeae;
+  background: #FFAA42;
+  border-color: #FFAA42;
   color: #fff;
 }
 
@@ -221,7 +221,7 @@
   margin-bottom: 25px;
 }
 .uc-order-item-pay .order-status, .uc-order-item-pay .order-desc {
-  color: #1baeae;
+  color: #FFAA42;
 }
 .uc-order-item .order-status {
   font-size: 18px;
@@ -231,7 +231,7 @@
   margin: -15px 0 25px;
 }
 .uc-order-item-pay .order-status, .uc-order-item-pay .order-desc {
-  color: #1baeae;
+  color: #FFAA42;
 }
 .uc-order-item .order-desc {
   margin: 10px 0 0;
@@ -430,7 +430,7 @@ td {
 }
 .order-view-box .uc-order-item .order-detail-total .total-table td {
   text-align: right;
-  color: #1baeae;
+  color: #FFAA42;
 }
 
 .order-view-box .uc-order-item .order-detail-total .total-table th.total, .order-view-box .uc-order-item .order-detail-total .total-table td.total {
@@ -465,11 +465,11 @@ td {
   width: 280px;
   height: 120px;
   margin: 5px;
-  border: #1baeae50 1px solid;
+  border: #FFAA4250 1px solid;
 }
 
 #my-coupon ul li.active {
-  border: #1baeae 2px solid;
+  border: #FFAA42 2px solid;
 }
 
 #my-coupon ul li:hover {
@@ -503,14 +503,14 @@ td {
   font: 400 18px arial;
   vertical-align: top;
   margin: 3px 3px 0 0;
-  color: #1baeae;
+  color: #FFAA42;
 }
 
 #my-coupon ul a .left-desc .q-price strong {
   display: inline;
   font: 400 34px arial;
   vertical-align: top;
-  color: #1baeae;
+  color: #FFAA42;
 }
 
 #my-coupon ul a .left-desc .q-price .q-limit {
