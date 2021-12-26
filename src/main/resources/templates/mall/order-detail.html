@@ -191,6 +191,31 @@
                                 <div class="actions">
                                 </div>
                             </div>
+                            <th:block th:if="${orderDetailVO.orderStatus==4}">
+                                <div id="" class="order-detail-info">
+                                    <h3>评价</h3>
+                                    <table class="info-table">
+                                        <tbody>
+                                        <tr>
+                                            <th>评论：</th>
+                                            <!--orderDetailVO.comment-->
+                                            <td th:text="${orderDetailVO.comment}">
+                                                没有评论，请添加评论
+                                            </td>
+                                            <td th:if="${orderDetailVO.comment==null}">
+                                                <form name="input" action="/orders/Ircomment" method="post">
+                                                    <input type="text" name="comment">
+                                                    <input type="hidden" name="oderNo" th:value="${orderDetailVO.orderNo}">
+                                                    <input type="submit" value="提交评论">
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="actions">
+                                    </div>
+                                </div>
+                            </th:block>
                             <div class="order-detail-total">
                                 <table class="total-table">
                                     <tbody>
