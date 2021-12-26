@@ -1,12 +1,13 @@
-var editorD;
+/*var editorD;*/
 
 $(function () {
 
+/*
     //富文本编辑器 用于商品详情编辑
     const E = window.wangEditor;
     editorD = new E('#wangEditor')
     // 设置编辑区域高度为 750px
-    editorD.config.height = 750
+    editorD.config.height = 100
     //配置服务端图片上传地址
     editorD.config.uploadImgServer = '/admin/upload/files'
     editorD.config.uploadFileName = 'files'
@@ -45,6 +46,7 @@ $(function () {
         }
     }
     editorD.create();
+*/
 
     //图片上传插件初始化 用于商品预览图上传
     new AjaxUpload('#uploadGoodsCoverImg', {
@@ -72,7 +74,7 @@ $(function () {
 
 $('#saveButton').click(function () {
     var goodsId = $('#goodsId').val();
-    var goodsCategoryId = $('#levelThree option:selected').val();
+    var goodsCategoryId = $('#levelThree').val();
     var goodsName = $('#goodsName').val();
     var tag = $('#tag').val();
     var originalPrice = $('#originalPrice').val();
@@ -80,7 +82,7 @@ $('#saveButton').click(function () {
     var goodsIntro = $('#goodsIntro').val();
     var stockNum = $('#stockNum').val();
     var goodsSellStatus = $("input[name='goodsSellStatus']:checked").val();
-    var goodsDetailContent = editorD.txt.html();
+    var goodsDetailContent = $('#imgsIntro').val();
     var goodsCoverImg = $('#goodsCoverImg')[0].src;
     if (isNull(goodsCategoryId)) {
         swal("请选择分类", {
