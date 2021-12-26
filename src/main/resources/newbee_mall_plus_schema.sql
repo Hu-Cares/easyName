@@ -1456,6 +1456,6 @@ CREATE TABLE `shop`  (
 alter table tb_newbee_mall_user add  is_merchant  tinyint NOT NULL DEFAULT 0 COMMENT '标识字段，是否为商家';
 alter table tb_newbee_mall_goods_info add  shop_id  bigint NOT NULL DEFAULT 0 COMMENT '商家ID，进行商品关联';
 alter table tb_newbee_mall_order add  shop_id  bigint NOT NULL DEFAULT 0 COMMENT '商家ID，将订单与商家关联';
-alter table tb_newbee_mall_order add  comment varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT '订单评论'
+alter table tb_newbee_mall_order add  comment varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT '订单评论';
 
 SET FOREIGN_KEY_CHECKS = 1;
