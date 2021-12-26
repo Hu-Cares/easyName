@@ -3,6 +3,7 @@
       @qq交流群 791509631
       @email 2449207463@qq.com
       @link https://github.com/newbee-ltd -->
+
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
@@ -26,6 +27,25 @@
         <java.version>1.8</java.version>
         <aliyun-docker-namespace>填写你的阿里云docker容器命名空间，容器设置：https://cr.console.aliyun.com/cn-shanghai/instances</aliyun-docker-namespace>
     </properties>
+
+    <!--打包报错而加-->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                            <goal>build-info</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
 
     <dependencies>
         <dependency>
