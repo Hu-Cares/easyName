@@ -309,8 +309,8 @@
             is_deleted   = #{isDeleted,jdbcType=TINYINT},
             create_time  = #{createTime,jdbcType=TIMESTAMP},
             update_time  = #{updateTime,jdbcType=TIMESTAMP},
-            shop_id      = #{shopId,jdbcType=BIGINT}
-            comment      = #{comment,jdbcType=VARCHAR},
+            shop_id      = #{shopId,jdbcType=BIGINT},
+            comment      = #{comment,jdbcType=VARCHAR}
         where order_id = #{orderId,jdbcType=BIGINT}
     </update>
 </mapper>

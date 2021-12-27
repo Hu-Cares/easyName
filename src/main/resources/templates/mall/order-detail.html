@@ -37,8 +37,8 @@
                                        class="btn btn-small btn-line-gray" title="取消订单">取消订单</a>
                                 </th:block>
 
-                                <a th:href="@{/mall/evaluation}"
-                                   class="btn1 btn-small btn-line-gray" title="评价">评价</a>
+                                <!--<a th:href="@{/mall/evaluation}"
+                                   class="btn1 btn-small btn-line-gray" title="评价">评价</a>-->
 
                                 <th:block th:if="${orderDetailVO.orderStatus==0}">
                                     <a onclick="payOrder()"
@@ -169,7 +169,7 @@
                                 <table class="info-table">
                                     <tbody>
                                     <tr>
-                                        <td th:text="${orderDetailVO.userAddress}">newbee</td>
+                                        <td th:text="${orderDetailVO.userAddress}">Itema</td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -191,6 +191,35 @@
                                 <div class="actions">
                                 </div>
                             </div>
+                            <th:block th:if="${orderDetailVO.orderStatus==4}">
+                                <div id="" class="order-detail-info">
+                                    <h3>评价</h3>
+                                    <table class="info-table">
+                                        <tbody>
+                                        <tr>
+                                            <!--orderDetailVO.comment-->
+                                            <td th:text="${orderDetailVO.comment}">
+                                                没有评论，请添加评论
+                                            </td>
+                                            <td th:if="${orderDetailVO.comment==null}">
+                                                <form name="input" action="/orders/Ircomment" method="post">
+                                                    <textarea name="comment" placeholder="没有评论，请添加评论"
+                                                    style="width: 875px;height: 200px">
+
+                                                    </textarea>
+                                                    <br>
+                                                    <input type="hidden" name="oderNo" th:value="${orderDetailVO.orderNo}">
+                                                    <br>
+                                                    <input class="btn1 btn-small btn-line-gray" type="submit" value="提交评论">
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="actions">
+                                    </div>
+                                </div>
+                            </th:block>
                             <div class="order-detail-total">
                                 <table class="total-table">
                                     <tbody>

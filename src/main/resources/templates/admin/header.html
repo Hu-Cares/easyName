@@ -4,12 +4,12 @@
 <head th:fragment="header-fragment">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title th:if="${session.newBeeMallShop!=null}and${session.loginUser==null}">newbee-mall商家管理系统 | Log in</title>
-    <title th:if="${session.loginUser!=null}">newbee-mall | 后台管理系统</title>
+    <title th:if="${session.newBeeMallShop!=null}and${session.loginUser==null}">Itema-mall商家管理系统 | Log in</title>
+    <title th:if="${session.loginUser!=null}">Itema-mall后台管理系统 | Log in</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Font Awesome -->
-    <link rel="shortcut icon" th:href="@{/admin/dist/img/favicon.ico}"/>
+    <link rel="shortcut icon" th:href="@{/favicon.ico}"/>
     <link rel="stylesheet" th:href="@{/admin/dist/css/font-awesome.min.css}">
     <!-- Ionicons -->
     <link rel="stylesheet" th:href="@{/admin/dist/css/ionicons.min.css}">

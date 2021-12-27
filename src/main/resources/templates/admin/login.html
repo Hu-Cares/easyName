@@ -32,6 +32,11 @@
 <body class="hold-transition login-page">
 <div id="particles">
 </div>
+
+<nav id="nav" th:fragment="nav-fragment">
+    <div class="banner_x center"><a th:href="@{/}" class="logo-return">返回主页</a></div>
+</nav>
+
 <div class="login-box">
     <div class="login-logo" style="color: #FFAA42;">
         <img th:src="@{/admin/dist/img/Itema-mall-logo.png}" style="    height: 58px;float: left;margin-left: 10px;">
@@ -77,7 +82,7 @@
         </div>
         <!-- /.login-card-body -->
     </div>
-    <div><a th:href="@{/}">返回主页</a></div>
+
 </div>
 <!-- /.login-box -->
 
