@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="mall/header::head-fragment('Itema商城-商品详情','detail')">
+</head>
+<body>
+<header th:replace="mall/header::header-fragment"></header>
+
+<div id="comments">
+    <!-- nav -->
+    <nav th:replace="mall/header::nav-fragment"></nav>
+    <!-- 这里使用的是 th:utext 标签，用 th:text 不会解析 html，用 th:utext 会解析 html -->
+<!--    <div class="goods mt20 w clearfix" th:utext="${goodsDetail.goodsDetailContent}">
+    </div>-->
+    <a th:href="@{'/goods/detail/'+${goodsDetail.goodsId}}">返回商品详情</a>
+    <h3>评论</h3>
+    <th:block>
+        <ul>
+            <li class="" th:each="Comments:${Comments}"
+                th:text="${Comments}">评论加载中</li>
+        </ul>
+    </th:block>
+
+</div>
+
+<div th:replace="mall/footer::footer-fragment"></div>
+
+<!-- jQuery -->
+<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+<script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
+<script th:src="@{/mall/js/search.js}" type="text/javascript"></script>
+</body>
+</html>

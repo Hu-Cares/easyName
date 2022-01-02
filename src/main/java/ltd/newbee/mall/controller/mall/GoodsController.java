@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -78,6 +79,13 @@ public class GoodsController {
         }
         NewBeeMallGoods goods = newBeeMallGoodsService.getNewBeeMallGoodsById(goodsId);
         List<String> Comments = newBeeMallGoodsService.getNewBeeMallCommentById(goodsId);
+        List<String> Commenttwo=new ArrayList<String>();
+        int flag=0;
+        for(String s:Comments){
+            Commenttwo.add(s);
+            flag++;
+            if(flag==2) break;
+        }
         if (goods == null) {
             NewBeeMallException.fail(ServiceResultEnum.GOODS_NOT_EXIST.getResult());
         }
@@ -88,7 +96,7 @@ public class GoodsController {
         BeanUtil.copyProperties(goods, goodsDetailVO);
         goodsDetailVO.setGoodsCarouselList(goods.getGoodsCarousel().split(","));
         request.setAttribute("goodsDetail", goodsDetailVO);
-        request.setAttribute("Comments",Comments);
+        request.setAttribute("Commenttwo",Commenttwo);
         return "mall/detail";
     }
     @GetMapping("/goods/comment/{goodsId}")
@@ -109,6 +117,6 @@ public class GoodsController {
         goodsDetailVO.setGoodsCarouselList(goods.getGoodsCarousel().split(","));
         request.setAttribute("goodsDetail", goodsDetailVO);
         request.setAttribute("Comments",Comments);
-        return "main";
+        return "mall/comments";
     }
 }

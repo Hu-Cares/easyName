@@ -19,7 +19,7 @@
     <div class="intro mt20 w clearfix">
         <div class="left fl" style="position: relative;">
             <div class="swiper-container fl">
-                <img th:src="@{${goodsDetail.goodsCoverImg}}">
+                <img th:src="@{${goodsDetail.goodsCoverImg}} ">
             </div>
         </div>
         <div class="right fr">
@@ -61,6 +61,13 @@
     <!-- 这里使用的是 th:utext 标签，用 th:text 不会解析 html，用 th:utext 会解析 html -->
     <div class="goods mt20 w clearfix" th:utext="${goodsDetail.goodsDetailContent}">
     </div>
+    <th:block>
+        <ul>
+            <li class="" th:each="Commenttwo:${Commenttwo}"
+                th:text="${Commenttwo}">评论加载中</li>
+        </ul>
+    </th:block>
+    <a th:href="@{'/goods/comment/'+${goodsDetail.goodsId}}">查看全部</a>
 </div>
 
 <div th:replace="mall/footer::footer-fragment"></div>
