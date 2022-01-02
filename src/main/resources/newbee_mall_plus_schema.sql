@@ -1457,5 +1457,6 @@ alter table tb_newbee_mall_user add  is_merchant  tinyint NOT NULL DEFAULT 0 COM
 alter table tb_newbee_mall_goods_info add  shop_id  bigint NOT NULL DEFAULT 0 COMMENT '商家ID，进行商品关联';
 alter table tb_newbee_mall_order add  shop_id  bigint NOT NULL DEFAULT 0 COMMENT '商家ID，将订单与商家关联';
 alter table tb_newbee_mall_order add  comment varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci COMMENT '订单评论';
+alter table tb_newbee_mall_order add  goods_id  bigint NOT NULL DEFAULT 0 COMMENT '货物ID，将货物与订单关联';
 
 SET FOREIGN_KEY_CHECKS = 1;
