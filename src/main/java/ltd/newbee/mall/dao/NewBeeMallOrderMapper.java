@@ -26,6 +26,8 @@ public interface NewBeeMallOrderMapper {
 
     NewBeeMallOrder selectByOrderNo(String orderNo);
 
+    List<NewBeeMallOrder>  selectByGoodsId(long goodsId);
+
     int updateByPrimaryKeySelective(NewBeeMallOrder record);
 
     int updateByPrimaryKey(NewBeeMallOrder record);

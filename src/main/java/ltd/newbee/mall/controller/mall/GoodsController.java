@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -76,6 +77,7 @@ public class GoodsController {
             return "error/error_5xx";
         }
         NewBeeMallGoods goods = newBeeMallGoodsService.getNewBeeMallGoodsById(goodsId);
+        List<String> Comments = newBeeMallGoodsService.getNewBeeMallCommentById(goodsId);
         if (goods == null) {
             NewBeeMallException.fail(ServiceResultEnum.GOODS_NOT_EXIST.getResult());
         }
@@ -86,7 +88,27 @@ public class GoodsController {
         BeanUtil.copyProperties(goods, goodsDetailVO);
         goodsDetailVO.setGoodsCarouselList(goods.getGoodsCarousel().split(","));
         request.setAttribute("goodsDetail", goodsDetailVO);
+        request.setAttribute("Comments",Comments);
         return "mall/detail";
     }
-
+    @GetMapping("/goods/comment/{goodsId}")
+    public String commentPage(@PathVariable("goodsId") Long goodsId, HttpServletRequest request) {
+        if (goodsId < 1) {
+            return "error/error_5xx";
+        }
+        NewBeeMallGoods goods = newBeeMallGoodsService.getNewBeeMallGoodsById(goodsId);
+        List<String> Comments = newBeeMallGoodsService.getNewBeeMallCommentById(goodsId);
+        if (goods == null) {
+            NewBeeMallException.fail(ServiceResultEnum.GOODS_NOT_EXIST.getResult());
+        }
+        if (Constants.SELL_STATUS_UP != goods.getGoodsSellStatus()) {
+            NewBeeMallException.fail(ServiceResultEnum.GOODS_PUT_DOWN.getResult());
+        }
+        NewBeeMallGoodsDetailVO goodsDetailVO = new NewBeeMallGoodsDetailVO();
+        BeanUtil.copyProperties(goods, goodsDetailVO);
+        goodsDetailVO.setGoodsCarouselList(goods.getGoodsCarousel().split(","));
+        request.setAttribute("goodsDetail", goodsDetailVO);
+        request.setAttribute("Comments",Comments);
+        return "main";
+    }
 }

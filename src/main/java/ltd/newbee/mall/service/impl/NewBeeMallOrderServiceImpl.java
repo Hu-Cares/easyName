@@ -260,6 +260,7 @@ public class NewBeeMallOrderServiceImpl implements NewBeeMallOrderService {
             newBeeMallOrder.setUserId(user.getUserId());
             newBeeMallOrder.setUserAddress(user.getAddress());
             newBeeMallOrder.setShopId(o.getShopId());
+            newBeeMallOrder.setGoodsId(o.getGoodsId());
 
             for (NewBeeMallShoppingCartItemVO newBeeMallShoppingCartItemVO : myShoppingCartItems) {
                 totalpriceTotal += newBeeMallShoppingCartItemVO.getGoodsCount() * newBeeMallShoppingCartItemVO.getSellingPrice();

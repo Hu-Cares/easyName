@@ -14,10 +14,8 @@ import ltd.newbee.mall.common.ServiceResultEnum;
 import ltd.newbee.mall.controller.vo.NewBeeMallSearchGoodsVO;
 import ltd.newbee.mall.dao.GoodsCategoryMapper;
 import ltd.newbee.mall.dao.NewBeeMallGoodsMapper;
-import ltd.newbee.mall.entity.GoodsCategory;
-import ltd.newbee.mall.entity.MallShop;
-import ltd.newbee.mall.entity.NewBeeMallGoods;
-import ltd.newbee.mall.entity.NewBeeMallshopGoods;
+import ltd.newbee.mall.dao.NewBeeMallOrderMapper;
+import ltd.newbee.mall.entity.*;
 import ltd.newbee.mall.service.NewBeeMallGoodsService;
 import ltd.newbee.mall.util.BeanUtil;
 import ltd.newbee.mall.util.PageQueryUtil;
@@ -40,6 +38,8 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
     private NewBeeMallGoodsMapper goodsMapper;
     @Autowired
     private GoodsCategoryMapper goodsCategoryMapper;
+    @Autowired
+    private NewBeeMallOrderMapper newBeeMallOrderMapper;
     @Autowired
     private HttpServletRequest request;
     @Override
@@ -126,6 +126,15 @@ public class NewBeeMallGoodsServiceImpl implements NewBeeMallGoodsService {
         return goodsMapper.selectByPrimaryKey(id);
     }
 
+    @Override
+    public List<String> getNewBeeMallCommentById(Long id){
+     List<NewBeeMallOrder> newBeeMallOrders=newBeeMallOrderMapper.selectByGoodsId(id);
+     List<String> Comments = new ArrayList<String>();
+     for(NewBeeMallOrder newBeeMallOrder:newBeeMallOrders){
+         Comments.add(newBeeMallOrder.getComment());
+     }
+     return Comments;
+    }
     //商家找寻
     @Override
     public NewBeeMallshopGoods getNewBeeMallShopGoodsById(Long id) {

@@ -62,6 +62,8 @@ public interface NewBeeMallGoodsService {
      */
     NewBeeMallGoods getNewBeeMallGoodsById(Long id);
 
+    List<String> getNewBeeMallCommentById(Long id);
+
     /**
      * 商家获取商品详情
      *

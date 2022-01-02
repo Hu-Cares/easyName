@@ -20,12 +20,6 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-        <aliyun-docker-namespace>填写你的阿里云docker容器命名空间，容器设置：https://cr.console.aliyun.com/cn-shanghai/instances</aliyun-docker-namespace>
-    </properties>
 
     <dependencies>
         <dependency>
@@ -145,58 +139,34 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-test</artifactId>
         </dependency>
+
+        <!-- 加入上传文件组件 -->
+        <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.1</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/commons-fileupload/commons-fileupload -->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.3</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/commons-net/commons-net -->
+        <dependency>
+            <groupId>commons-net</groupId>
+            <artifactId>commons-net</artifactId>
+            <version>3.3</version>
+        </dependency>
     </dependencies>
+
 
     <build>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-
-            <plugin>
-                <groupId>com.google.cloud.tools</groupId>
-                <artifactId>jib-maven-plugin</artifactId>
-                <version>3.1.4</version>
-                <configuration>
-                    <!--配置基本镜像-->
-                    <from>
-                        <image>adoptopenjdk:8-jre</image>
-                    </from>
-                    <!--配置最终推送的地址，仓库名，镜像名-->
-                    <to>
-                        <image>registry.cn-shanghai.aliyuncs.com/${aliyun-docker-namespace}/${project.artifactId}</image>
-                        <tags>
-                            <tag>${project.version}</tag>
-                            <tag>latest</tag>
-                        </tags>
-                        <auth>
-                            <username>填写你的阿里云docker容器账号（邮箱）</username>
-                            <password>填写你的阿里云docker容器密码（固定密码），密码设置：https://cr.console.aliyun.com/cn-shanghai/instance/credentials</password>
-                        </auth>
-                    </to>
-                    <container>
-                        <mainClass>ltd.newbee.mall.NewBeeMallPlusApplication</mainClass>
-                        <jvmFlags>
-                            <jvmFlag>-Xms512m</jvmFlag>
-                            <jvmFlag>-Xmx512m</jvmFlag>
-                            <!-- 记录内存溢出时的推展情况-->
-                            <jvmFlag>-XX:+HeapDumpOnOutOfMemoryError</jvmFlag>
-                            <!-- 内存溢出文件位置-->
-                            <jvmFlag>-XX:HeapDumpPath=./</jvmFlag>
-                        </jvmFlags>
-                    </container>
-                </configuration>
-
-                <!--绑定到maven lifecicle-->
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>build</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
 
         </plugins>
