@@ -1,7 +1,7 @@
 package ltd.newbee.mall.task;
 
-import ltd.newbee.mall.dao.NewBeeMallOrderMapper;
-import ltd.newbee.mall.entity.NewBeeMallOrder;
+import ltd.newbee.mall.dao.ItemaMallOrderMapper;
+import ltd.newbee.mall.entity.ItemaMallOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -22,14 +22,14 @@ public class TaskStartupRunner implements ApplicationRunner {
 
     public static final Long UN_PAID_ORDER_EXPIRE_TIME = 30L;
     @Autowired
-    private NewBeeMallOrderMapper newBeeMallOrderMapper;
+    private ItemaMallOrderMapper itemaMallOrderMapper;
     @Autowired
     private TaskService taskService;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
-        List<NewBeeMallOrder> newBeeMallOrders = newBeeMallOrderMapper.selectPrePayOrders();
-        for (NewBeeMallOrder order : newBeeMallOrders) {
+        List<ItemaMallOrder> itemaMallOrders = itemaMallOrderMapper.selectPrePayOrders();
+        for (ItemaMallOrder order : itemaMallOrders) {
             Date date = order.getCreateTime();
             Instant instant = date.toInstant();
             ZoneId zoneId = ZoneId.systemDefault();

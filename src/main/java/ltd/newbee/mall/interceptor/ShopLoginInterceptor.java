@@ -1,7 +1,7 @@
 package ltd.newbee.mall.interceptor;
 
 import ltd.newbee.mall.common.Constants;
-import ltd.newbee.mall.controller.vo.NewBeeMallUserVO;
+import ltd.newbee.mall.controller.vo.ItemaUserVO;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -19,7 +19,7 @@ public class ShopLoginInterceptor implements HandlerInterceptor {
             response.sendRedirect(request.getContextPath() + "/login");
             return false;
         }
-        else if(((NewBeeMallUserVO)request.getSession().getAttribute(Constants.MALL_USER_SESSION_KEY)).getIsMerchant()==0){
+        else if(((ItemaUserVO)request.getSession().getAttribute(Constants.MALL_USER_SESSION_KEY)).getIsMerchant()==0){
             response.sendRedirect(request.getContextPath() + "/shop_register");
             return false;
         }

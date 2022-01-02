@@ -3,14 +3,7 @@ package ltd.newbee.mall.util;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * 分页工具类
- *
- * @author 13
- * @qq交流群 791509631
- * @email 2449207463@qq.com
- * @link https://github.com/newbee-ltd
- */
+
 public class PageResult<T> implements Serializable {
 
     //总记录数

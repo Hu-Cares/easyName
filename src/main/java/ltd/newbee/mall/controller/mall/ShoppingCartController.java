@@ -1,21 +1,14 @@
-/**
- * 严肃声明：
- * 开源版本请务必保留此注释头信息，若删除我方将保留所有法律责任追究！
- * 本系统已申请软件著作权，受国家版权局知识产权以及国家计算机软件著作权保护！
- * 可正常分享和学习源码，不得用于违法犯罪活动，违者必究！
- * Copyright (c) 2019-2020 十三 all rights reserved.
- * 版权所有，侵权必究！
- */
+ 
 package ltd.newbee.mall.controller.mall;
 
 import ltd.newbee.mall.common.Constants;
 import ltd.newbee.mall.common.ServiceResultEnum;
-import ltd.newbee.mall.controller.vo.NewBeeMallMyCouponVO;
-import ltd.newbee.mall.controller.vo.NewBeeMallShoppingCartItemVO;
-import ltd.newbee.mall.controller.vo.NewBeeMallUserVO;
-import ltd.newbee.mall.entity.NewBeeMallShoppingCartItem;
-import ltd.newbee.mall.service.NewBeeMallCouponService;
-import ltd.newbee.mall.service.NewBeeMallShoppingCartService;
+import ltd.newbee.mall.controller.vo.ItemaMallMyCouponVO;
+import ltd.newbee.mall.controller.vo.ItemaMallShoppingCartItemVO;
+import ltd.newbee.mall.controller.vo.ItemaUserVO;
+import ltd.newbee.mall.entity.ItemaMallShoppingCartItem;
+import ltd.newbee.mall.service.ItemaMallCouponService;
+import ltd.newbee.mall.service.ItemaMallShoppingCartService;
 import ltd.newbee.mall.util.Result;
 import ltd.newbee.mall.util.ResultGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,27 +25,27 @@ import java.util.List;
 public class ShoppingCartController {
 
     @Resource
-    private NewBeeMallShoppingCartService newBeeMallShoppingCartService;
+    private ItemaMallShoppingCartService itemaMallShoppingCartService;
 
     @Autowired
-    private NewBeeMallCouponService newBeeMallCouponService;
+    private ItemaMallCouponService itemaMallCouponService;
 
     @GetMapping("/shop-cart")
     public String cartListPage(HttpServletRequest request,
                                HttpSession httpSession) {
-        NewBeeMallUserVO user = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+        ItemaUserVO user = (ItemaUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         int itemsTotal = 0;
         int priceTotal = 0;
-        List<NewBeeMallShoppingCartItemVO> myShoppingCartItems = newBeeMallShoppingCartService.getMyShoppingCartItems(user.getUserId());
+        List<ItemaMallShoppingCartItemVO> myShoppingCartItems = itemaMallShoppingCartService.getMyShoppingCartItems(user.getUserId());
         if (!CollectionUtils.isEmpty(myShoppingCartItems)) {
             //购物项总数
-            itemsTotal = myShoppingCartItems.stream().mapToInt(NewBeeMallShoppingCartItemVO::getGoodsCount).sum();
+            itemsTotal = myShoppingCartItems.stream().mapToInt(ItemaMallShoppingCartItemVO::getGoodsCount).sum();
             if (itemsTotal < 1) {
                 return "error/error_5xx";
             }
             //总价
-            for (NewBeeMallShoppingCartItemVO newBeeMallShoppingCartItemVO : myShoppingCartItems) {
-                priceTotal += newBeeMallShoppingCartItemVO.getGoodsCount() * newBeeMallShoppingCartItemVO.getSellingPrice();
+            for (ItemaMallShoppingCartItemVO itemaMallShoppingCartItemVO : myShoppingCartItems) {
+                priceTotal += itemaMallShoppingCartItemVO.getGoodsCount() * itemaMallShoppingCartItemVO.getSellingPrice();
             }
             if (priceTotal < 1) {
                 return "error/error_5xx";
@@ -66,11 +59,11 @@ public class ShoppingCartController {
 
     @PostMapping("/shop-cart")
     @ResponseBody
-    public Result saveNewBeeMallShoppingCartItem(@RequestBody NewBeeMallShoppingCartItem newBeeMallShoppingCartItem,
+    public Result saveNewBeeMallShoppingCartItem(@RequestBody ItemaMallShoppingCartItem itemaMallShoppingCartItem,
                                                  HttpSession httpSession) {
-        NewBeeMallUserVO user = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
-        newBeeMallShoppingCartItem.setUserId(user.getUserId());
-        String saveResult = newBeeMallShoppingCartService.saveNewBeeMallCartItem(newBeeMallShoppingCartItem);
+        ItemaUserVO user = (ItemaUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+        itemaMallShoppingCartItem.setUserId(user.getUserId());
+        String saveResult = itemaMallShoppingCartService.saveNewBeeMallCartItem(itemaMallShoppingCartItem);
         //添加成功
         if (ServiceResultEnum.SUCCESS.getResult().equals(saveResult)) {
             return ResultGenerator.genSuccessResult();
@@ -81,11 +74,11 @@ public class ShoppingCartController {
 
     @PutMapping("/shop-cart")
     @ResponseBody
-    public Result updateNewBeeMallShoppingCartItem(@RequestBody NewBeeMallShoppingCartItem newBeeMallShoppingCartItem,
+    public Result updateNewBeeMallShoppingCartItem(@RequestBody ItemaMallShoppingCartItem itemaMallShoppingCartItem,
                                                    HttpSession httpSession) {
-        NewBeeMallUserVO user = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
-        newBeeMallShoppingCartItem.setUserId(user.getUserId());
-        String updateResult = newBeeMallShoppingCartService.updateNewBeeMallCartItem(newBeeMallShoppingCartItem);
+        ItemaUserVO user = (ItemaUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+        itemaMallShoppingCartItem.setUserId(user.getUserId());
+        String updateResult = itemaMallShoppingCartService.updateNewBeeMallCartItem(itemaMallShoppingCartItem);
         //修改成功
         if (ServiceResultEnum.SUCCESS.getResult().equals(updateResult)) {
             return ResultGenerator.genSuccessResult();
@@ -98,8 +91,8 @@ public class ShoppingCartController {
     @ResponseBody
     public Result updateNewBeeMallShoppingCartItem(@PathVariable("newBeeMallShoppingCartItemId") Long newBeeMallShoppingCartItemId,
                                                    HttpSession httpSession) {
-        NewBeeMallUserVO user = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
-        Boolean deleteResult = newBeeMallShoppingCartService.deleteById(newBeeMallShoppingCartItemId, user.getUserId());
+        ItemaUserVO user = (ItemaUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+        Boolean deleteResult = itemaMallShoppingCartService.deleteById(newBeeMallShoppingCartItemId, user.getUserId());
         //删除成功
         if (deleteResult) {
             return ResultGenerator.genSuccessResult();
@@ -112,21 +105,21 @@ public class ShoppingCartController {
     public String settlePage(HttpServletRequest request,
                              HttpSession httpSession) {
         int priceTotal = 0;
-        NewBeeMallUserVO user = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
-        List<NewBeeMallShoppingCartItemVO> myShoppingCartItems = newBeeMallShoppingCartService.getMyShoppingCartItems(user.getUserId());
+        ItemaUserVO user = (ItemaUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+        List<ItemaMallShoppingCartItemVO> myShoppingCartItems = itemaMallShoppingCartService.getMyShoppingCartItems(user.getUserId());
         if (CollectionUtils.isEmpty(myShoppingCartItems)) {
             //无数据则不跳转至结算页
             return "/shop-cart";
         } else {
             //总价
-            for (NewBeeMallShoppingCartItemVO newBeeMallShoppingCartItemVO : myShoppingCartItems) {
-                priceTotal += newBeeMallShoppingCartItemVO.getGoodsCount() * newBeeMallShoppingCartItemVO.getSellingPrice();
+            for (ItemaMallShoppingCartItemVO itemaMallShoppingCartItemVO : myShoppingCartItems) {
+                priceTotal += itemaMallShoppingCartItemVO.getGoodsCount() * itemaMallShoppingCartItemVO.getSellingPrice();
             }
             if (priceTotal < 1) {
                 return "error/error_5xx";
             }
         }
-        List<NewBeeMallMyCouponVO> myCouponVOS = newBeeMallCouponService.selectOrderCanUseCoupons(myShoppingCartItems, priceTotal, user.getUserId());
+        List<ItemaMallMyCouponVO> myCouponVOS = itemaMallCouponService.selectOrderCanUseCoupons(myShoppingCartItems, priceTotal, user.getUserId());
         request.setAttribute("coupons", myCouponVOS);
         request.setAttribute("priceTotal", priceTotal);
         request.setAttribute("myShoppingCartItems", myShoppingCartItems);

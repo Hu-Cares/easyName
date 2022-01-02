@@ -3,14 +3,6 @@ package ltd.newbee.mall.util;
 import ltd.newbee.mall.common.ServiceResultEnum;
 import org.apache.commons.lang3.StringUtils;
 
-/**
- * 响应结果生成工具
- *
- * @author 13
- * @qq交流群 791509631
- * @email 2449207463@qq.com
- * @link https://github.com/newbee-ltd
- */
 public class ResultGenerator {
     private static final String DEFAULT_SUCCESS_MESSAGE = "SUCCESS";
     private static final String DEFAULT_FAIL_MESSAGE = "FAIL";

@@ -1,16 +1,16 @@
 package ltd.newbee.mall.controller.mall;
 
 import ltd.newbee.mall.common.Constants;
-import ltd.newbee.mall.common.NewBeeMallException;
+import ltd.newbee.mall.common.ItemaException;
 import ltd.newbee.mall.controller.vo.ExposerVO;
-import ltd.newbee.mall.controller.vo.NewBeeMallSeckillGoodsVO;
-import ltd.newbee.mall.controller.vo.NewBeeMallUserVO;
+import ltd.newbee.mall.controller.vo.ItemaMallSeckillGoodsVO;
+import ltd.newbee.mall.controller.vo.ItemaUserVO;
 import ltd.newbee.mall.controller.vo.SeckillSuccessVO;
-import ltd.newbee.mall.dao.NewBeeMallGoodsMapper;
-import ltd.newbee.mall.entity.NewBeeMallGoods;
-import ltd.newbee.mall.entity.NewBeeMallSeckill;
+import ltd.newbee.mall.dao.ItemaGoodsMapper;
+import ltd.newbee.mall.entity.ItemaMallGoods;
+import ltd.newbee.mall.entity.ItemaMallSeckill;
 import ltd.newbee.mall.redis.RedisCache;
-import ltd.newbee.mall.service.NewBeeMallSeckillService;
+import ltd.newbee.mall.service.ItemaMallSeckillService;
 import ltd.newbee.mall.util.BeanUtil;
 import ltd.newbee.mall.util.MD5Util;
 import ltd.newbee.mall.util.Result;
@@ -34,10 +34,10 @@ import java.util.stream.Collectors;
 public class SecKillController {
 
     @Autowired
-    private NewBeeMallSeckillService newBeeMallSeckillService;
+    private ItemaMallSeckillService itemaMallSeckillService;
 
     @Autowired
-    private NewBeeMallGoodsMapper newBeeMallGoodsMapper;
+    private ItemaGoodsMapper itemaGoodsMapper;
 
     @Autowired
     private RedisCache redisCache;
@@ -84,7 +84,7 @@ public class SecKillController {
     @ResponseBody
     @PostMapping("/seckill/{seckillId}/exposer")
     public Result exposerUrl(@PathVariable Long seckillId) {
-        ExposerVO exposerVO = newBeeMallSeckillService.exposerUrl(seckillId);
+        ExposerVO exposerVO = itemaMallSeckillService.exposerUrl(seckillId);
         return ResultGenerator.genSuccessResult(exposerVO);
     }
 
@@ -103,9 +103,9 @@ public class SecKillController {
                           @PathVariable String md5) {
         // 判断md5信息是否合法
         if (md5 == null || userId == null || !md5.equals(MD5Util.MD5Encode(seckillId.toString(), Constants.UTF_ENCODING))) {
-            throw new NewBeeMallException("秒杀商品不存在");
+            throw new ItemaException("秒杀商品不存在");
         }
-        SeckillSuccessVO seckillSuccessVO = newBeeMallSeckillService.executeSeckill(seckillId, userId);
+        SeckillSuccessVO seckillSuccessVO = itemaMallSeckillService.executeSeckill(seckillId, userId);
         return ResultGenerator.genSuccessResult(seckillSuccessVO);
     }
 
@@ -113,7 +113,7 @@ public class SecKillController {
     public String seckillInfo(@PathVariable Long seckillId,
                               HttpServletRequest request,
                               HttpSession httpSession) {
-        NewBeeMallUserVO user = (NewBeeMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
+        ItemaUserVO user = (ItemaUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         if (user != null) {
             request.setAttribute("userId", user.getUserId());
         }
@@ -126,31 +126,31 @@ public class SecKillController {
     public Result secondKillGoodsList() {
         // 直接返回配置的秒杀商品列表
         // 不返回商品id，每配置一条秒杀数据，就生成一个唯一的秒杀id和发起秒杀的事件id，根据秒杀id去访问详情页
-        List<NewBeeMallSeckillGoodsVO> newBeeMallSeckillGoodsVOS = redisCache.getCacheObject(Constants.SECKILL_GOODS_LIST);
-        if (newBeeMallSeckillGoodsVOS == null) {
-            List<NewBeeMallSeckill> list = newBeeMallSeckillService.getHomeSeckillPage();
+        List<ItemaMallSeckillGoodsVO> itemaMallSeckillGoodsVOS = redisCache.getCacheObject(Constants.SECKILL_GOODS_LIST);
+        if (itemaMallSeckillGoodsVOS == null) {
+            List<ItemaMallSeckill> list = itemaMallSeckillService.getHomeSeckillPage();
             SimpleDateFormat sdf = new SimpleDateFormat("MM-dd HH:mm");
-            newBeeMallSeckillGoodsVOS = list.stream().map(newBeeMallSeckill -> {
-                NewBeeMallSeckillGoodsVO newBeeMallSeckillGoodsVO = new NewBeeMallSeckillGoodsVO();
-                BeanUtil.copyProperties(newBeeMallSeckill, newBeeMallSeckillGoodsVO);
-                NewBeeMallGoods newBeeMallGoods = newBeeMallGoodsMapper.selectByPrimaryKey(newBeeMallSeckill.getGoodsId());
-                if (newBeeMallGoods == null) {
+            itemaMallSeckillGoodsVOS = list.stream().map(newBeeMallSeckill -> {
+                ItemaMallSeckillGoodsVO itemaMallSeckillGoodsVO = new ItemaMallSeckillGoodsVO();
+                BeanUtil.copyProperties(newBeeMallSeckill, itemaMallSeckillGoodsVO);
+                ItemaMallGoods itemaMallGoods = itemaGoodsMapper.selectByPrimaryKey(newBeeMallSeckill.getGoodsId());
+                if (itemaMallGoods == null) {
                     return null;
                 }
-                newBeeMallSeckillGoodsVO.setGoodsName(newBeeMallGoods.getGoodsName());
-                newBeeMallSeckillGoodsVO.setGoodsCoverImg(newBeeMallGoods.getGoodsCoverImg());
-                newBeeMallSeckillGoodsVO.setSellingPrice(newBeeMallGoods.getSellingPrice());
-                Date seckillBegin = newBeeMallSeckillGoodsVO.getSeckillBegin();
-                Date seckillEnd = newBeeMallSeckillGoodsVO.getSeckillEnd();
+                itemaMallSeckillGoodsVO.setGoodsName(itemaMallGoods.getGoodsName());
+                itemaMallSeckillGoodsVO.setGoodsCoverImg(itemaMallGoods.getGoodsCoverImg());
+                itemaMallSeckillGoodsVO.setSellingPrice(itemaMallGoods.getSellingPrice());
+                Date seckillBegin = itemaMallSeckillGoodsVO.getSeckillBegin();
+                Date seckillEnd = itemaMallSeckillGoodsVO.getSeckillEnd();
                 String formatBegin = sdf.format(seckillBegin);
                 String formatEnd = sdf.format(seckillEnd);
-                newBeeMallSeckillGoodsVO.setSeckillBeginTime(formatBegin);
-                newBeeMallSeckillGoodsVO.setSeckillEndTime(formatEnd);
-                return newBeeMallSeckillGoodsVO;
-            }).filter(newBeeMallSeckillGoodsVO -> newBeeMallSeckillGoodsVO != null).collect(Collectors.toList());
-            redisCache.setCacheObject(Constants.SECKILL_GOODS_LIST, newBeeMallSeckillGoodsVOS, 60 * 60 * 100, TimeUnit.SECONDS);
+                itemaMallSeckillGoodsVO.setSeckillBeginTime(formatBegin);
+                itemaMallSeckillGoodsVO.setSeckillEndTime(formatEnd);
+                return itemaMallSeckillGoodsVO;
+            }).filter(itemaMallSeckillGoodsVO -> itemaMallSeckillGoodsVO != null).collect(Collectors.toList());
+            redisCache.setCacheObject(Constants.SECKILL_GOODS_LIST, itemaMallSeckillGoodsVOS, 60 * 60 * 100, TimeUnit.SECONDS);
         }
-        return ResultGenerator.genSuccessResult(newBeeMallSeckillGoodsVOS);
+        return ResultGenerator.genSuccessResult(itemaMallSeckillGoodsVOS);
     }
 
     @GetMapping("/seckill/{seckillId}")
@@ -159,27 +159,27 @@ public class SecKillController {
         // 返回秒杀商品详情VO，如果秒杀时间未到，不允许访问详情页，也不允许返回数据，参数为秒杀id
         // 根据返回的数据解析出秒杀的事件id，发起秒杀
         // 不访问详情页不会获取到秒杀的事件id，不然容易被猜到url路径从而直接发起秒杀请求
-        NewBeeMallSeckillGoodsVO newBeeMallSeckillGoodsVO = redisCache.getCacheObject(Constants.SECKILL_GOODS_DETAIL + seckillId);
-        if (newBeeMallSeckillGoodsVO == null) {
-            NewBeeMallSeckill newBeeMallSeckill = newBeeMallSeckillService.getSeckillById(seckillId);
-            if (!newBeeMallSeckill.getSeckillStatus()) {
+        ItemaMallSeckillGoodsVO itemaMallSeckillGoodsVO = redisCache.getCacheObject(Constants.SECKILL_GOODS_DETAIL + seckillId);
+        if (itemaMallSeckillGoodsVO == null) {
+            ItemaMallSeckill itemaMallSeckill = itemaMallSeckillService.getSeckillById(seckillId);
+            if (!itemaMallSeckill.getSeckillStatus()) {
                 return ResultGenerator.genFailResult("秒杀商品已下架");
             }
-            newBeeMallSeckillGoodsVO = new NewBeeMallSeckillGoodsVO();
-            BeanUtil.copyProperties(newBeeMallSeckill, newBeeMallSeckillGoodsVO);
-            NewBeeMallGoods newBeeMallGoods = newBeeMallGoodsMapper.selectByPrimaryKey(newBeeMallSeckill.getGoodsId());
-            newBeeMallSeckillGoodsVO.setGoodsName(newBeeMallGoods.getGoodsName());
-            newBeeMallSeckillGoodsVO.setGoodsIntro(newBeeMallGoods.getGoodsIntro());
-            newBeeMallSeckillGoodsVO.setGoodsDetailContent(newBeeMallGoods.getGoodsDetailContent());
-            newBeeMallSeckillGoodsVO.setGoodsCoverImg(newBeeMallGoods.getGoodsCoverImg());
-            newBeeMallSeckillGoodsVO.setSellingPrice(newBeeMallGoods.getSellingPrice());
-            Date seckillBegin = newBeeMallSeckillGoodsVO.getSeckillBegin();
-            Date seckillEnd = newBeeMallSeckillGoodsVO.getSeckillEnd();
-            newBeeMallSeckillGoodsVO.setStartDate(seckillBegin.getTime());
-            newBeeMallSeckillGoodsVO.setEndDate(seckillEnd.getTime());
-            redisCache.setCacheObject(Constants.SECKILL_GOODS_DETAIL + seckillId, newBeeMallSeckillGoodsVO);
+            itemaMallSeckillGoodsVO = new ItemaMallSeckillGoodsVO();
+            BeanUtil.copyProperties(itemaMallSeckill, itemaMallSeckillGoodsVO);
+            ItemaMallGoods itemaMallGoods = itemaGoodsMapper.selectByPrimaryKey(itemaMallSeckill.getGoodsId());
+            itemaMallSeckillGoodsVO.setGoodsName(itemaMallGoods.getGoodsName());
+            itemaMallSeckillGoodsVO.setGoodsIntro(itemaMallGoods.getGoodsIntro());
+            itemaMallSeckillGoodsVO.setGoodsDetailContent(itemaMallGoods.getGoodsDetailContent());
+            itemaMallSeckillGoodsVO.setGoodsCoverImg(itemaMallGoods.getGoodsCoverImg());
+            itemaMallSeckillGoodsVO.setSellingPrice(itemaMallGoods.getSellingPrice());
+            Date seckillBegin = itemaMallSeckillGoodsVO.getSeckillBegin();
+            Date seckillEnd = itemaMallSeckillGoodsVO.getSeckillEnd();
+            itemaMallSeckillGoodsVO.setStartDate(seckillBegin.getTime());
+            itemaMallSeckillGoodsVO.setEndDate(seckillEnd.getTime());
+            redisCache.setCacheObject(Constants.SECKILL_GOODS_DETAIL + seckillId, itemaMallSeckillGoodsVO);
         }
-        return ResultGenerator.genSuccessResult(newBeeMallSeckillGoodsVO);
+        return ResultGenerator.genSuccessResult(itemaMallSeckillGoodsVO);
     }
 
 }

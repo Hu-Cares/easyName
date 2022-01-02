@@ -4,9 +4,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.net.URI;
 
-/**
- * @author 13
- */
+
 public class NewBeeMallUtils {
 
     public static URI getHost(URI uri) {

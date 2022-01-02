@@ -1,22 +1,18 @@
 package ltd.newbee.mall.dao;
-import ltd.newbee.mall.entity.MallShop;
-import ltd.newbee.mall.entity.MallUser;
-import ltd.newbee.mall.util.PageQueryUtil;
-import org.apache.ibatis.annotations.Param;
+import ltd.newbee.mall.entity.Shop;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 @Repository
 public interface MallShopMapper {
 
-    int insert(MallShop record);
+    int insert(Shop record);
 
-    int insertSelective(MallShop record);
+    int insertSelective(Shop record);
 
-    MallShop selectByLoginName(String loginName);
+    Shop selectByLoginName(String loginName);
 
-    MallShop selectByShopName(String loginName);
+    Shop selectByShopName(String loginName);
 
-    MallShop selectByPrimaryKey(Long shopId);
+    Shop selectByPrimaryKey(Long shopId);
 
 }
