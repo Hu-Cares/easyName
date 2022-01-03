@@ -21,7 +21,7 @@
     <select id="findMallUserList" parameterType="Map" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_newbee_mall_user
+        from itema_user
         where 1=1
         <if test="loginName!=null and loginName!=''">
             and login_name = #{loginName}
@@ -33,7 +33,7 @@
     </select>
 
     <select id="getTotalMallUsers" parameterType="Map" resultType="int">
-        select count(*) from tb_newbee_mall_user
+        select count(*) from itema_user
         where 1=1
         <if test="loginName!=null and loginName!=''">
             and login_name = #{loginName}
@@ -43,31 +43,31 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_newbee_mall_user
+        from itema_user
         where user_id = #{userId,jdbcType=BIGINT} and is_deleted = 0
     </select>
     <select id="selectByLoginName" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_newbee_mall_user
+        from itema_user
         where login_name = #{loginName} and is_deleted = 0
     </select>
     <select id="selectByLoginNameAndPasswd" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_newbee_mall_user
+        from itema_user
         where login_name = #{loginName} and password_md5 = #{password} and is_deleted = 0
     </select>
     <update id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    update tb_newbee_mall_user set is_deleted = 1
+    update itema_user set is_deleted = 1
     where user_id = #{userId,jdbcType=BIGINT} and is_deleted = 0
   </update>
     <update id="isMerchant" parameterType="java.lang.String">
-    update tb_newbee_mall_user set is_merchant = 1
+    update itema_user set is_merchant = 1
     where login_name = #{loginName} and is_merchant = 0
   </update>
     <insert id="insert" parameterType="ltd.newbee.mall.entity.MallUser">
-    insert into tb_newbee_mall_user (user_id, nick_name, login_name,
+    insert into itema_user (user_id, nick_name, login_name,
       password_md5, introduce_sign, address,
       is_deleted, locked_flag, create_time,is_merchant
       )
@@ -77,7 +77,7 @@
       )
   </insert>
     <insert id="insertSelective" parameterType="ltd.newbee.mall.entity.MallUser" useGeneratedKeys="true" keyProperty="userId">
-        insert into tb_newbee_mall_user
+        insert into itema_user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="userId != null">
                 user_id,
@@ -144,7 +144,7 @@
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="ltd.newbee.mall.entity.MallUser">
-        update tb_newbee_mall_user
+        update itema_user
         <set>
             <if test="nickName != null">
                 nick_name = #{nickName,jdbcType=VARCHAR},
@@ -177,7 +177,7 @@
         where user_id = #{userId,jdbcType=BIGINT}
     </update>
     <update id="updateByPrimaryKey" parameterType="ltd.newbee.mall.entity.MallUser">
-    update tb_newbee_mall_user
+    update itema_user
     set nick_name = #{nickName,jdbcType=VARCHAR},
       login_name = #{loginName,jdbcType=VARCHAR},
       password_md5 = #{passwordMd5,jdbcType=VARCHAR},
@@ -190,7 +190,7 @@
     where user_id = #{userId,jdbcType=BIGINT}
   </update>
     <update id="lockUserBatch">
-        update tb_newbee_mall_user
+        update itema_user
         set locked_flag=#{lockStatus} where user_id in
         <foreach item="id" collection="ids" open="(" separator="," close=")">
             #{id}

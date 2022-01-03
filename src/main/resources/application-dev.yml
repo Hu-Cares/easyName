@@ -1,9 +1,9 @@
 # 数据源配置
 spring:
   datasource:
-    name: newbee_mall_plus_db
+    name: itema_db
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/newbee_mall_plus_db?useUnicode=true&serverTimezone=Asia/Shanghai&characterEncoding=utf8&autoReconnect=true&useSSL=false&allowMultiQueries=true&useAffectedRows=true
+    url: jdbc:mysql://localhost:3306/itema_db?useUnicode=true&serverTimezone=Asia/Shanghai&characterEncoding=utf8&autoReconnect=true&useSSL=false&allowMultiQueries=true&useAffectedRows=true
     username: root
     password: "a123456"
     hikari:

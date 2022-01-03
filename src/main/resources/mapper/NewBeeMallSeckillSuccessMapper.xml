@@ -14,30 +14,30 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_newbee_mall_seckill_success
+        from seckill_success
         where sec_id = #{secId,jdbcType=BIGINT}
     </select>
     <select id="getSeckillSuccessByUserIdAndSeckillId"
             resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_newbee_mall_seckill_success
+        from seckill_success
         where seckill_id = #{seckillId}
         and user_id = #{userId}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
         delete
-        from tb_newbee_mall_seckill_success
+        from seckill_success
         where sec_id = #{secId,jdbcType=BIGINT}
     </delete>
     <insert id="insert" parameterType="ltd.newbee.mall.entity.NewBeeMallSeckillSuccess">
-        insert into tb_newbee_mall_seckill_success (sec_id, seckill_id, user_id,
+        insert into seckill_success (sec_id, seckill_id, user_id,
                                                     state, create_time)
         values (#{secId,jdbcType=BIGINT}, #{seckillId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT},
                 #{state,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP})
     </insert>
     <insert id="insertSelective" parameterType="ltd.newbee.mall.entity.NewBeeMallSeckillSuccess">
-        insert into tb_newbee_mall_seckill_success
+        insert into seckill_success
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="secId != null">
                 sec_id,
@@ -74,7 +74,7 @@
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="ltd.newbee.mall.entity.NewBeeMallSeckillSuccess">
-        update tb_newbee_mall_seckill_success
+        update seckill_success
         <set>
             <if test="seckillId != null">
                 seckill_id = #{seckillId,jdbcType=BIGINT},
@@ -92,7 +92,7 @@
         where sec_id = #{secId,jdbcType=BIGINT}
     </update>
     <update id="updateByPrimaryKey" parameterType="ltd.newbee.mall.entity.NewBeeMallSeckillSuccess">
-        update tb_newbee_mall_seckill_success
+        update seckill_success
         set seckill_id  = #{seckillId,jdbcType=BIGINT},
             user_id     = #{userId,jdbcType=BIGINT},
             state       = #{state,jdbcType=TINYINT},

@@ -19,16 +19,16 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_newbee_mall_user_coupon_record
+        from user_coupon_record
         where coupon_user_id = #{couponUserId,jdbcType=BIGINT}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-        update tb_newbee_mall_user_coupon_record
+        update user_coupon_record
         set is_deleted = 1
         where coupon_user_id = #{couponUserId,jdbcType=BIGINT}
     </delete>
     <insert id="insert" parameterType="ltd.newbee.mall.entity.NewBeeMallUserCouponRecord">
-        insert into tb_newbee_mall_user_coupon_record (coupon_user_id, user_id, coupon_id,
+        insert into user_coupon_record (coupon_user_id, user_id, coupon_id,
                                                        use_status, used_time, order_id,
                                                        create_time, update_time, is_deleted)
         values (#{couponUserId,jdbcType=BIGINT}, #{userId,jdbcType=BIGINT}, #{couponId,jdbcType=BIGINT},
@@ -37,7 +37,7 @@
                 #{updateTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=TINYINT})
     </insert>
     <insert id="insertSelective" parameterType="ltd.newbee.mall.entity.NewBeeMallUserCouponRecord">
-        insert into tb_newbee_mall_user_coupon_record
+        insert into user_coupon_record
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="couponUserId != null">
                 coupon_user_id,
@@ -98,7 +98,7 @@
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="ltd.newbee.mall.entity.NewBeeMallUserCouponRecord">
-        update tb_newbee_mall_user_coupon_record
+        update user_coupon_record
         <set>
             <if test="userId != null">
                 user_id = #{userId,jdbcType=BIGINT},
@@ -128,7 +128,7 @@
         where coupon_user_id = #{couponUserId,jdbcType=BIGINT}
     </update>
     <update id="updateByPrimaryKey" parameterType="ltd.newbee.mall.entity.NewBeeMallUserCouponRecord">
-        update tb_newbee_mall_user_coupon_record
+        update user_coupon_record
         set user_id     = #{userId,jdbcType=BIGINT},
             coupon_id   = #{couponId,jdbcType=BIGINT},
             use_status  = #{useStatus,jdbcType=TINYINT},
@@ -141,35 +141,35 @@
     </update>
     <select id="getUserCouponCount" resultType="java.lang.Integer">
         select count(coupon_user_id)
-        from tb_newbee_mall_user_coupon_record
+        from user_coupon_record
         where is_deleted = 0
           and user_id = #{userId}
           and coupon_id = #{couponId}
     </select>
     <select id="getCouponCount" resultType="java.lang.Integer">
         select count(coupon_user_id)
-        from tb_newbee_mall_user_coupon_record
+        from user_coupon_record
         where is_deleted = 0
           and coupon_id = #{couponId}
     </select>
     <select id="selectMyCoupons" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_newbee_mall_user_coupon_record
+        from user_coupon_record
         where is_deleted = 0 and user_id = #{userId}
         order by use_status asc, create_time desc
     </select>
     <select id="selectMyAvailableCoupons" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_newbee_mall_user_coupon_record
+        from user_coupon_record
         where is_deleted = 0 and user_id = #{userId}
         and use_status = 0 order by create_time limit 8
     </select>
     <select id="getUserCouponByOrderId" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_newbee_mall_user_coupon_record
+        from user_coupon_record
         where is_deleted = 0 and order_id = #{orderId}
     </select>
 </mapper>

@@ -29,7 +29,7 @@
     <select id="findCouponlList" parameterType="Map" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_newbee_mall_coupon
+        from itema_coupon
         where is_deleted = 0
         <if test="couponName != null and couponName != ''">
             and coupon_name LIKE CONCAT('%',#{couponName},'%')
@@ -53,7 +53,7 @@
     </select>
     <select id="getTotalCoupons" parameterType="Map" resultType="int">
         select count(*)
-        from tb_newbee_mall_coupon
+        from itema_coupon
         where is_deleted = 0
         <if test="couponName != null and couponName != ''">
             and coupon_name LIKE CONCAT('%',#{couponName},'%')
@@ -75,17 +75,17 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_newbee_mall_coupon
+        from itema_coupon
         where coupon_id = #{couponId,jdbcType=BIGINT}
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete
-        from tb_newbee_mall_coupon
+        from itema_coupon
         where coupon_id = #{couponId,jdbcType=BIGINT}
     </delete>
 
     <insert id="insert" parameterType="ltd.newbee.mall.entity.NewBeeMallCoupon">
-        insert into tb_newbee_mall_coupon (coupon_id, coupon_name, coupon_desc,
+        insert into itema_coupon (coupon_id, coupon_name, coupon_desc,
                                            coupon_total, discount, min,
                                            coupon_limit, coupon_type, coupon_status,
                                            goods_type, goods_value, coupon_code,
@@ -98,7 +98,7 @@
                 #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=TINYINT})
     </insert>
     <insert id="insertSelective" parameterType="ltd.newbee.mall.entity.NewBeeMallCoupon">
-        insert into tb_newbee_mall_coupon
+        insert into itema_coupon
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="couponId != null">
                 coupon_id,
@@ -207,7 +207,7 @@
         </trim>
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="ltd.newbee.mall.entity.NewBeeMallCoupon">
-        update tb_newbee_mall_coupon
+        update itema_coupon
         <set>
             <if test="couponName != null">
                 coupon_name = #{couponName,jdbcType=VARCHAR},
@@ -261,7 +261,7 @@
         where coupon_id = #{couponId,jdbcType=BIGINT}
     </update>
     <update id="updateByPrimaryKey" parameterType="ltd.newbee.mall.entity.NewBeeMallCoupon">
-        update tb_newbee_mall_coupon
+        update itema_coupon
         set coupon_name       = #{couponName,jdbcType=VARCHAR},
             coupon_desc       = #{couponDesc,jdbcType=VARCHAR},
             coupon_total      = #{couponTotal,jdbcType=INTEGER},
@@ -282,7 +282,7 @@
     </update>
 
     <update id="deleteBatch">
-        update tb_newbee_mall_coupon
+        update itema_coupon
         set is_deleted=1,update_time=now() where coupon_id in
         <foreach item="id" collection="array" open="(" separator="," close=")">
             #{id}
@@ -290,7 +290,7 @@
     </update>
 
     <update id="reduceCouponTotal">
-        update tb_newbee_mall_coupon
+        update itema_coupon
         set coupon_total = coupon_total - 1
         where coupon_id = #{couponId}
           and coupon_total > 0
@@ -299,7 +299,7 @@
     <select id="selectAvailableCoupon" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_newbee_mall_coupon t
+        from itema_coupon t
         <where>
             t.is_deleted = 0
             AND t.coupon_type = 0
@@ -309,7 +309,7 @@
     <select id="selectByIds" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_newbee_mall_coupon
+        from itema_coupon
         where coupon_id in
         <foreach item="id" collection="list" open="(" separator="," close=")">
             #{id}
@@ -318,7 +318,7 @@
     <select id="selectAvailableGiveCoupon" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_newbee_mall_coupon
+        from itema_coupon
         where is_deleted = 0 and coupon_type = 1
         and coupon_start_time <![CDATA[ < ]]> now()
         and coupon_end_time <![CDATA[ > ]]> now()

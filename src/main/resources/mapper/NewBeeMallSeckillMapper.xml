@@ -21,14 +21,14 @@
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_newbee_mall_seckill
+        from itema_seckill
         where seckill_id = #{seckillId,jdbcType=INTEGER}
     </select>
 
     <select id="findSeckillList" parameterType="Map" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_newbee_mall_seckill s
+        from itema_seckill s
         where is_deleted = 0
         <if test="goodsId != null and goodsId != ''">
             and s.goods_id = #{goodsId}
@@ -45,7 +45,7 @@
     </select>
     <select id="getTotalSeckills" parameterType="Map" resultType="int">
         select count(*)
-        from tb_newbee_mall_seckill s
+        from itema_seckill s
         where is_deleted = 0
         <if test="goodsId != null and goodsId != ''">
             and s.goods_id = #{goodsId}
@@ -63,7 +63,7 @@
     <select id="findHomeSeckillList" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_newbee_mall_seckill s
+        from itema_seckill s
         where is_deleted = 0
         and seckill_status = 1
         and seckill_num > 0
@@ -71,7 +71,7 @@
     </select>
     <select id="getHomeTotalSeckills" resultType="java.lang.Integer">
         select count(*)
-        from tb_newbee_mall_seckill s
+        from itema_seckill s
         where is_deleted = 0
           and seckill_status = 1
           and seckill_num > 0
@@ -79,11 +79,11 @@
 
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete
-        from tb_newbee_mall_seckill
+        from itema_seckill
         where seckill_id = #{seckillId,jdbcType=BIGINT}
     </delete>
     <insert id="insert" parameterType="ltd.newbee.mall.entity.NewBeeMallSeckill">
-        insert into tb_newbee_mall_seckill (seckill_id, goods_id, seckill_price,
+        insert into itema_seckill (seckill_id, goods_id, seckill_price,
                                             seckill_num, seckill_status, seckill_begin,
                                             seckill_end, seckill_rank, create_time,
                                             update_time, is_deleted)
@@ -93,7 +93,7 @@
                 #{updateTime,jdbcType=TIMESTAMP}, #{isDeleted,jdbcType=BIT})
     </insert>
     <insert id="insertSelective" parameterType="ltd.newbee.mall.entity.NewBeeMallSeckill">
-        insert into tb_newbee_mall_seckill
+        insert into itema_seckill
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="seckillId != null">
                 seckill_id,
@@ -166,12 +166,12 @@
         </trim>
     </insert>
     <insert id="addStock">
-        update tb_newbee_mall_seckill
+        update itema_seckill
         set seckill_num = seckill_num + 1
         where seckill_id = #{seckillId}
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="ltd.newbee.mall.entity.NewBeeMallSeckill">
-        update tb_newbee_mall_seckill
+        update itema_seckill
         <set>
             <if test="goodsId != null">
                 goods_id = #{goodsId,jdbcType=BIGINT},
@@ -207,7 +207,7 @@
         where seckill_id = #{seckillId,jdbcType=BIGINT}
     </update>
     <update id="updateByPrimaryKey" parameterType="ltd.newbee.mall.entity.NewBeeMallSeckill">
-        update tb_newbee_mall_seckill
+        update itema_seckill
         set goods_id       = #{goodsId,jdbcType=BIGINT},
             seckill_price  = #{seckillPrice,jdbcType=BIGINT},
             seckill_num    = #{seckillNum,jdbcType=INTEGER},
