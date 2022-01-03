@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper  namespace="ltd.newbee.mall.dao.MallShopMapper">
-    <resultMap id="BaseResultMap" type="ltd.newbee.mall.entity.MallShop">
+<mapper  namespace="ltd.itema.mall.dao.MallShopMapper">
+    <resultMap id="BaseResultMap" type="ltd.itema.mall.entity.MallShop">
         <id column="shop_id" jdbcType="BIGINT" property="shopId"/>
         <result column="shop_name" jdbcType="VARCHAR" property="shopName"/>
         <result column="login_name" jdbcType="VARCHAR" property="loginName"/>
@@ -34,7 +34,7 @@
         where shop_name = #{shopName}
     </select>
 
-    <insert id="insert" parameterType="ltd.newbee.mall.entity.MallShop">
+    <insert id="insert" parameterType="ltd.itema.mall.entity.MallShop">
     insert into shop (shop_id, shop_name, login_name,
     ID_card, real_name,  create_time
       )
@@ -43,7 +43,7 @@
       )
   </insert>
 
-    <insert id="insertSelective" parameterType="ltd.newbee.mall.entity.MallShop" useGeneratedKeys="true" keyProperty="shopId">
+    <insert id="insertSelective" parameterType="ltd.itema.mall.entity.MallShop" useGeneratedKeys="true" keyProperty="shopId">
         insert into shop
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="shopId != null">
