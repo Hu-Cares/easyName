@@ -124,7 +124,7 @@ public class ItemaMallCategoryServiceImpl implements ItemaMallCategoryService {
                         for (GoodsCategory firstCategory : firstLevelCategories) {
                             ItemaMallIndexCategoryVO itemaMallIndexCategoryVO = new ItemaMallIndexCategoryVO();
                             BeanUtil.copyProperties(firstCategory, itemaMallIndexCategoryVO);
-                            //如果该一级分类下有数据则放入 newBeeMallIndexCategoryVOS 对象中
+                            //如果该一级分类下有数据则放入 itemaMallIndexCategoryVOS 对象中
                             if (secondLevelCategoryVOMap.containsKey(firstCategory.getCategoryId())) {
                                 //根据一级分类的id取出secondLevelCategoryVOMap分组中的二级级分类list
                                 List<SecondLevelCategoryVO> tempGoodsCategories = secondLevelCategoryVOMap.get(firstCategory.getCategoryId());

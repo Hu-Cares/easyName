@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--  @author 13
-      @qq交流群 791509631
-      @email 2449207463@qq.com
-      @link https://github.com/newbee-ltd -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
-    <groupId>ltd.newbee.mall</groupId>
-    <artifactId>newbee-mall-plus</artifactId>
+    <groupId>ltd.itema.mall</groupId>
+    <artifactId>itema-mall</artifactId>
     <version>2.0.2</version>
-    <name>newbee-mall-plus</name>
-    <description>新蜂商城升级版本</description>
+    <name>itema-mall</name>
+    <description>Itema商城</description>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -216,9 +212,4 @@
             </properties>
         </profile>
     </profiles>
-    <!--  @author 13
-          @qq交流群 791509631
-          @email 2449207463@qq.com
-          @link https://github.com/newbee-ltd
-    -->
 </project>

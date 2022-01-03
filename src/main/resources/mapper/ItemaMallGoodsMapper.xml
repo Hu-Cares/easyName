@@ -58,7 +58,7 @@
     </sql>
 
     <insert id="batchInsert">
-        INSERT INTO tb_newbee_mall_goods_info(goods_name, goods_intro, goods_category_id,goods_cover_img,
+        INSERT INTO goods_info(goods_name, goods_intro, goods_category_id,goods_cover_img,
         goods_carousel,
         goods_detail_content,original_price,
         selling_price, stock_num)
@@ -72,13 +72,13 @@
         <include refid="Base_Column_List"/>
         ,
         <include refid="Blob_Column_List"/>
-        from tb_newbee_mall_goods_info
+        from goods_info
         where goods_id = #{goodsId,jdbcType=BIGINT}
     </select>
     <select id="shopSelectByPrimaryKey" parameterType="java.lang.Long" resultMap="ShopResultMapWithBLOBs">
         select
         <include refid="Shop_Base_Column_List"/>
-        from tb_newbee_mall_goods_info
+        from goods_info
         where goods_id = #{goodsId,jdbcType=BIGINT} and shop_id=#{shopId,jdbcType=BIGINT}
     </select>
     <select id="selectByCategoryIdAndName" resultMap="ResultMapWithBLOBs">
@@ -86,17 +86,17 @@
         <include refid="Base_Column_List"/>
         ,
         <include refid="Blob_Column_List"/>
-        from tb_newbee_mall_goods_info
+        from goods_info
         where goods_name = #{goodsName,jdbcType=VARCHAR} and goods_category_id = #{goodsCategoryId,jdbcType=BIGINT}
     </select>
     <update id="updateStockNum">
         <foreach collection="stockNumDTOS" item="stockNumDTO">
-            update tb_newbee_mall_goods_info set stock_num = stock_num-#{stockNumDTO.goodsCount}
+            update goods_info set stock_num = stock_num-#{stockNumDTO.goodsCount}
             where goods_id = #{stockNumDTO.goodsId} and stock_num>=#{stockNumDTO.goodsCount} and goods_sell_status = 0;
         </foreach>
     </update>
     <update id="batchUpdateSellStatus">
-        update tb_newbee_mall_goods_info
+        update goods_info
         set goods_sell_status=#{sellStatus},update_time=now() where goods_id in
         <foreach item="id" collection="orderIds" open="(" separator="," close=")">
             #{id}
@@ -105,7 +105,7 @@
     <select id="findItemaMallGoodsList" parameterType="Map" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_newbee_mall_goods_info
+        from goods_info
         <where>
             <if test="goodsName!=null and goodsName!=''">
                 and goods_name like CONCAT('%',#{goodsName},'%')
@@ -129,7 +129,7 @@
     <select id="findItemaMallGoodsListBySearch" parameterType="Map" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_newbee_mall_goods_info
+        from goods_info
         <where>
             <if test="keyword!=null and keyword!=''">
                 and (goods_name like CONCAT('%',#{keyword},'%') or goods_intro like CONCAT('%',#{keyword},'%'))
@@ -163,7 +163,7 @@
     </select>
 
     <select id="getTotalItemaMallGoodsBySearch" parameterType="Map" resultType="int">
-        select count(*) from tb_newbee_mall_goods_info
+        select count(*) from goods_info
         <where>
             <if test="keyword!=null and keyword!=''">
                 and (goods_name like CONCAT('%',#{keyword},'%') or goods_intro like CONCAT('%',#{keyword},'%'))
@@ -180,7 +180,7 @@
     <select id="selectByPrimaryKeys" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from tb_newbee_mall_goods_info
+        from goods_info
         where goods_id in
         <foreach item="id" collection="list" open="(" separator="," close=")">
             #{id}
@@ -192,7 +192,7 @@
         );
     </select>
     <select id="getTotalItemaMallGoods" parameterType="Map" resultType="int">
-        select count(*) from tb_newbee_mall_goods_info
+        select count(*) from goods_info
         <where>
             <if test="goodsName!=null and goodsName!=''">
                 and goods_name like CONCAT('%',#{goodsName},'%')
@@ -210,11 +210,11 @@
     </select>
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
         delete
-        from tb_newbee_mall_goods_info
+        from goods_info
         where goods_id = #{goodsId,jdbcType=BIGINT}
     </delete>
     <insert id="insert" parameterType="ltd.itema.mall.entity.ItemaMallGoods">
-        insert into tb_newbee_mall_goods_info (goods_id, goods_name, goods_intro,
+        insert into goods_info (goods_id, goods_name, goods_intro,
                                                goods_cover_img, goods_carousel, original_price,
                                                selling_price, stock_num, tag,
                                                goods_sell_status, create_user, create_time,
@@ -227,7 +227,7 @@
                 #{goodsDetailContent,jdbcType=LONGVARCHAR},#{shopId,jdbcType=BIGINT})
     </insert>
     <insert id="insertSelective" parameterType="ltd.itema.mall.entity.ItemaMallGoods">
-        insert into tb_newbee_mall_goods_info
+        insert into goods_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="goodsId != null">
                 goods_id,
@@ -337,7 +337,7 @@
     </insert>
 
     <insert id="shopInsertSelective" parameterType="ltd.itema.mall.entity.ItemaMallshopGoods">
-        insert into tb_newbee_mall_goods_info
+        insert into goods_info
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="goodsId != null">
                 goods_id,
@@ -447,12 +447,12 @@
     </insert>
 
     <insert id="addStock">
-        update tb_newbee_mall_goods_info
+        update goods_info
         set stock_num = stock_num + #{goodsCount}, update_time = now()
         where goods_id = #{goodsId}
     </insert>
     <update id="updateByPrimaryKeySelective" parameterType="ltd.itema.mall.entity.ItemaMallGoods">
-        update tb_newbee_mall_goods_info
+        update goods_info
         <set>
             <if test="goodsName != null">
                 goods_name = #{goodsName,jdbcType=VARCHAR},
@@ -506,7 +506,7 @@
         where goods_id = #{goodsId,jdbcType=BIGINT}
     </update>
     <update id="updateByPrimaryKeyWithBLOBs" parameterType="ltd.itema.mall.entity.ItemaMallGoods">
-        update tb_newbee_mall_goods_info
+        update goods_info
         set goods_name           = #{goodsName,jdbcType=VARCHAR},
             goods_intro          = #{goodsIntro,jdbcType=VARCHAR},
             goods_cover_img      = #{goodsCoverImg,jdbcType=VARCHAR},
@@ -524,7 +524,7 @@
         where goods_id = #{goodsId,jdbcType=BIGINT}
     </update>
     <update id="updateByPrimaryKey" parameterType="ltd.itema.mall.entity.ItemaMallGoods">
-        update tb_newbee_mall_goods_info
+        update goods_info
         set goods_name        = #{goodsName,jdbcType=VARCHAR},
             goods_intro       = #{goodsIntro,jdbcType=VARCHAR},
             goods_cover_img   = #{goodsCoverImg,jdbcType=VARCHAR},

@@ -27,12 +27,20 @@
                                 <img th:src="@{/admin/dist/img/欢迎.png}" style="width: 240px;height: 200px;">
                                 <br>
                                 <br>
-                                <h3>这里是后台管理系统！</h3>
-                                <ul>
-                                    <li>欢迎，这里是您的后台管理系统首页。</li>
-                                    <li>您可以查看并编辑首页配置、商家管理、分类管理、设置等模块。</li>
-                                </ul>
-
+                                <th:block th:if="${session.itemaMallShop!=null}and${session.loginUser==null}">
+                                    <h3>这里是后台管理系统！</h3>
+                                    <ul>
+                                        <li>欢迎，这里是您的后台管理系统首页。</li>
+                                        <li>您可以查看并编辑首页配置、商家管理、分类管理、设置等模块。</li>
+                                    </ul>
+                                </th:block>
+                                <th:block th:if="${session.loginUser!=null}">
+                                    <h3>这里是您的小店！</h3>
+                                    <ul>
+                                        <li>欢迎，这里是您的个人小店首页。</li>
+                                        <li>您可以查看并编辑商品管理、订单管理、分类管理、设置等模块。</li>
+                                    </ul>
+                                </th:block>
                                 <br>
                                 <h3>联系我们</h3>
                                 <ul>

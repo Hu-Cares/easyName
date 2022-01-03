@@ -12,30 +12,30 @@
     </resultMap>
     <sql id="Base_Column_List">
     shop_id, shop_name, login_name, ID_card, real_name,  create_time
-  </sql>
+    </sql>
     <select id="selectByLoginName" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from shop
+        from itema_shop
         where login_name = #{loginName}
     </select>
 
     <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from shop
+        from itema_shop
         where shop_id = #{shopId,jdbcType=BIGINT}
     </select>
 
     <select id="selectByShopName" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from shop
+        from itema_shop
         where shop_name = #{shopName}
     </select>
 
     <insert id="insert" parameterType="ltd.itema.mall.entity.MallShop">
-    insert into shop (shop_id, shop_name, login_name,
+    insert into itema_shop (shop_id, shop_name, login_name,
     ID_card, real_name,  create_time
       )
     values (#{shopId,jdbcType=BIGINT}, #{shopName,jdbcType=VARCHAR}, #{loginName,jdbcType=VARCHAR},
@@ -44,7 +44,7 @@
   </insert>
 
     <insert id="insertSelective" parameterType="ltd.itema.mall.entity.MallShop" useGeneratedKeys="true" keyProperty="shopId">
-        insert into shop
+        insert into itema_shop
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="shopId != null">
                 shop_id,

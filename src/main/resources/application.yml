@@ -10,7 +10,7 @@ server:
 
 # 项目全局配置
 project:
-  name: itema-mall-plus # 项目名称
+  name: itema-mall# 项目名称
   fileUploadPath:  E:\javaweb\dx1\src\main\resources\static\upload          # 上传文件的默认url前缀，根据部署设置自行修改，windows下路径
   orderUnpaidOverTime: 300 # 订单未支付超期时间，单位秒
   serverUrl: http://localhost:28079 # 服务器地址

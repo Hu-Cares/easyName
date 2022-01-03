@@ -429,22 +429,22 @@ a {
     color: #b0b0b0;
 }
 
-.newbee-pagenavi .iconfont {
+.itema-pagenavi .iconfont {
     font-size: 24px;
     vertical-align: bottom;
 }
 
-.newbee-pagenavi .current {
+.itema-pagenavi .current {
     background-color: #757575;
     color: #fff;
 }
 
-.newbee-pagenavi a.numbers {
+.itema-pagenavi a.numbers {
     -webkit-transition: all .2s linear;
     transition: all .2s linear
 }
 
-.newbee-pagenavi a.numbers:hover {
+.itema-pagenavi a.numbers:hover {
     background: #b0b0b0;
     color: #fff
 }
