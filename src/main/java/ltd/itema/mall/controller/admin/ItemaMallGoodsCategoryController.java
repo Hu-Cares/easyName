@@ -23,12 +23,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
-/**
- * @author 13
- * @qq交流群 791509631
- * @email 2449207463@qq.com
- * @link https://github.com/newbee-ltd
- */
 @Controller
 @RequestMapping("/admin")
 public class ItemaMallGoodsCategoryController {
@@ -41,11 +35,11 @@ public class ItemaMallGoodsCategoryController {
         if (categoryLevel == null || categoryLevel < 1 || categoryLevel > 3) {
             return "error/error_5xx";
         }
-        request.setAttribute("path", "newbee_mall_category");
+        request.setAttribute("path", "itema_mall_category");
         request.setAttribute("parentId", parentId);
         request.setAttribute("backParentId", backParentId);
         request.setAttribute("categoryLevel", categoryLevel);
-        return "admin/newbee_mall_category";
+        return "itema_mall_category";
     }
 
     /**

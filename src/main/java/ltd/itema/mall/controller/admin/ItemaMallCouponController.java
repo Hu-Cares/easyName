@@ -23,8 +23,8 @@ public class ItemaMallCouponController {
 
     @GetMapping("/coupon")
     public String index(HttpServletRequest request) {
-        request.setAttribute("path", "newbee_mall_coupon");
-        return "admin/newbee_mall_coupon";
+        request.setAttribute("path", "itema_mall_coupon");
+        return "admin/itema_mall_coupon";
     }
 
     @ResponseBody

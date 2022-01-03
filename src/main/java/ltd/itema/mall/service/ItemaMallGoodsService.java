@@ -22,7 +22,7 @@ public interface ItemaMallGoodsService {
      * @param pageUtil
      * @return
      */
-    PageResult getNewBeeMallGoodsPage(PageQueryUtil pageUtil);
+    PageResult getItemaMallGoodsPage(PageQueryUtil pageUtil);
 
     /**
      * 添加商品
@@ -30,21 +30,21 @@ public interface ItemaMallGoodsService {
      * @param goods
      * @return
      */
-    String saveNewBeeMallGoods(ItemaMallGoods goods);
+    String saveItemaMallGoods(ItemaMallGoods goods);
     /**
      * 添加商品
      *
      * @param goods
      * @return
      */
-    String shopSaveNewBeeMallGoods(ItemaMallshopGoods goods);
+    String shopSaveItemaMallGoods(ItemaMallshopGoods goods);
     /**
      * 批量新增商品数据
      *
      * @param itemaMallGoodsList
      * @return
      */
-    void batchSaveNewBeeMallGoods(List<ItemaMallGoods> itemaMallGoodsList);
+    void batchSaveItemaMallGoods(List<ItemaMallGoods> itemaMallGoodsList);
 
     /**
      * 修改商品信息
@@ -52,7 +52,7 @@ public interface ItemaMallGoodsService {
      * @param goods
      * @return
      */
-    String updateNewBeeMallGoods(ItemaMallGoods goods);
+    String updateItemaMallGoods(ItemaMallGoods goods);
 
     /**
      * 获取商品详情
@@ -60,9 +60,9 @@ public interface ItemaMallGoodsService {
      * @param id
      * @return
      */
-    ItemaMallGoods getNewBeeMallGoodsById(Long id);
+    ItemaMallGoods getItemaMallGoodsById(Long id);
 
-    List<String> getNewBeeMallCommentById(Long id);
+    List<String> getItemaMallCommentById(Long id);
 
     /**
      * 商家获取商品详情
@@ -70,7 +70,7 @@ public interface ItemaMallGoodsService {
      * @param id
      * @return
      */
-    ItemaMallshopGoods getNewBeeMallShopGoodsById(Long id);
+    ItemaMallshopGoods getItemaMallShopGoodsById(Long id);
     /**
      * 批量修改销售状态(上架下架)
      *
@@ -85,5 +85,5 @@ public interface ItemaMallGoodsService {
      * @param pageUtil
      * @return
      */
-    PageResult searchNewBeeMallGoods(PageQueryUtil pageUtil);
+    PageResult searchItemaMallGoods(PageQueryUtil pageUtil);
 }

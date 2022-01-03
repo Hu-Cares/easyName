@@ -19,7 +19,6 @@ import ltd.itema.mall.service.ItemaMallGoodsService;
 import ltd.itema.mall.util.PageQueryUtil;
 import ltd.itema.mall.util.Result;
 import ltd.itema.mall.util.ResultGenerator;
-import ltd.itema.mall.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
@@ -33,13 +32,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-
-/**
- * @author 13
- * @qq交流群 791509631
- * @email 2449207463@qq.com
- * @link https://github.com/newbee-ltd
- */
 @Controller
 @RequestMapping("/admin")
 public class ItemaMallGoodsController {
@@ -52,8 +44,8 @@ public class ItemaMallGoodsController {
     private HttpServletRequest request;
     @GetMapping("/goods")
     public String goodsPage(HttpServletRequest request) {
-        request.setAttribute("path", "newbee_mall_goods");
-        return "admin/newbee_mall_goods";
+        request.setAttribute("path", "itema_mall_goods");
+        return "admin/itema_mall_goods";
     }
 
     @GetMapping("/goods/edit")
@@ -71,7 +63,7 @@ public class ItemaMallGoodsController {
                 request.setAttribute("secondLevelCategories", secondLevelCategories);
                 request.setAttribute("thirdLevelCategories", thirdLevelCategories);
                 request.setAttribute("path", "goods-edit");
-                return "admin/newbee_mall_goods_edit";
+                return "admin/itema_mall_goods_edit";
             }
         }
         return "error/error_5xx";
@@ -80,7 +72,7 @@ public class ItemaMallGoodsController {
     @GetMapping("/goods/edit/{goodsId}")
     public String edit(HttpServletRequest request, @PathVariable("goodsId") Long goodsId) {
         request.setAttribute("path", "edit");
-        ItemaMallGoods itemaMallGoods = itemaMallGoodsService.getNewBeeMallGoodsById(goodsId);
+        ItemaMallGoods itemaMallGoods = itemaMallGoodsService.getItemaMallGoodsById(goodsId);
         if (itemaMallGoods == null) {
             return "error/error_400";
         }
@@ -131,7 +123,7 @@ public class ItemaMallGoodsController {
         }
         request.setAttribute("goods", itemaMallGoods);
         request.setAttribute("path", "goods-edit");
-        return "admin/newbee_mall_goods_edit";
+        return "admin/itema_mall_goods_edit";
     }
 
     /**
@@ -144,7 +136,7 @@ public class ItemaMallGoodsController {
             return ResultGenerator.genFailResult("参数异常！");
         }
         PageQueryUtil pageUtil = new PageQueryUtil(params);
-        return ResultGenerator.genSuccessResult(itemaMallGoodsService.getNewBeeMallGoodsPage(pageUtil));
+        return ResultGenerator.genSuccessResult(itemaMallGoodsService.getItemaMallGoodsPage(pageUtil));
     }
 
     /**
@@ -169,7 +161,7 @@ public class ItemaMallGoodsController {
         if (mallshop!=null&&null == request.getSession().getAttribute("loginUser")) {
             itemaMallGoods.setShopId(mallshop.getShopId());
         }
-        String result = itemaMallGoodsService.saveNewBeeMallGoods(itemaMallGoods);
+        String result = itemaMallGoodsService.saveItemaMallGoods(itemaMallGoods);
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
             return ResultGenerator.genSuccessResult();
         } else {
@@ -201,7 +193,7 @@ public class ItemaMallGoodsController {
         if (mallshop!=null&&null == request.getSession().getAttribute("loginUser")) {
             itemaMallGoods.setShopId(mallshop.getShopId());
         }
-        String result = itemaMallGoodsService.updateNewBeeMallGoods(itemaMallGoods);
+        String result = itemaMallGoodsService.updateItemaMallGoods(itemaMallGoods);
         if (ServiceResultEnum.SUCCESS.getResult().equals(result)) {
             return ResultGenerator.genSuccessResult();
         } else {
@@ -215,7 +207,7 @@ public class ItemaMallGoodsController {
     @GetMapping("/goods/info/{id}")
     @ResponseBody
     public Result info(@PathVariable("id") Long id) {
-        ItemaMallGoods goods = itemaMallGoodsService.getNewBeeMallGoodsById(id);
+        ItemaMallGoods goods = itemaMallGoodsService.getItemaMallGoodsById(id);
         if (goods == null) {
             return ResultGenerator.genFailResult(ServiceResultEnum.DATA_NOT_EXIST.getResult());
         }

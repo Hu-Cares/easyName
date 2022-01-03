@@ -1,4 +1,4 @@
-package ltd.itema.mall.controller.admin;
+/*package ltd.itema.mall.controller.admin;
 
 import ltd.itema.mall.common.Constants;
 import ltd.itema.mall.entity.ItemaMallSeckill;
@@ -26,8 +26,8 @@ public class ItemaMallSeckillController {
 
     @GetMapping("/seckill")
     public String index(HttpServletRequest request) {
-        request.setAttribute("path", "newbee_mall_seckill");
-        return "admin/newbee_mall_seckill";
+        request.setAttribute("path", "itema_mall_seckill");
+        return "admin/itema_mall_seckill";
     }
 
     @ResponseBody
@@ -38,11 +38,12 @@ public class ItemaMallSeckillController {
         }
         PageQueryUtil pageUtil = new PageQueryUtil(params);
         return ResultGenerator.genSuccessResult(itemaMallSeckillService.getSeckillPage(pageUtil));
-    }
+    }*/
 
-    /**
+/**
      * 保存
-     */
+     *//*
+
     @ResponseBody
     @PostMapping("/seckill/save")
     public Result save(@RequestBody ItemaMallSeckill itemaMallSeckill) {
@@ -57,9 +58,11 @@ public class ItemaMallSeckillController {
         return ResultGenerator.genDmlResult(result);
     }
 
-    /**
+    */
+/**
      * 更新
-     */
+     *//*
+
     @PostMapping("/seckill/update")
     @ResponseBody
     public Result update(@RequestBody ItemaMallSeckill itemaMallSeckill) {
@@ -76,9 +79,11 @@ public class ItemaMallSeckillController {
         return ResultGenerator.genDmlResult(result);
     }
 
-    /**
+    */
+/**
      * 详情
-     */
+     *//*
+
     @GetMapping("/seckill/{id}")
     @ResponseBody
     public Result Info(@PathVariable("id") Long id) {
@@ -86,9 +91,11 @@ public class ItemaMallSeckillController {
         return ResultGenerator.genSuccessResult(itemaMallSeckill);
     }
 
-    /**
+    */
+/**
      * 删除
-     */
+     *//*
+
     @DeleteMapping("/seckill/{id}")
     @ResponseBody
     public Result delete(@PathVariable Long id) {
@@ -97,3 +104,4 @@ public class ItemaMallSeckillController {
         return ResultGenerator.genDmlResult(itemaMallSeckillService.deleteSeckillById(id));
     }
 }
+*/

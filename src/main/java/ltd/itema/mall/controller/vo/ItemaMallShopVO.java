@@ -34,7 +34,7 @@ public class ItemaMallShopVO {
 
     @Override
     public String toString() {
-        return "NewBeeMallShopVO{" +
+        return "ItemaMallShopVO{" +
                 "shopId=" + shopId +
                 ", shopName='" + shopName + '\'' +
                 ", realName='" + realName + '\'' +

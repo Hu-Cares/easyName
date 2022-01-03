@@ -38,17 +38,17 @@ public interface ItemaMallGoodsMapper {
 
     int updateByPrimaryKey(ItemaMallGoods record);
 
-    List<ItemaMallGoods> findNewBeeMallGoodsList(PageQueryUtil pageUtil);
+    List<ItemaMallGoods> findItemaMallGoodsList(PageQueryUtil pageUtil);
 
-    int getTotalNewBeeMallGoods(PageQueryUtil pageUtil);
+    int getTotalItemaMallGoods(PageQueryUtil pageUtil);
 
     List<ItemaMallGoods> selectByPrimaryKeys(List<Long> goodsIds);
 
-    List<ItemaMallGoods> findNewBeeMallGoodsListBySearch(PageQueryUtil pageUtil);
+    List<ItemaMallGoods> findItemaMallGoodsListBySearch(PageQueryUtil pageUtil);
 
-    int getTotalNewBeeMallGoodsBySearch(PageQueryUtil pageUtil);
+    int getTotalItemaMallGoodsBySearch(PageQueryUtil pageUtil);
 
-    int batchInsert(@Param("newBeeMallGoodsList") List<ItemaMallGoods> itemaMallGoodsList);
+    int batchInsert(@Param("itemaMallGoodsList") List<ItemaMallGoods> itemaMallGoodsList);
 
     int updateStockNum(@Param("stockNumDTOS") List<StockNumDTO> stockNumDTOS);
 

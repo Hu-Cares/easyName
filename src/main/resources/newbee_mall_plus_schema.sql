@@ -2,7 +2,7 @@
 -- Copyright (c) 2019-2020 十三 all rights reserved.
 -- ----------------------------
 
--- 创建mysql newbee_mall_plus_db库
+-- 创建mysql itema_mall_plus_db库
 DROP DATABASE IF EXISTS `newbee_mall_plus_db`;
 CREATE database `newbee_mall_plus_db` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 SET NAMES utf8mb4;

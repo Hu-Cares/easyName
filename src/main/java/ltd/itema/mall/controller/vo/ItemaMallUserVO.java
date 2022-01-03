@@ -86,7 +86,7 @@ public class ItemaMallUserVO implements Serializable {
 
     @Override
     public String toString() {
-        return "NewBeeMallUserVO{" +
+        return "ItemaMallUserVO{" +
                 "userId=" + userId +
                 ", nickName='" + nickName + '\'' +
                 ", loginName='" + loginName + '\'' +

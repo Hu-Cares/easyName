@@ -68,7 +68,7 @@ public class GoodsController {
         params.put("goodsSellStatus", Constants.SELL_STATUS_UP);
         //封装商品数据
         PageQueryUtil pageUtil = new PageQueryUtil(params);
-        request.setAttribute("pageResult", itemaMallGoodsService.searchNewBeeMallGoods(pageUtil));
+        request.setAttribute("pageResult", itemaMallGoodsService.searchItemaMallGoods(pageUtil));
         return "mall/search";
     }
 
@@ -77,8 +77,8 @@ public class GoodsController {
         if (goodsId < 1) {
             return "error/error_5xx";
         }
-        ItemaMallGoods goods = itemaMallGoodsService.getNewBeeMallGoodsById(goodsId);
-        List<String> Comments = itemaMallGoodsService.getNewBeeMallCommentById(goodsId);
+        ItemaMallGoods goods = itemaMallGoodsService.getItemaMallGoodsById(goodsId);
+        List<String> Comments = itemaMallGoodsService.getItemaMallCommentById(goodsId);
         List<String> Commenttwo=new ArrayList<String>();
         int flag=0;
         for(String s:Comments){
@@ -104,8 +104,8 @@ public class GoodsController {
         if (goodsId < 1) {
             return "error/error_5xx";
         }
-        ItemaMallGoods goods = itemaMallGoodsService.getNewBeeMallGoodsById(goodsId);
-        List<String> Comments = itemaMallGoodsService.getNewBeeMallCommentById(goodsId);
+        ItemaMallGoods goods = itemaMallGoodsService.getItemaMallGoodsById(goodsId);
+        List<String> Comments = itemaMallGoodsService.getItemaMallCommentById(goodsId);
         if (goods == null) {
             ItemaMallException.fail(ServiceResultEnum.GOODS_NOT_EXIST.getResult());
         }

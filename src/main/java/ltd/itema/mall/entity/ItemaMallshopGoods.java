@@ -183,7 +183,7 @@ public class ItemaMallshopGoods {
 
     @Override
     public String toString() {
-        return "NewBeeMallshopGoods{" +
+        return "ItemaMallshopGoods{" +
                 "goodsId=" + goodsId +
                 ", goodsName='" + goodsName + '\'' +
                 ", goodsIntro='" + goodsIntro + '\'' +

@@ -20,12 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * newbee-mall购物车数量处理
- *
- * @author 13
- * @qq交流群 791509631
- * @email 2449207463@qq.com
- * @link https://github.com/newbee-ltd
+ * itema-mall购物车数量处理
  */
 @Component
 public class ItemaMallCartNumberInterceptor implements HandlerInterceptor {

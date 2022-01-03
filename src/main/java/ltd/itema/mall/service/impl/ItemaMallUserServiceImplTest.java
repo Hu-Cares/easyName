@@ -28,7 +28,7 @@ class ItemaMallUserServiceImplTest {
     void login(){
        HttpSession session=request.getSession();
        service.login("15707061101","2a19cb7daff53d0166c5b4257dc3f62d",session);
-       ItemaMallUserVO newBeeMallShopVO=(ItemaMallUserVO) session.getAttribute(Constants.MALL_SHOP_SESSION_KEY);
-       System.out.println(newBeeMallShopVO.toString());//newBeeMallShopVO.toString()
+       ItemaMallUserVO itemaMallShopVO=(ItemaMallUserVO) session.getAttribute(Constants.MALL_SHOP_SESSION_KEY);
+       System.out.println(itemaMallShopVO.toString());//itemaMallShopVO.toString()
    }
 }

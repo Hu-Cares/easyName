@@ -62,8 +62,8 @@ public class ItemaMallOrderServiceImpl implements ItemaMallOrderService {
     private HttpServletRequest request;
 
     @Override
-    public PageResult getNewBeeMallOrdersPage(PageQueryUtil pageUtil) {
-        List<ItemaMallOrder> itemaMallOrders = itemaMallOrderMapper.findNewBeeMallOrderList(pageUtil);
+    public PageResult getItemaMallOrdersPage(PageQueryUtil pageUtil) {
+        List<ItemaMallOrder> itemaMallOrders = itemaMallOrderMapper.findItemaMallOrderList(pageUtil);
         MallShop mallshop=(MallShop)request.getSession().getAttribute(Constants.MALL_SHOP_SESSION_KEY);
          if (mallshop!=null&&null == request.getSession().getAttribute("loginUser")) {
              Iterator<ItemaMallOrder> it = itemaMallOrders.iterator();
@@ -74,7 +74,7 @@ public class ItemaMallOrderServiceImpl implements ItemaMallOrderService {
                  }
              }
          }
-        int total = itemaMallOrderMapper.getTotalNewBeeMallOrders(pageUtil);
+        int total = itemaMallOrderMapper.getTotalItemaMallOrders(pageUtil);
         PageResult pageResult = new PageResult(itemaMallOrders, total, pageUtil.getLimit(), pageUtil.getPage());
         return pageResult;
     }
@@ -220,22 +220,22 @@ public class ItemaMallOrderServiceImpl implements ItemaMallOrderService {
         List<ItemaMallGoods> itemaMallGoods = itemaMallGoodsMapper.selectByPrimaryKeys(goodsIds);
         // 检查是否包含已下架商品
         List<ItemaMallGoods> goodsListNotSelling = itemaMallGoods.stream()
-                .filter(newBeeMallGoodsTemp -> newBeeMallGoodsTemp.getGoodsSellStatus() != Constants.SELL_STATUS_UP)
+                .filter(itemaMallGoodsTemp -> itemaMallGoodsTemp.getGoodsSellStatus() != Constants.SELL_STATUS_UP)
                 .collect(Collectors.toList());
         if (!CollectionUtils.isEmpty(goodsListNotSelling)) {
             // goodsListNotSelling 对象非空则表示有下架商品
             ItemaMallException.fail(goodsListNotSelling.get(0).getGoodsName() + "已下架，无法生成订单");
         }
-        Map<Long, ItemaMallGoods> newBeeMallGoodsMap = itemaMallGoods.stream().collect(Collectors.toMap(ItemaMallGoods::getGoodsId, Function.identity(), (entity1, entity2) -> entity1));
+        Map<Long, ItemaMallGoods> itemaMallGoodsMap = itemaMallGoods.stream().collect(Collectors.toMap(ItemaMallGoods::getGoodsId, Function.identity(), (entity1, entity2) -> entity1));
         // 判断商品库存
         int i=0;
         for (ItemaMallShoppingCartItemVO shoppingCartItemVO : myShoppingCartItems) {
             // 查出的商品中不存在购物车中的这条关联商品数据，直接返回错误提醒
-            if (!newBeeMallGoodsMap.containsKey(shoppingCartItemVO.getGoodsId())) {
+            if (!itemaMallGoodsMap.containsKey(shoppingCartItemVO.getGoodsId())) {
                 ItemaMallException.fail(ServiceResultEnum.SHOPPING_ITEM_ERROR.getResult());
             }
             // 存在数量大于库存的情况，直接返回错误提醒
-            if (shoppingCartItemVO.getGoodsCount() > newBeeMallGoodsMap.get(shoppingCartItemVO.getGoodsId()).getStockNum()) {
+            if (shoppingCartItemVO.getGoodsCount() > itemaMallGoodsMap.get(shoppingCartItemVO.getGoodsId()).getStockNum()) {
                 ItemaMallException.fail(ServiceResultEnum.SHOPPING_ITEM_COUNT_ERROR.getResult());
             }
         }
@@ -280,7 +280,7 @@ public class ItemaMallOrderServiceImpl implements ItemaMallOrderService {
                 ItemaMallException.fail(ServiceResultEnum.ORDER_PRICE_ERROR.getResult());
             }
             itemaMallOrder.setTotalPrice(priceTotal);
-            String extraInfo = "newbeemall-plus支付宝沙箱支付";
+            String extraInfo = "itemamall-plus支付宝沙箱支付";
             itemaMallOrder.setExtraInfo(extraInfo);
             // 生成订单项并保存订单项纪录
             if (itemaMallOrderMapper.insertSelective(itemaMallOrder) <= 0) {
@@ -297,15 +297,15 @@ public class ItemaMallOrderServiceImpl implements ItemaMallOrderService {
                 itemaMallUserCouponRecordMapper.updateByPrimaryKeySelective(couponUser);
             }
             // 生成所有的订单项快照，并保存至数据库
-            //List<NewBeeMallOrderItem> newBeeMallOrderItems = new ArrayList<>();
-            //for (NewBeeMallShoppingCartItemVO newBeeMallShoppingCartItemVO : myShoppingCartItems) {
+            //List<ItemaMallOrderItem> itemaMallOrderItems = new ArrayList<>();
+            //for (ItemaMallShoppingCartItemVO itemaMallShoppingCartItemVO : myShoppingCartItems) {
                 ItemaMallShoppingCartItemVO itemaMallShoppingCartItemVO =myShoppingCartItems.get(l++);
                 ItemaMallOrderItem itemaMallOrderItem = new ItemaMallOrderItem();
-                // 使用BeanUtil工具类将newBeeMallShoppingCartItemVO中的属性复制到newBeeMallOrderItem对象中
+                // 使用BeanUtil工具类将itemaMallShoppingCartItemVO中的属性复制到itemaMallOrderItem对象中
                 BeanUtil.copyProperties(itemaMallShoppingCartItemVO, itemaMallOrderItem);
-                // NewBeeMallOrderMapper文件insert()方法中使用了useGeneratedKeys因此orderId可以获取到
+                // ItemaMallOrderMapper文件insert()方法中使用了useGeneratedKeys因此orderId可以获取到
                 itemaMallOrderItem.setOrderId(itemaMallOrder.getOrderId());
-             //   newBeeMallOrderItems.add(newBeeMallOrderItem);
+             //   itemaMallOrderItems.add(itemaMallOrderItem);
            // }
             // 保存至数据库
             if (itemaMallOrderItemMapper.insert(itemaMallOrderItem) <= 0) {
@@ -386,7 +386,7 @@ public class ItemaMallOrderServiceImpl implements ItemaMallOrderService {
         List<ItemaMallOrderItemVO> itemaMallOrderItemVOS = BeanUtil.copyList(orderItems, ItemaMallOrderItemVO.class);
         ItemaMallOrderDetailVO itemaMallOrderDetailVO = new ItemaMallOrderDetailVO();
         BeanUtil.copyProperties(itemaMallOrder, itemaMallOrderDetailVO);
-        itemaMallOrderDetailVO.setOrderStatusString(ItemaMallOrderStatusEnum.getNewBeeMallOrderStatusEnumByStatus(itemaMallOrderDetailVO.getOrderStatus()).getName());
+        itemaMallOrderDetailVO.setOrderStatusString(ItemaMallOrderStatusEnum.getItemaMallOrderStatusEnumByStatus(itemaMallOrderDetailVO.getOrderStatus()).getName());
         itemaMallOrderDetailVO.setPayTypeString(PayTypeEnum.getPayTypeEnumByType(itemaMallOrderDetailVO.getPayType()).getName());
         itemaMallOrderDetailVO.setItemaMallOrderItemVOS(itemaMallOrderItemVOS);
         ItemaMallUserCouponRecord itemaMallUserCouponRecord = itemaMallUserCouponRecordMapper.getUserCouponByOrderId(itemaMallOrder.getOrderId());
@@ -398,22 +398,22 @@ public class ItemaMallOrderServiceImpl implements ItemaMallOrderService {
     }
 
     @Override
-    public ItemaMallOrder getNewBeeMallOrderByOrderNo(String orderNo) {
+    public ItemaMallOrder getItemaMallOrderByOrderNo(String orderNo) {
         ItemaMallOrder itemaMallOrder = itemaMallOrderMapper.selectByOrderNo(orderNo);
         return itemaMallOrder;
     }
 
     @Override
     public PageResult getMyOrders(PageQueryUtil pageUtil) {
-        int total = itemaMallOrderMapper.getTotalNewBeeMallOrders(pageUtil);
-        List<ItemaMallOrder> itemaMallOrders = itemaMallOrderMapper.findNewBeeMallOrderList(pageUtil);
+        int total = itemaMallOrderMapper.getTotalItemaMallOrders(pageUtil);
+        List<ItemaMallOrder> itemaMallOrders = itemaMallOrderMapper.findItemaMallOrderList(pageUtil);
         List<ItemaMallOrderListVO> orderListVOS = new ArrayList<>();
         if (total > 0) {
             // 数据转换 将实体类转成vo
             orderListVOS = BeanUtil.copyList(itemaMallOrders, ItemaMallOrderListVO.class);
             // 设置订单状态中文显示值
             for (ItemaMallOrderListVO itemaMallOrderListVO : orderListVOS) {
-                itemaMallOrderListVO.setOrderStatusString(ItemaMallOrderStatusEnum.getNewBeeMallOrderStatusEnumByStatus(itemaMallOrderListVO.getOrderStatus()).getName());
+                itemaMallOrderListVO.setOrderStatusString(ItemaMallOrderStatusEnum.getItemaMallOrderStatusEnumByStatus(itemaMallOrderListVO.getOrderStatus()).getName());
             }
             List<Long> orderIds = itemaMallOrders.stream().map(ItemaMallOrder::getOrderId).collect(Collectors.toList());
             if (!CollectionUtils.isEmpty(orderIds)) {
@@ -423,7 +423,7 @@ public class ItemaMallOrderServiceImpl implements ItemaMallOrderService {
                     // 封装每个订单列表对象的订单项数据
                     if (itemByOrderIdMap.containsKey(itemaMallOrderListVO.getOrderId())) {
                         List<ItemaMallOrderItem> orderItemListTemp = itemByOrderIdMap.get(itemaMallOrderListVO.getOrderId());
-                        // 将NewBeeMallOrderItem对象列表转换成NewBeeMallOrderItemVO对象列表
+                        // 将ItemaMallOrderItem对象列表转换成ItemaMallOrderItemVO对象列表
                         List<ItemaMallOrderItemVO> itemaMallOrderItemVOS = BeanUtil.copyList(orderItemListTemp, ItemaMallOrderItemVO.class);
                         itemaMallOrderListVO.setItemaMallOrderItemVOS(itemaMallOrderItemVOS);
                     }
@@ -431,7 +431,7 @@ public class ItemaMallOrderServiceImpl implements ItemaMallOrderService {
             }
         }
 //        for (ItemaMallOrderListVO o : orderListVOS){
-//            List<ItemaMallOrderItemVO> itemaMallOrderItemVO=o.getNewBeeMallOrderItemVOS();
+//            List<ItemaMallOrderItemVO> itemaMallOrderItemVO=o.getItemaMallOrderItemVOS();
 //            for(ItemaMallOrderItemVO oo:itemaMallOrderItemVO)
 //                System.out.println(oo.toString());
 //        }

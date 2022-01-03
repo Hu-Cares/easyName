@@ -9,10 +9,6 @@
 package ltd.itema.mall.common;
 
 /**
- * @author 13
- * @qq交流群 791509631
- * @email 2449207463@qq.com
- * @link https://github.com/newbee-ltd
  * @apiNote 分类级别
  */
 public enum ItemaMallCategoryLevelEnum {
@@ -31,7 +27,7 @@ public enum ItemaMallCategoryLevelEnum {
         this.name = name;
     }
 
-    public static ItemaMallCategoryLevelEnum getNewBeeMallOrderStatusEnumByLevel(int level) {
+    public static ItemaMallCategoryLevelEnum getItemaMallOrderStatusEnumByLevel(int level) {
         for (ItemaMallCategoryLevelEnum itemaMallCategoryLevelEnum : ItemaMallCategoryLevelEnum.values()) {
             if (itemaMallCategoryLevelEnum.getLevel() == level) {
                 return itemaMallCategoryLevelEnum;

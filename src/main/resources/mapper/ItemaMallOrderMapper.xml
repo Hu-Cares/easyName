@@ -50,7 +50,7 @@
                  open="(" separator="," close=")">#{item}
         </foreach>
     </select>
-    <select id="findNewBeeMallOrderList" parameterType="Map" resultMap="BaseResultMap">
+    <select id="findItemaMallOrderList" parameterType="Map" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from tb_newbee_mall_order
@@ -83,7 +83,7 @@
         </if>
     </select>
 
-    <select id="getTotalNewBeeMallOrders" parameterType="Map" resultType="int">
+    <select id="getTotalItemaMallOrders" parameterType="Map" resultType="int">
         select count(*) from tb_newbee_mall_order
         <where>
             <if test="orderNo!=null and orderNo!=''">

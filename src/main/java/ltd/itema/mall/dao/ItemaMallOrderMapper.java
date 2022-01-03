@@ -32,9 +32,9 @@ public interface ItemaMallOrderMapper {
 
     int updateByPrimaryKey(ItemaMallOrder record);
 
-    List<ItemaMallOrder> findNewBeeMallOrderList(PageQueryUtil pageUtil);
+    List<ItemaMallOrder> findItemaMallOrderList(PageQueryUtil pageUtil);
 
-    int getTotalNewBeeMallOrders(PageQueryUtil pageUtil);
+    int getTotalItemaMallOrders(PageQueryUtil pageUtil);
 
     List<ItemaMallOrder> selectByPrimaryKeys(@Param("orderIds") List<Long> orderIds);
 

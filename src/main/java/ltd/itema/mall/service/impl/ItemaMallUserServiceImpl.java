@@ -20,9 +20,7 @@ import ltd.itema.mall.entity.ItemaMallUserCouponRecord;
 import ltd.itema.mall.entity.MallShop;
 import ltd.itema.mall.entity.MallUser;
 import ltd.itema.mall.util.*;
-import ltd.itema.mall.entity.*;
 import ltd.itema.mall.service.ItemaMallUserService;
-import ltd.itema.mall.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,7 +46,7 @@ public class ItemaMallUserServiceImpl implements ItemaMallUserService {
     private ItemaMallUserCouponRecordMapper itemaMallUserCouponRecordMapper;
 
     @Override
-    public PageResult getNewBeeMallUsersPage(PageQueryUtil pageUtil) {
+    public PageResult getItemaMallUsersPage(PageQueryUtil pageUtil) {
         List<MallUser> mallUsers = mallUserMapper.findMallUserList(pageUtil);
         Iterator<MallUser> it = mallUsers.iterator();
         while(it.hasNext()){
@@ -143,13 +141,13 @@ public class ItemaMallUserServiceImpl implements ItemaMallUserService {
         MallUser userFromDB = mallUserMapper.selectByPrimaryKey(userTemp.getUserId());
         if (userFromDB != null) {
             if (!StringUtils.isEmpty(mallUser.getNickName())) {
-                userFromDB.setNickName(NewBeeMallUtils.cleanString(mallUser.getNickName()));
+                userFromDB.setNickName(ItemaMallUtils.cleanString(mallUser.getNickName()));
             }
             if (!StringUtils.isEmpty(mallUser.getAddress())) {
-                userFromDB.setAddress(NewBeeMallUtils.cleanString(mallUser.getAddress()));
+                userFromDB.setAddress(ItemaMallUtils.cleanString(mallUser.getAddress()));
             }
             if (!StringUtils.isEmpty(mallUser.getIntroduceSign())) {
-                userFromDB.setIntroduceSign(NewBeeMallUtils.cleanString(mallUser.getIntroduceSign()));
+                userFromDB.setIntroduceSign(ItemaMallUtils.cleanString(mallUser.getIntroduceSign()));
             }
             if (mallUserMapper.updateByPrimaryKeySelective(userFromDB) > 0) {
                 ItemaMallUserVO itemaMallUserVO = new ItemaMallUserVO();

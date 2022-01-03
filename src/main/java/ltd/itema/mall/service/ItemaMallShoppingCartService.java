@@ -21,7 +21,7 @@ public interface ItemaMallShoppingCartService {
      * @param itemaMallShoppingCartItem
      * @return
      */
-    String saveNewBeeMallCartItem(ItemaMallShoppingCartItem itemaMallShoppingCartItem);
+    String saveItemaMallCartItem(ItemaMallShoppingCartItem itemaMallShoppingCartItem);
 
     /**
      * 修改购物车中的属性
@@ -29,15 +29,15 @@ public interface ItemaMallShoppingCartService {
      * @param itemaMallShoppingCartItem
      * @return
      */
-    String updateNewBeeMallCartItem(ItemaMallShoppingCartItem itemaMallShoppingCartItem);
+    String updateItemaMallCartItem(ItemaMallShoppingCartItem itemaMallShoppingCartItem);
 
     /**
      * 获取购物项详情
      *
-     * @param newBeeMallShoppingCartItemId
+     * @param itemaMallShoppingCartItemId
      * @return
      */
-    ItemaMallShoppingCartItem getNewBeeMallCartItemById(Long newBeeMallShoppingCartItemId);
+    ItemaMallShoppingCartItem getItemaMallCartItemById(Long itemaMallShoppingCartItemId);
 
     /**
      * 删除购物车中的商品
@@ -52,8 +52,8 @@ public interface ItemaMallShoppingCartService {
     /**
      * 获取我的购物车中的列表数据
      *
-     * @param newBeeMallUserId
+     * @param itemaMallUserId
      * @return
      */
-    List<ItemaMallShoppingCartItemVO> getMyShoppingCartItems(Long newBeeMallUserId);
+    List<ItemaMallShoppingCartItemVO> getMyShoppingCartItems(Long itemaMallUserId);
 }

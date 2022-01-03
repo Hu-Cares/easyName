@@ -22,7 +22,7 @@ public interface ItemaMallUserService {
      * @param pageUtil
      * @return
      */
-    PageResult getNewBeeMallUsersPage(PageQueryUtil pageUtil);
+    PageResult getItemaMallUsersPage(PageQueryUtil pageUtil);
 
     /**
      * 用户注册

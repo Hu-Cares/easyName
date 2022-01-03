@@ -9,10 +9,6 @@
 package ltd.itema.mall.common;
 
 /**
- * @author 13
- * @qq交流群 791509631
- * @email 2449207463@qq.com
- * @link https://github.com/newbee-ltd
  * @apiNote 常量配置
  */
 public class Constants {
@@ -33,9 +29,9 @@ public class Constants {
 
     public final static String MALL_VERIFY_CODE_KEY = "mallVerifyCode";//验证码key
 
-    public final static String MALL_USER_SESSION_KEY = "newBeeMallUser";//session中user的key
+    public final static String MALL_USER_SESSION_KEY = "itemaMallUser";//session中user的key
 
-    public final static String MALL_SHOP_SESSION_KEY = "newBeeMallShop";//session中shop的key
+    public final static String MALL_SHOP_SESSION_KEY = "itemaMallShop";//session中shop的key
 
     public final static int GOODS_SEARCH_PAGE_LIMIT = 10;//搜索分页的默认条数(每页10条)
 

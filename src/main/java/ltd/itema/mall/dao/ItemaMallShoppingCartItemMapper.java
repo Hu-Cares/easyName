@@ -23,11 +23,11 @@ public interface ItemaMallShoppingCartItemMapper {
 
     ItemaMallShoppingCartItem selectByPrimaryKey(Long cartItemId);
 
-    ItemaMallShoppingCartItem selectByUserIdAndGoodsId(@Param("newBeeMallUserId") Long newBeeMallUserId, @Param("goodsId") Long goodsId);
+    ItemaMallShoppingCartItem selectByUserIdAndGoodsId(@Param("itemaMallUserId") Long itemaMallUserId, @Param("goodsId") Long goodsId);
 
-    List<ItemaMallShoppingCartItem> selectByUserId(@Param("newBeeMallUserId") Long newBeeMallUserId, @Param("number") int number);
+    List<ItemaMallShoppingCartItem> selectByUserId(@Param("itemaMallUserId") Long itemaMallUserId, @Param("number") int number);
 
-    int selectCountByUserId(Long newBeeMallUserId);
+    int selectCountByUserId(Long itemaMallUserId);
 
     int updateByPrimaryKeySelective(ItemaMallShoppingCartItem record);
 

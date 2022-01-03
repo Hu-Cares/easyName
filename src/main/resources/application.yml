@@ -1,8 +1,3 @@
-# author 13
-# qq-group 791509631
-# email 2449207463@qq.com
-# link https://github.com/newbee-ltd
-
 # 服务器配置
 server:
   port: 28079
@@ -15,8 +10,7 @@ server:
 
 # 项目全局配置
 project:
-  name: newbee-mall-plus # 项目名称
-  #  fileUploadPath: /opt/newbee-mall-plus/upload/  # 上传文件的默认url前缀，根据部署设置自行修改，linux下路径
+  name: itema-mall-plus # 项目名称
   fileUploadPath:  E:\javaweb\dx1\src\main\resources\static\upload          # 上传文件的默认url前缀，根据部署设置自行修改，windows下路径
   orderUnpaidOverTime: 300 # 订单未支付超期时间，单位秒
   serverUrl: http://localhost:28079 # 服务器地址
@@ -43,6 +37,5 @@ alipay:
   gateway: https://openapi.alipaydev.com/gateway.do
   charset: UTF-8
   format: json
-  #  log-path: /opt/newbee-mall-plus/log
-  log-path: D://newbee-mall-plus//log
+  log-path: D://itema-mall//log
   signtype: RSA2

@@ -43,8 +43,8 @@ public class ItemaMallGoodsServiceImpl implements ItemaMallGoodsService {
     @Autowired
     private HttpServletRequest request;
     @Override
-    public PageResult getNewBeeMallGoodsPage(PageQueryUtil pageUtil) {
-        List<ItemaMallGoods> goodsList = goodsMapper.findNewBeeMallGoodsList(pageUtil);
+    public PageResult getItemaMallGoodsPage(PageQueryUtil pageUtil) {
+        List<ItemaMallGoods> goodsList = goodsMapper.findItemaMallGoodsList(pageUtil);
         MallShop mallshop=(MallShop)request.getSession().getAttribute(Constants.MALL_SHOP_SESSION_KEY);
         if (mallshop!=null&&null == request.getSession().getAttribute("loginUser")) {
             Iterator<ItemaMallGoods> it = goodsList.iterator();
@@ -55,13 +55,13 @@ public class ItemaMallGoodsServiceImpl implements ItemaMallGoodsService {
                 }
             }
         }
-        int total = goodsMapper.getTotalNewBeeMallGoods(pageUtil);
+        int total = goodsMapper.getTotalItemaMallGoods(pageUtil);
         PageResult pageResult = new PageResult(goodsList, total, pageUtil.getLimit(), pageUtil.getPage());
         return pageResult;
     }
 
     @Override
-    public String saveNewBeeMallGoods(ItemaMallGoods goods) {
+    public String saveItemaMallGoods(ItemaMallGoods goods) {
         GoodsCategory goodsCategory = goodsCategoryMapper.selectByPrimaryKey(goods.getGoodsCategoryId());
         // 分类不存在或者不是三级分类，则该参数字段异常
         if (goodsCategory == null || goodsCategory.getCategoryLevel().intValue() != ItemaMallCategoryLevelEnum.LEVEL_THREE.getLevel()) {
@@ -76,7 +76,7 @@ public class ItemaMallGoodsServiceImpl implements ItemaMallGoodsService {
         return ServiceResultEnum.DB_ERROR.getResult();
     }
     @Override
-    public String shopSaveNewBeeMallGoods(ItemaMallshopGoods goods) {
+    public String shopSaveItemaMallGoods(ItemaMallshopGoods goods) {
         GoodsCategory goodsCategory = goodsCategoryMapper.selectByPrimaryKey(goods.getGoodsCategoryId());
         // 分类不存在或者不是三级分类，则该参数字段异常
         if (goodsCategory == null || goodsCategory.getCategoryLevel().intValue() != ItemaMallCategoryLevelEnum.LEVEL_THREE.getLevel()) {
@@ -92,14 +92,14 @@ public class ItemaMallGoodsServiceImpl implements ItemaMallGoodsService {
     }
 
     @Override
-    public void batchSaveNewBeeMallGoods(List<ItemaMallGoods> itemaMallGoodsList) {
+    public void batchSaveItemaMallGoods(List<ItemaMallGoods> itemaMallGoodsList) {
         if (!CollectionUtils.isEmpty(itemaMallGoodsList)) {
             goodsMapper.batchInsert(itemaMallGoodsList);
         }
     }
 
     @Override
-    public String updateNewBeeMallGoods(ItemaMallGoods goods) {
+    public String updateItemaMallGoods(ItemaMallGoods goods) {
         GoodsCategory goodsCategory = goodsCategoryMapper.selectByPrimaryKey(goods.getGoodsCategoryId());
         // 分类不存在或者不是三级分类，则该参数字段异常
         if (goodsCategory == null || goodsCategory.getCategoryLevel().intValue() != ItemaMallCategoryLevelEnum.LEVEL_THREE.getLevel()) {
@@ -122,12 +122,12 @@ public class ItemaMallGoodsServiceImpl implements ItemaMallGoodsService {
     }
 
     @Override
-    public ItemaMallGoods getNewBeeMallGoodsById(Long id) {
+    public ItemaMallGoods getItemaMallGoodsById(Long id) {
         return goodsMapper.selectByPrimaryKey(id);
     }
 
     @Override
-    public List<String> getNewBeeMallCommentById(Long id){
+    public List<String> getItemaMallCommentById(Long id){
      List<ItemaMallOrder> itemaMallOrders = itemaMallOrderMapper.selectByGoodsId(id);
      List<String> Comments = new ArrayList<String>();
      for(ItemaMallOrder itemaMallOrder : itemaMallOrders){
@@ -137,7 +137,7 @@ public class ItemaMallGoodsServiceImpl implements ItemaMallGoodsService {
     }
     //商家找寻
     @Override
-    public ItemaMallshopGoods getNewBeeMallShopGoodsById(Long id) {
+    public ItemaMallshopGoods getItemaMallShopGoodsById(Long id) {
         return goodsMapper.shopSelectByPrimaryKey(id);
     } //商家找寻
     @Override
@@ -146,8 +146,8 @@ public class ItemaMallGoodsServiceImpl implements ItemaMallGoodsService {
     }
 
     @Override
-    public PageResult searchNewBeeMallGoods(PageQueryUtil pageUtil) {
-        List<ItemaMallGoods> goodsList = goodsMapper.findNewBeeMallGoodsListBySearch(pageUtil);
+    public PageResult searchItemaMallGoods(PageQueryUtil pageUtil) {
+        List<ItemaMallGoods> goodsList = goodsMapper.findItemaMallGoodsListBySearch(pageUtil);
         MallShop mallshop=(MallShop)request.getSession().getAttribute(Constants.MALL_SHOP_SESSION_KEY);
         if (mallshop!=null&&null == request.getSession().getAttribute("loginUser")) {
             Iterator<ItemaMallGoods> it = goodsList.iterator();
@@ -158,7 +158,7 @@ public class ItemaMallGoodsServiceImpl implements ItemaMallGoodsService {
                 }
             }
         }
-        int total = goodsMapper.getTotalNewBeeMallGoodsBySearch(pageUtil);
+        int total = goodsMapper.getTotalItemaMallGoodsBySearch(pageUtil);
         List<ItemaMallSearchGoodsVO> itemaMallSearchGoodsVOS = new ArrayList<>();
         if (!CollectionUtils.isEmpty(goodsList)) {
             itemaMallSearchGoodsVOS = BeanUtil.copyList(goodsList, ItemaMallSearchGoodsVO.class);

@@ -409,13 +409,13 @@ a {
     line-height: 28px;
 }
 
-.newbee-pagenavi {
+.itema-pagenavi {
     height: 30px;
     padding: 15px 0;
     text-align: center;
 }
 
-.newbee-pagenavi .numbers {
+.itema-pagenavi .numbers {
     display: inline-block;
     *zoom: 1;
     *display: inline;

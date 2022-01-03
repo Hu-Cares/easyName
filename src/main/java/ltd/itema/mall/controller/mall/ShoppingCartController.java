@@ -66,11 +66,11 @@ public class ShoppingCartController {
 
     @PostMapping("/shop-cart")
     @ResponseBody
-    public Result saveNewBeeMallShoppingCartItem(@RequestBody ItemaMallShoppingCartItem itemaMallShoppingCartItem,
+    public Result saveItemaShoppingCartItem(@RequestBody ItemaMallShoppingCartItem itemaMallShoppingCartItem,
                                                  HttpSession httpSession) {
         ItemaMallUserVO user = (ItemaMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         itemaMallShoppingCartItem.setUserId(user.getUserId());
-        String saveResult = itemaMallShoppingCartService.saveNewBeeMallCartItem(itemaMallShoppingCartItem);
+        String saveResult = itemaMallShoppingCartService.saveItemaMallCartItem(itemaMallShoppingCartItem);
         //添加成功
         if (ServiceResultEnum.SUCCESS.getResult().equals(saveResult)) {
             return ResultGenerator.genSuccessResult();
@@ -81,11 +81,11 @@ public class ShoppingCartController {
 
     @PutMapping("/shop-cart")
     @ResponseBody
-    public Result updateNewBeeMallShoppingCartItem(@RequestBody ItemaMallShoppingCartItem itemaMallShoppingCartItem,
+    public Result updateItemaMallShoppingCartItem(@RequestBody ItemaMallShoppingCartItem itemaMallShoppingCartItem,
                                                    HttpSession httpSession) {
         ItemaMallUserVO user = (ItemaMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
         itemaMallShoppingCartItem.setUserId(user.getUserId());
-        String updateResult = itemaMallShoppingCartService.updateNewBeeMallCartItem(itemaMallShoppingCartItem);
+        String updateResult = itemaMallShoppingCartService.updateItemaMallCartItem(itemaMallShoppingCartItem);
         //修改成功
         if (ServiceResultEnum.SUCCESS.getResult().equals(updateResult)) {
             return ResultGenerator.genSuccessResult();
@@ -94,12 +94,12 @@ public class ShoppingCartController {
         return ResultGenerator.genFailResult(updateResult);
     }
 
-    @DeleteMapping("/shop-cart/{newBeeMallShoppingCartItemId}")
+    @DeleteMapping("/shop-cart/{itemaMallShoppingCartItemId}")
     @ResponseBody
-    public Result updateNewBeeMallShoppingCartItem(@PathVariable("newBeeMallShoppingCartItemId") Long newBeeMallShoppingCartItemId,
+    public Result updateItemaMallShoppingCartItem(@PathVariable("itemaMallShoppingCartItemId") Long itemaMallShoppingCartItemId,
                                                    HttpSession httpSession) {
         ItemaMallUserVO user = (ItemaMallUserVO) httpSession.getAttribute(Constants.MALL_USER_SESSION_KEY);
-        Boolean deleteResult = itemaMallShoppingCartService.deleteById(newBeeMallShoppingCartItemId, user.getUserId());
+        Boolean deleteResult = itemaMallShoppingCartService.deleteById(itemaMallShoppingCartItemId, user.getUserId());
         //删除成功
         if (deleteResult) {
             return ResultGenerator.genSuccessResult();

@@ -130,10 +130,10 @@ public class SecKillController {
         if (itemaMallSeckillGoodsVOS == null) {
             List<ItemaMallSeckill> list = itemaMallSeckillService.getHomeSeckillPage();
             SimpleDateFormat sdf = new SimpleDateFormat("MM-dd HH:mm");
-            itemaMallSeckillGoodsVOS = list.stream().map(newBeeMallSeckill -> {
+            itemaMallSeckillGoodsVOS = list.stream().map(itemaMallSeckill -> {
                 ItemaMallSeckillGoodsVO itemaMallSeckillGoodsVO = new ItemaMallSeckillGoodsVO();
-                BeanUtil.copyProperties(newBeeMallSeckill, itemaMallSeckillGoodsVO);
-                ItemaMallGoods itemaMallGoods = itemaMallGoodsMapper.selectByPrimaryKey(newBeeMallSeckill.getGoodsId());
+                BeanUtil.copyProperties(itemaMallSeckill, itemaMallSeckillGoodsVO);
+                ItemaMallGoods itemaMallGoods = itemaMallGoodsMapper.selectByPrimaryKey(itemaMallSeckill.getGoodsId());
                 if (itemaMallGoods == null) {
                     return null;
                 }

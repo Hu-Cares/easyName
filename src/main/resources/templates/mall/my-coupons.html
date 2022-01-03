@@ -1,7 +1,7 @@
 <!-- Copyright (c) 2019-2020 十三 all rights reserved. -->
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-<head th:replace="mall/header::head-fragment('NewBee商城-我的优惠券列表','my-coupons')">
+<head th:replace="mall/header::head-fragment('Itema商城-我的优惠券列表','my-coupons')">
 </head>
 <body>
 <header th:replace="mall/header::header-fragment"></header>
@@ -40,7 +40,7 @@
                                                 <strong class="num" th:text="${coupon.discount}">360</strong>
                                                 <div class="txt">
                                                     <div class="typ-txt" th:text="${coupon.couponName} + ${coupon.used?' 已使用':' 未使用'}">
-                                                        newbee券
+                                                        itema券
                                                     </div>
                                                 </div>
                                             </div>

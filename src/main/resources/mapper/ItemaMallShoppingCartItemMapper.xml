@@ -23,20 +23,20 @@
         select
         <include refid="Base_Column_List"/>
         from tb_newbee_mall_shopping_cart_item
-        where user_id = #{newBeeMallUserId,jdbcType=BIGINT} and goods_id=#{goodsId,jdbcType=BIGINT} and is_deleted = 0
+        where user_id = #{itemaMallUserId,jdbcType=BIGINT} and goods_id=#{goodsId,jdbcType=BIGINT} and is_deleted = 0
         limit 1
     </select>
     <select id="selectByUserId" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
         from tb_newbee_mall_shopping_cart_item
-        where user_id = #{newBeeMallUserId,jdbcType=BIGINT} and is_deleted = 0
+        where user_id = #{itemaMallUserId,jdbcType=BIGINT} and is_deleted = 0
         limit #{number}
     </select>
     <select id="selectCountByUserId" resultType="int">
         select count(*)
         from tb_newbee_mall_shopping_cart_item
-        where user_id = #{newBeeMallUserId,jdbcType=BIGINT}
+        where user_id = #{itemaMallUserId,jdbcType=BIGINT}
           and is_deleted = 0
     </select>
     <update id="deleteByPrimaryKey" parameterType="java.lang.Long">

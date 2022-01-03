@@ -25,7 +25,7 @@ public interface ItemaMallOrderService {
      * @param pageUtil
      * @return
      */
-    PageResult getNewBeeMallOrdersPage(PageQueryUtil pageUtil);
+    PageResult getItemaMallOrdersPage(PageQueryUtil pageUtil);
 
     /**
      * 订单信息修改
@@ -101,7 +101,7 @@ public interface ItemaMallOrderService {
      * @param orderNo
      * @return
      */
-    ItemaMallOrder getNewBeeMallOrderByOrderNo(String orderNo);
+    ItemaMallOrder getItemaMallOrderByOrderNo(String orderNo);
 
     /**
      * 我的订单列表
