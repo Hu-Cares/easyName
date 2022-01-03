@@ -14,8 +14,12 @@
  Date: 03/01/2022 17:22:10
 */
 
+DROP DATABASE IF EXISTS `itema_db`;
+CREATE database `itema_db` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
+USE `itema_db`;
+
 
 -- ----------------------------
 -- Table structure for goods_info
